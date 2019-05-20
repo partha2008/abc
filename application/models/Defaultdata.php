@@ -31,6 +31,7 @@ class Defaultdata extends CI_Model {
 		$this->mydata['admin_profile'] = $this->grabProfileData();	
 		$this->data = $this->mydata;
 		$this->headerdata = $this->mydata;
+		$this->data["head"] = $this->load->view('partials/head', $this->headerdata, true);	
 		$this->data["header"] = $this->load->view('partials/header', $this->headerdata, true);	
 		$this->data["footer"] = $this->load->view('partials/footer', null, true);
 		

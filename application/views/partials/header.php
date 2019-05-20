@@ -1,42 +1,3 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
-  <meta name="author" content="Creative Tim">
-  <title><?php echo $general_settings->sitename;?></title>
-  <!-- Favicon -->
-  <link href="<?php echo base_url(); ?>resources/images/favicon.png" rel="icon" type="image/png">
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-  <!-- Icons -->
-  <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/nucleo.css" />
-  <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/all.min.css" />
-  <!-- global.css -->
-  <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/global.css" />
-  <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/main.css" />
-
-  <script>
-    var BASEPATH = '<?php echo base_url();?>';
-    var PAGENAME = '<?php echo $tot_segments[1];?>';
-    var VIEW = '<?php echo isset($tot_segments[3]) ? $tot_segments[3] : $tot_segments[2];?>';
-  </script>
-
-  <script src="<?php echo base_url(); ?>resources/js/jquery.min.js"></script>
-  <script src="<?php echo base_url(); ?>resources/js/bootstrap.bundle.min.js"></script>
-  <!-- coustome.js -->
-  <script src="<?php echo base_url(); ?>resources/js/custom.js"></script>
-  <?php
-    if($tot_segments[1] == 'register'){
-  ?>
-  <script src="<?php echo base_url(); ?>resources/js/main.js"></script>
-  <?php
-    }
-  ?>
-</head>
-
 <body class="bg-default home">
   <div class="main-content">
     <!-- Navbar -->
@@ -76,7 +37,7 @@
                   if($this->session->userdata('user_id')){
                 ?>
                   <li class="nav-item register">
-                  <a class="nav-link nav-link-icon" href="<?php echo base_url('home/logout');?>">
+                  <a class="nav-link nav-link-icon" href="<?php echo base_url('logout');?>">
                     <i class="ni ni-button-power"></i>
                     <span class="nav-link-inner--text">Logout</span>
                   </a>

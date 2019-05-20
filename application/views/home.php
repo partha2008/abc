@@ -1,3 +1,4 @@
+    <?php echo $head;?> 
     <?php echo $header; ?>
 
     <div class="home-banner">

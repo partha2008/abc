@@ -1,11 +1,11 @@
   <!-- Footer -->
-  <footer>
-    <div class="container">
+  <footer class="<?php echo ($tot_segments[1] == 'dashboard') ? 'footer' : '';?>">
+    <div class="<?php echo ($tot_segments[1] != 'dashboard') ? 'container' : '';?>">
       <div class="row align-items-center justify-content-xl-between">
         <div class="col-xl-6">
           <div class="copyright text-center text-xl-left text-muted">
-            &copy; 2019 <a href="" class="font-weight-bold ml-1" target="_blank"><?php echo $general_settings->sitename;?></a>
-          </div>
+              &copy; 2019 <?php echo $general_settings->sitename;?>
+            </div>
         </div>
         <div class="col-xl-6">
           <ul class="nav nav-footer justify-content-center justify-content-xl-end">

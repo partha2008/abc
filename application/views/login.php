@@ -1,6 +1,5 @@
-<?php echo $header;?>    
-    
-    
+    <?php echo $head;?>     
+    <?php echo $header;?>     
     <!-- Page content -->
     <div class="login-block">
     	<div class="container">

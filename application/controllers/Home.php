@@ -52,17 +52,13 @@
 		}
 
 		public function register(){	
-			if($this->session->userdata('user_id')){
-				redirect(base_url('dashboard'));
-			}else{
-				if($this->session->userdata('has_error')){
-					$user_details = (object)$this->session->userdata;
-					$this->data['user_details'] = $user_details;
-				}
-				$this->data['state'] = $this->defaultdata->grabStateData();	
+			if($this->session->userdata('has_error')){
+				$user_details = (object)$this->session->userdata;
+				$this->data['user_details'] = $user_details;
+			}
+			$this->data['state'] = $this->defaultdata->grabStateData();	
 
-				$this->load->view('register', $this->data); 
-			}			
+			$this->load->view('register', $this->data);			
 		}
 
 		public function process_register(){
@@ -157,11 +153,7 @@
 		}
 
 		public function login(){
-			if($this->session->userdata('user_id')){
-				redirect(base_url('dashboard'));
-			}else{
-				$this->load->view('login', $this->data); 
-			}
+			$this->load->view('login', $this->data); 
 		}
 
 		public function process_login(){
@@ -269,6 +261,14 @@
 			$this->defaultdata->unsetFrontendLoginSession();
 			
 			redirect(base_url());
+		}
+
+		public function dashboard(){
+			$user = $this->userdata->grab_user_details(array("user_id" => $this->session->userdata('user_id')));
+
+			$this->data['user_details'] = $user[0];
+
+			$this->load->view('dashboard', $this->data); 
 		}
 
 		public function cms(){
