@@ -7,7 +7,7 @@
 		private $perPage = 6;
 		public $loggedin_method_arr = array('myaccount', 'dashboard');
 
-		public $loggedout_method_arr = array('login', 'register');
+		public $loggedout_method_arr = array('login', 'register', 'forget_password');
 		
 		public function __construct(){
 			parent::__construct();
@@ -151,6 +151,7 @@
 
 			$this->form_validation->set_rules('user_id', 'User Id', 'trim|required');
 			$this->form_validation->set_rules('password', 'Password', 'trim|required');
+			$this->form_validation->set_rules('g-recaptcha-response', 'Captcha Code', 'trim|required');
 
 			if($this->form_validation->run() == FALSE)
 			{	
@@ -180,29 +181,38 @@
 			}
 		}
 
+		public function forget_password(){
+			if($this->session->userdata('has_error')){
+				$user_details = (object)$this->session->userdata;
+				$this->data['user_details'] = $user_details;
+			}
+			$this->load->view('forget', $this->data); 
+		}
+
 		public function hasSameEmailAddress($email){
 			$user_data = $this->userdata->grab_user_details(array("email" => $email));
 			if(count($user_data) > 0){
 				return true;				
 			}else{
-				$this->form_validation->set_message('hasSameEmailAddress', 'The given email address does not exists');
+				$this->form_validation->set_message('hasSameEmailAddress', 'The given email id does not exists');
 				return false;
 			}
 		}
 
-		public function forget_password(){
+		public function process_forget_password(){
 			$post_data = $this->input->post();
 			$general_settings = $this->data['general_settings'];
 			$admin_profile = $this->data['admin_profile'];
 				
 			$this->load->library('form_validation');
 
-			$this->form_validation->set_rules('email', 'Email Address', 'callback_hasSameEmailAddress');
+			$this->form_validation->set_rules('email', 'Email ID', 'trim|required|callback_hasSameEmailAddress');
 
 			if($this->form_validation->run() == FALSE)
-			{					
-				$response['success'] = false;
-				$response['msg'] = validation_errors();
+			{	
+				$this->session->set_userdata($post_data);
+				$this->session->set_userdata('has_error', true);
+				$this->session->set_userdata('forget_notification', validation_errors());
 			}else{
 				$given_password = $this->defaultdata->getGeneratedPassword();
 				$encrypted_password = base64_encode(hash("sha256", $given_password, True));
@@ -211,9 +221,10 @@
 
 				if($this->userdata->update_user_details(array("user_id" => $user[0]->user_id), array("password" => $encrypted_password, "date_modified" => time()))){
 
-					$response['success'] = true;
-					$response['msg'] = "You have successfully reset your password. A new password generated & sent to your given email address. Please check your inbox to get your login credential.";
+					$this->session->set_userdata('has_error', false);
+					$this->session->set_userdata('forget_notification', "You have successfully reset your password. A new password generated & sent to your given email address. Please check your inbox to get your login credential.");
 
+					/*
 					// an email should be sent to user			
 					$this->data['site_title'] = rtrim(preg_replace("(^https?://www.)", "",$general_settings->siteaddress), '/');
 					$this->data['site_logo'] = UPLOAD_LOGO_PATH.$general_settings->logoname;
@@ -238,11 +249,11 @@
 						"message" => $message
 					);
 					
-					$this->defaultdata->_send_mail($mail_config);
+					$this->defaultdata->_send_mail($mail_config);*/
 				}
 			}
 
-			echo json_encode($response);
+			redirect($this->agent->referrer());
 		}
 
 		public function logout(){

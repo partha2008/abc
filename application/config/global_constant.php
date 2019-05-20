@@ -6,7 +6,9 @@
 		"email_smtp_port" => "25",
 		"smtp_email" => "",
 		"smtp_password" => "",
-		"max_register_user" => 10
+		"max_register_user" => 10,
+		"google_captcha_site_key" => "6LcSjaQUAAAAAAmNa_3MEmKWFdycM-RQWeMAJOSb",
+		"google_captcha_secret_key" => "6LcSjaQUAAAAABkotuBc7mGVGveQND2a_hlOmAM-"
 	);
 	
 	// Bootstrap Pagination Configuration

@@ -31,7 +31,11 @@
   <?php
     if($tot_segments[1] == 'register'){
   ?>
-  <script src="<?php echo base_url(); ?>resources/js/main.js"></script>
+  <script src="<?php echo base_url(); ?>resources/js/main.js"></script>  
+  <?php
+    }elseif($tot_segments[1] == 'login'){
+  ?>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <?php
     }
   ?>

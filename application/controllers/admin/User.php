@@ -4,7 +4,7 @@
 	class User extends CI_Controller {
 		
 		public $data = array();
-		public $loggedin_method_arr = array('dashboard', 'profile', 'settings', 'user-list', 'user-add', 'user-edit', 'banner-list', 'banner-add', 'banner-edit', 'entity-list', 'entity-add', 'entity-edit', 'product-list', 'product-add', 'product-edit', 'term', 'privacy', 'return', 'shipping', 'about', 'feedback', 'newsletter', 'ads');
+		public $loggedin_method_arr = array('dashboard', 'profile', 'settings', 'user-list', 'user-add', 'user-edit', 'about');
 
 		public $loggedout_method_arr = array('index');
 		
@@ -386,9 +386,6 @@
 					$this->data['states'] = $states;
 				}
 			}
-
-			$country = $this->defaultdata->grabCountryData();
-			$this->data['country'] = $country;
 			
 			$this->load->view('admin/user_add', $this->data);
 		}
@@ -439,14 +436,6 @@
 				$user_details = (object)$this->session->userdata;
 			}
 			$this->data['user_details'] = $user_details;
-
-			if($user_details->country_id){
-				$states = $this->defaultdata->grabStateData(array("country_id" => $user_details->country_id));
-				$this->data['states'] = $states;
-			}
-
-			$country = $this->defaultdata->grabCountryData();
-			$this->data['country'] = $country;
 			
 			$this->load->view('admin/user_edit', $this->data);
 		}

@@ -8,6 +8,7 @@
           <div class="card bg-secondary shadow border-0">
             
             <div class="card-body px-lg-5 py-lg-5">
+              <h1 class="text-muted">Login</h1>
               <?php
                 $msg = $this->session->userdata('has_error');
                 if($msg && isset($msg)){
@@ -19,7 +20,7 @@
                   $this->session->unset_userdata('login_notification');
                   $this->session->unset_userdata('has_error');
                 }
-              ?>
+              ?>              
               <form role="form" action="<?php echo base_url('home/process_login');?>" method="post" novalidate>
                 <div class="form-group mb-3">
                   <label class="field-titel" for="user_id">User Id</label>
@@ -39,18 +40,10 @@
                     <input class="form-control" id="password" placeholder="Password" type="password" name="password">
                   </div>
                 </div>
-                <!--<div class="form-group">
+                <div class="form-group">
                   <label class="field-titel">Captcha Code</label>
-                  <div class="captcha-code_image">
-               	  	<img src="assets/img/captcha-code_image.png"  alt=""> 
-                  </div>
-                  <div class="input-group input-group-alternative">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="ni ni-curved-next"></i></span>
-                    </div>
-                    <input class="form-control" placeholder="Captcha Code" type="Captcha Code">
-                  </div>
-                </div>-->
+                  <div class="g-recaptcha" data-sitekey="<?php echo $this->config->item('site_info')['google_captcha_site_key'];?>"></div>
+                </div>
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary my-4">Sign in</button>
                 </div>
