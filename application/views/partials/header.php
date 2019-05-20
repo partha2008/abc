@@ -36,6 +36,12 @@
                 <?php
                   if($this->session->userdata('user_id')){
                 ?>
+                  <li class="nav-item register <?php echo ($tot_segments[1] == 'register') ? 'active' : '';?>">
+                    <a class="nav-link nav-link-icon" href="<?php echo base_url('dashboard');?>">
+                      <i class="ni ni-single-copy-04"></i>
+                      <span class="nav-link-inner--text">Dashboard</span>
+                    </a>
+                  </li>
                   <li class="nav-item register">
                   <a class="nav-link nav-link-icon" href="<?php echo base_url('logout');?>">
                     <i class="ni ni-button-power"></i>

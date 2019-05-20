@@ -25,9 +25,18 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('myaccount');?>">
+            <a class="nav-link" href="<?php echo base_url('dashboard');?>">
+              <i class="ni ni-single-copy-04 text-green"></i> Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link dropdown-toggle " href="JavaScript:Void(0);" id="profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="ni ni-single-02 text-yellow"></i> Profile
             </a>
+            <div class="dropdown-menu" aria-labelledby="profile">
+                  <a class="dropdown-item" href="<?php echo base_url('myaccount');?>"><i class="ni ni-bold-right"></i>Update Profile</a>
+                  <a class="dropdown-item" href="<?php echo base_url('changepassword');?>"><i class="ni ni-bold-right"></i>Change Password</a>
+                </div>
           </li>
           <li class="nav-item">
             <a class="nav-link dropdown-toggle " href="JavaScript:Void(0);" id="teamdetails" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -38,7 +47,6 @@
                   <a class="dropdown-item" href="javascript:void(0);"><i class="ni ni-bold-right"></i>Member Tree</a>
                   <a class="dropdown-item" href="javascript:void(0);"><i class="ni ni-bold-right"></i>Team Level</a>
                 </div>
-          
           </li>
           <li class="nav-item">
             <a class="nav-link dropdown-toggle " href="JavaScript:Void(0);" id="message" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -93,6 +101,10 @@
               <a href="<?php echo base_url('myaccount');?>" class="dropdown-item">
                 <i class="ni ni-single-02"></i>
                 <span>My profile</span>
+              </a>
+              <a href="<?php echo base_url('changepassword');?>" class="dropdown-item">
+                <i class="ni ni-key-25"></i>
+                <span>Change Password</span>
               </a>
               <div class="dropdown-divider"></div>
               <a href="<?php echo base_url('logout');?>" class="dropdown-item">

@@ -5,6 +5,9 @@
 		
 		public $data = array();
 		private $perPage = 6;
+		public $loggedin_method_arr = array('myaccount', 'dashboard');
+
+		public $loggedout_method_arr = array('login', 'register');
 		
 		public function __construct(){
 			parent::__construct();
@@ -12,6 +15,22 @@
 			$this->load->model('userdata');
 
 			$this->data = $this->defaultdata->getFrontendDefaultData();
+
+			if(in_array($this->data['tot_segments'][2], $this->loggedin_method_arr))
+			{
+				if($this->defaultdata->is_user_session_active() == 0)
+				{
+					redirect(base_url());
+				}
+			}
+			
+			if(in_array($this->data['tot_segments'][2], $this->loggedout_method_arr))
+			{
+				if($this->defaultdata->is_user_session_active() == 1)
+				{
+					redirect(base_url('dashboard'));
+				}
+			}
 		}
 		
 		public function index()
@@ -257,11 +276,12 @@
 		public function myaccount(){
 			if($this->session->userdata('has_error')){
 				$user = (object)$this->session->userdata;
-				$this->data['user'] = $user;
+				$this->data['user_details'] = $user;
 			}else{
-				$user = $this->userdata->grab_user_details(array("user_id" => $this->session->userdata('user_id')));
+				$user = $this->userdata->grab_user_details(array("user_id" => $this->session->userdata('user_id')));				
 				$this->data['user_details'] = $user[0];
 			}
+			$this->data['state'] = $this->defaultdata->grabStateData();	
 			$this->data['inner'] = $this->load->view('partials/myaccount_inner', $this->data, true);
 			$this->data['page_name'] = 'My Profile';
 			$this->data['container'] = $this->load->view('partials/container', $this->data, true);
@@ -278,8 +298,8 @@
 				$is_unique =  '';
 			}
 
-			if($post_data['phone'] != $post_data['old_phone']){
-				$is_unique1 =  '|is_unique['.TABLE_USER.'.phone]';
+			if($post_data['mobile_no'] != $post_data['old_mobile_no']){
+				$is_unique1 =  '|is_unique['.TABLE_USER.'.mobile_no]';
 			}else{
 				$is_unique1 =  '';
 			}				
@@ -288,13 +308,16 @@
 			
 			$this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
 			$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
-			$this->form_validation->set_rules('email', 'E-mail', 'trim|required'.$is_unique);
-			$this->form_validation->set_rules('phone', 'Phone', 'trim|required'.$is_unique1);
-			$this->form_validation->set_rules('address1', 'Address1', 'trim|required');
+			$this->form_validation->set_rules('email', 'Email ID', 'trim|required'.$is_unique);
+			$this->form_validation->set_rules('mobile_no', 'Mobile No', 'trim|required'.$is_unique1);
+			$this->form_validation->set_rules('address', 'Address', 'trim|required');
 			$this->form_validation->set_rules('city', 'City', 'trim|required');
-			$this->form_validation->set_rules('post_code', 'Post Code', 'trim|required');
-			$this->form_validation->set_rules('country_id', 'Country', 'trim|required');
+			$this->form_validation->set_rules('district', 'District', 'trim|required');
+			$this->form_validation->set_rules('post_code', 'Postal Code', 'trim|required');
 			$this->form_validation->set_rules('state_id', 'State', 'trim|required');
+			$this->form_validation->set_rules('nominee_info', 'Nominee Information', 'trim|required');
+			$this->form_validation->set_rules('nominee_relation', 'Nominee Relation', 'trim|required');
+			$this->form_validation->set_rules('about_me', 'About Me', 'trim|required');
 			
 			$this->session->unset_userdata($post_data);
 			if($this->form_validation->run() == FALSE)
@@ -304,7 +327,7 @@
 				$this->session->set_userdata('myaccount_notification', validation_errors());
 			}else{
 				unset($post_data['old_email']);
-				unset($post_data['old_phone']);
+				unset($post_data['old_mobile_no']);
 
 				$post_data['date_modified'] = time();
 				
@@ -312,6 +335,44 @@
 
 				$this->session->set_userdata('has_error', false);
 				$this->session->set_userdata('myaccount_notification', "Your account updated successfully");
+			}
+			redirect($this->agent->referrer());
+		}
+
+		public function changepassword(){	
+			$user = $this->userdata->grab_user_details(array("user_id" => $this->session->userdata('user_id')));	
+						
+			$this->data['user_details'] = $user[0];
+			$this->data['inner'] = $this->load->view('partials/password_inner', $this->data, true);
+			$this->data['page_name'] = 'Change Password';
+			$this->data['container'] = $this->load->view('partials/container', $this->data, true);
+
+			$this->load->view('changepassword', $this->data);
+		}
+
+		public function update_password(){
+			$post_data = $this->input->post();
+				
+			$this->load->library('form_validation');
+
+			$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[6]|max_length[20]');
+			$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|matches[password]');
+			
+			$this->session->unset_userdata($post_data);
+			if($this->form_validation->run() == FALSE)
+			{	
+				$this->session->set_userdata($post_data);
+				$this->session->set_userdata('has_error', true);
+				$this->session->set_userdata('password_notification', validation_errors());
+			}else{
+				unset($post_data['confirm_password']);
+				$post_data['password'] = base64_encode(hash("sha256", $post_data['password'], True));
+				$post_data['date_modified'] = time();
+				
+				$this->userdata->update_user_details(array("user_id" => $this->session->userdata('user_id')), $post_data);
+
+				$this->session->set_userdata('has_error', false);
+				$this->session->set_userdata('password_notification', "Your password updated successfully");
 			}
 			redirect($this->agent->referrer());
 		}

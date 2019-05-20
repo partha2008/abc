@@ -27,7 +27,8 @@
                 <h4 class="alert-heading">Success!</h4> <?php echo $this->session->userdata('register_notification');?>  
               </div>
               <?php
-                $this->session->unset_userdata('has_error');
+                  $this->session->unset_userdata('register_notification');
+                  $this->session->unset_userdata('has_error');
                 }
               ?>
               <?php
