@@ -57,12 +57,12 @@
 												?>
 											</div>
 											<div class="form-group">
-												<label class="control-label">Facebook Page URL <span style="color:#a94442;">*</span></label>
-												<input class="form-control" type="text" name="facebook_page_url" placeholder="Enter Site Address" value="<?php if(isset($settings_data->facebook_page_url)){echo $settings_data->facebook_page_url;}?>">
+												<label class="control-label">Notification</label>
+												<textarea placeholder="Enter Notification" class="form-control" name="notification"><?php if(isset($settings_data->notification)){echo $settings_data->notification;}?></textarea>
 											</div>
 											<div class="form-group">
-												<label class="control-label">GST Reg No <span style="color:#a94442;">*</span></label>
-												<input class="form-control" type="text" name="gst_no" placeholder="Enter GST Reg No" value="<?php if(isset($settings_data->gst_no)){echo $settings_data->gst_no;}?>">
+												<label class="control-label">Title</label>
+												<textarea placeholder="Enter Title" class="form-control" name="title"><?php if(isset($settings_data->title)){echo $settings_data->title;}?></textarea>
 											</div>
 											<input type="hidden" name="settings_id" value="<?php if(isset($settings_data->settings_id)){echo $settings_data->settings_id;}?>">
 											<input type="hidden" name="logopathname" value="<?php if(isset($settings_data->logopathname)){echo $settings_data->logopathname;}?>">

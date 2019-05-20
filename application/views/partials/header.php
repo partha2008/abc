@@ -28,7 +28,13 @@
   <script src="<?php echo base_url(); ?>resources/js/bootstrap.bundle.min.js"></script>
   <!-- coustome.js -->
   <script src="<?php echo base_url(); ?>resources/js/custom.js"></script>
+  <?php
+    if($tot_segments[1] == 'register'){
+  ?>
   <script src="<?php echo base_url(); ?>resources/js/main.js"></script>
+  <?php
+    }
+  ?>
 </head>
 
 <body class="bg-default home">
@@ -40,7 +46,7 @@
         <div class="hometop-header">
             <div class="logo">
                 <a href="<?php echo base_url();?>">
-                    <img src="<?php echo base_url(); ?>resources/images/logo.png" alt="GreenGlory">
+                    <img src="<?php echo base_url($general_settings->logopathname.'?v='.time()); ?>" alt="Logo">
                 </a>
             </div>
             
@@ -66,7 +72,18 @@
               </div>
               <!-- Navbar items -->
               <ul class="navbar-nav ml-auto">
-                
+                <?php
+                  if($this->session->userdata('user_id')){
+                ?>
+                  <li class="nav-item register">
+                  <a class="nav-link nav-link-icon" href="<?php echo base_url('home/logout');?>">
+                    <i class="ni ni-button-power"></i>
+                    <span class="nav-link-inner--text">Logout</span>
+                  </a>
+                </li>
+                <?php
+                  }else{
+                ?>
                 <li class="nav-item register <?php echo ($tot_segments[1] == 'register') ? 'active' : '';?>">
                   <a class="nav-link nav-link-icon" href="<?php echo base_url('register');?>">
                     <i class="ni ni-circle-08"></i>
@@ -79,7 +96,9 @@
                     <span class="nav-link-inner--text">Login</span>
                   </a>
                 </li>
-                
+                <?php
+                  }
+                ?>
               </ul>
             </div>
         </div>
@@ -91,11 +110,10 @@
     <!-- header-animation -->
   <div class="header-animation">
       <div class="container">
-          <div class="welcome-animation">
-              
-                <marquee width="1000PX"> <div class="ourtitlestext"> 
-Welcome to ABC.  </div> </marquee>
-            
+          <div class="welcome-animation">              
+                <marquee width="1000PX"> 
+                  <div class="ourtitlestext"><?php echo $general_settings->notification;?></div> 
+                </marquee>            
             </div>
         </div>
     </div> 

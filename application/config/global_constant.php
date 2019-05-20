@@ -5,7 +5,8 @@
 		"email_smtp_host" => "localhost",
 		"email_smtp_port" => "25",
 		"smtp_email" => "",
-		"smtp_password" => ""
+		"smtp_password" => "",
+		"max_register_user" => 10
 	);
 	
 	// Bootstrap Pagination Configuration

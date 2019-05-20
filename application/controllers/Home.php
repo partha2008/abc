@@ -18,15 +18,7 @@
 		{
 			//$this->output->cache(60); // Will expire in 60 minutes
 			$this->load->view('home', $this->data); 
-		}
-
-		public function login(){
-			$this->load->view('login', $this->data); 
-		}
-
-		public function register(){			
-			$this->load->view('register', $this->data); 
-		}
+		}		
 
 		public function save_user_info(){
 			$post_data = $this->input->post();
@@ -59,6 +51,20 @@
 			echo json_encode($response);
 		}
 
+		public function register(){	
+			if($this->session->userdata('user_id')){
+				redirect(base_url('dashboard'));
+			}else{
+				if($this->session->userdata('has_error')){
+					$user_details = (object)$this->session->userdata;
+					$this->data['user_details'] = $user_details;
+				}
+				$this->data['state'] = $this->defaultdata->grabStateData();	
+
+				$this->load->view('register', $this->data); 
+			}			
+		}
+
 		public function process_register(){
 			$post_data = $this->input->post();
 			$general_settings = $this->data['general_settings'];
@@ -87,39 +93,48 @@
 				$this->session->set_userdata('has_error', true);
 				$this->session->set_userdata('register_notification', validation_errors());
 			}else{
-				unset($post_data['confirm_password']);
+				$user = $this->userdata->grab_user_details(array("parent_id" => $post_data['parent_id']));
 
-				$post_data['password'] = base64_encode(hash("sha256", $post_data['password'], True));
-				$post_data['date_added'] = time();
+				if(count($user) > $this->config->item('site_info')['max_register_user']){
+					$this->session->set_userdata('has_error', true);
+					$this->session->set_userdata('register_notification', "Registration failed. Maximum user exceeds the limit with the sponsor id.");
+				}else{
+					unset($post_data['confirm_password']);
+					unset($post_data['sponsor_id']);
 
-				$this->userdata->insert_user($post_data);
+					$post_data['sponsor_id'] = $this->defaultdata->getUserId();
+					$post_data['password'] = base64_encode(hash("sha256", $post_data['password'], True));
+					$post_data['date_added'] = time();
 
-				$response['success'] = true;
-				$response['msg'] = "You have registered successfully. Please login to continue.";
+					$this->userdata->insert_user($post_data);
 
-				// an email should be sent to user			
-				$this->data['site_title'] = rtrim(preg_replace("(^https?://www.)", "",$general_settings->siteaddress), '/');
-				$this->data['site_logo'] = UPLOAD_LOGO_PATH.$general_settings->logoname;
-				$this->data['site_url'] = $general_settings->siteaddress;
-				$this->data['site_name'] = $general_settings->sitename;				
-				$this->data['fb_img'] = base_url('resources/images/facebook.jpg'); 
-				$this->data['fb_link'] = $general_settings->facebook_page_url; 
-				$this->data['tw_img'] = base_url('resources/images/twitter.jpg');
-				$this->data['tw_link'] = ''; 
-				$this->data['email_banner'] = base_url('resources/images/email-banner.jpg');
-				$this->data['boder'] = base_url('resources/images/boder.jpg');
+					$this->session->set_userdata('has_error', false);
+					$this->session->set_userdata('register_notification', "Thank you for registering with us. An Email has been sent your email address to get the login credentials");
+					/*
+					// an email should be sent to user			
+					$this->data['site_title'] = rtrim(preg_replace("(^https?://www.)", "",$general_settings->siteaddress), '/');
+					$this->data['site_logo'] = UPLOAD_LOGO_PATH.$general_settings->logoname;
+					$this->data['site_url'] = $general_settings->siteaddress;
+					$this->data['site_name'] = $general_settings->sitename;				
+					$this->data['fb_img'] = base_url('resources/images/facebook.jpg'); 
+					$this->data['fb_link'] = $general_settings->facebook_page_url; 
+					$this->data['tw_img'] = base_url('resources/images/twitter.jpg');
+					$this->data['tw_link'] = ''; 
+					$this->data['email_banner'] = base_url('resources/images/email-banner.jpg');
+					$this->data['boder'] = base_url('resources/images/boder.jpg');
 
-				$this->data['first_name'] = $post_data['first_name'];
-				
-				$message = $this->load->view('email_template/register', $this->data, true);
-				$mail_config = array(
-					"from" => $admin_profile->email,
-					"to" => array($post_data['email']),
-					"subject" => $general_settings->sitename.": New Registration",
-					"message" => $message
-				);
-				
-				$this->defaultdata->_send_mail($mail_config);
+					$this->data['first_name'] = $post_data['first_name'];
+					
+					$message = $this->load->view('email_template/register', $this->data, true);
+					$mail_config = array(
+						"from" => $admin_profile->email,
+						"to" => array($post_data['email']),
+						"subject" => $general_settings->sitename.": New Registration",
+						"message" => $message
+					);
+					
+					$this->defaultdata->_send_mail($mail_config);*/
+				}
 			}
 
 			redirect($this->agent->referrer());
@@ -132,7 +147,7 @@
 
 			if(!empty($user)){
 				$response['name'] = $user[0]->first_name." ".$user[0]->last_name;
-				$response['parent_id'] = $user[0]->parent_id;
+				$response['parent_id'] = $user[0]->user_id;
 				$response['status'] = true;
 			}else{
 				$response['status'] = false;
@@ -141,45 +156,48 @@
 			echo json_encode($response);
 		}
 
+		public function login(){
+			if($this->session->userdata('user_id')){
+				redirect(base_url('dashboard'));
+			}else{
+				$this->load->view('login', $this->data); 
+			}
+		}
+
 		public function process_login(){
 			$post_data = $this->input->post();
 				
 			$this->load->library('form_validation');
 
-			$this->form_validation->set_rules('email', 'Email Address', 'trim|required|valid_email');
+			$this->form_validation->set_rules('user_id', 'User Id', 'trim|required');
 			$this->form_validation->set_rules('password', 'Password', 'trim|required');
 
 			if($this->form_validation->run() == FALSE)
-			{					
-				$response['success'] = false;
-				$response['msg'] = validation_errors();
+			{	
+				$this->session->set_userdata('has_error', true);
+				$this->session->set_userdata('login_notification', validation_errors());
+
+				redirect($this->agent->referrer());
 			}else{
-				$email = $post_data['email'];
 				$given_password = $post_data['password'];
 				$encrypted_password = base64_encode(hash("sha256", $post_data['password'], True));
 
-				$user = $this->userdata->grab_user_details(array("email" => $email, "password" => $encrypted_password));
+				$user = $this->userdata->grab_user_details(array("sponsor_id" => $post_data['user_id'], "password" => $encrypted_password));
 
 				if(!empty($user)){
-					if($user[0]->status == 'N'){
-						$response['success'] = false;
-						$response['msg'] = "Sorry, Your account deactivated.";
-					}else{						
-						if($this->userdata->update_user_details(array("user_id" => $user[0]->user_id), array("last_login" => time()))){
+					if($this->userdata->update_user_details(array("sponsor_id" => $user[0]->sponsor_id), array("last_login" => time()))){
 							
-							$this->defaultdata->setFrontendLoginSession($user[0]);
+						$this->defaultdata->setFrontendLoginSession($user[0]);
 
-							$response['success'] = true;
-							$response['msg'] = "Login Successful.";
-						}						
+						redirect(base_url('dashboard'));
 					}
 				}else{
-					$response['success'] = false;
-					$response['msg'] = "Invalid Login. Please try again later.";
+					$this->session->set_userdata('has_error', true);
+					$this->session->set_userdata('login_notification', "Invalid Login. Please try again later.");
+
+					redirect($this->agent->referrer());
 				}				
 			}
-
-			echo json_encode($response);
 		}
 
 		public function hasSameEmailAddress($email){

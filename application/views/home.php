@@ -8,7 +8,7 @@
     
     <div class="home-welcome_text">
       <div class="container">
-          <h1 class="welcome-text">We Grow By Helping Others Grow !</h1>
+          <h1 class="welcome-text"><?php echo $general_settings->title;?></h1>
         </div>
     </div>
 

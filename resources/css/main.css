@@ -2,3 +2,8 @@
 	line-height: 0.5;
 	font-size: 0.8rem;
 }
+
+.form-group.required .form-control-label:before {
+  content:"* ";
+  color:red;
+}

@@ -104,14 +104,6 @@ class Defaultdata extends CI_Model {
 		
 		return $query->row();
 	}
-	public function grabCountryData($cond = array()){
-		if(!empty($cond)){
-			$this->db->where($cond);			
-		}
-		$query = $this->db->get(TABLE_COUNTRY);
-		
-		return $query->result();
-	}
 	public function grabStateData($cond = array()){
 		if(!empty($cond)){
 			$this->db->where($cond);			
@@ -155,9 +147,10 @@ class Defaultdata extends CI_Model {
 	public function unsetFrontendLoginSession()
 	{
 		$this->session->unset_userdata('user_id');
-		$this->session->unset_userdata('user_email');
-		$this->session->unset_userdata('active_coupon_code');
-		$this->session->unset_userdata('active_coupon');	
+		$this->session->unset_userdata('user_email');	
+	}
+	public function getUserId($len=6) {
+		return "ABC".mt_rand(100000, 999999);
 	}
 	public function getSha256Base64Hash($s) {
 		return base64_encode(hash("sha256", $s, True));

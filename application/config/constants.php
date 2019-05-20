@@ -87,10 +87,10 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 // User-defined global values
 switch(ENVIRONMENT){
 	case "development":
-		define('ROOT_URL', 'http://localhost/abc/');
+		define('ROOT_URL', 'http://localhost/abc_git/');
 	break;
 	default:
-		define('ROOT_URL', 'https://www.sareewali.com/');
+		define('ROOT_URL', 'https://www.abccaresolution.com/');
 	break;
 }
 

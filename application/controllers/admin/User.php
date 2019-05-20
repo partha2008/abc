@@ -243,8 +243,6 @@
 			
 			$this->form_validation->set_rules('sitename', 'Sitename', 'trim|required');
 			$this->form_validation->set_rules('siteaddress', 'Siteaddress', 'trim|required');
-			$this->form_validation->set_rules('facebook_page_url', 'Facebook Page URL', 'trim|required');
-			$this->form_validation->set_rules('gst_no', 'GST Reg No', 'trim|required');
 
 			$this->session->unset_userdata($post_data);
 			if($this->form_validation->run() == FALSE)
@@ -256,8 +254,8 @@
 				$data = array(
 					"sitename" => $post_data['sitename'],
 					"siteaddress" => $post_data['siteaddress'],
-					"facebook_page_url" => $post_data['facebook_page_url'],
-					"gst_no" => $post_data['gst_no'],
+					"notification" => $post_data['notification'],
+					"title" => $post_data['title'],
 					"date_added" => time()
 				);
 				
@@ -346,7 +344,7 @@
 				$this->data['search_key'] = '';
 			}
 
-			$user_data = $this->userdata->grab_user_details(array(), array(), $like); 
+			$user_data = $this->userdata->grab_user_details(array("parent_id !=" => 0), array(), $like); 
 			
 			//pagination settings
 			$config['base_url'] = base_url('admin/user-list');
@@ -361,7 +359,7 @@
 
 			$this->data['pagination'] = $this->pagination->create_links();
 			
-			$user_paginated_data = $this->userdata->grab_user_details(array(), array(PAGINATION_PER_PAGE, $this->data['page']), $like);			
+			$user_paginated_data = $this->userdata->grab_user_details(array("parent_id !=" => 0), array(PAGINATION_PER_PAGE, $this->data['page']), $like);			
 			
 			$this->data['user_details'] = $user_paginated_data;
 			
