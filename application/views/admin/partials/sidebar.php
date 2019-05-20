@@ -19,12 +19,7 @@
 					<a href="#"><i class="fa fa-th fa-fw"></i> Content Management<span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
 						<li>
-							<a href="<?php echo base_url('admin/term');?>"><i class="fa fa-hand-o-right fa-fw"></i> Terms & Conditions</a>
-							<a href="<?php echo base_url('admin/privacy');?>"><i class="fa fa-hand-o-right fa-fw"></i> Privacy & Policy</a>
-							<a href="<?php echo base_url('admin/return');?>"><i class="fa fa-hand-o-right fa-fw"></i> Cancellation & Returns</a>
-							<a href="<?php echo base_url('admin/shipping');?>"><i class="fa fa-hand-o-right fa-fw"></i> Shipping Policy</a>
 							<a href="<?php echo base_url('admin/about');?>"><i class="fa fa-hand-o-right fa-fw"></i> About Us</a>
-							<a href="<?php echo base_url('admin/feedback');?>"><i class="fa fa-hand-o-right fa-fw"></i> Feedback</a>
 						</li>
 					</ul>
 				</li>

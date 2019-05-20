@@ -290,10 +290,8 @@
 				$cond['mode'] = $cms;
 				$this->data['cms_data'] = $this->userdata->get_cms_content($cond);
 			}
-			if($cms == 'term'){
-				$title = "Terms & Conditions";
-			}else{
-				$title = "Privacy & Policy";
+			if($cms == 'about'){
+				$title = "About Us";
 			}
 			$this->data['title'] = $title;
 			$this->load->view('admin/cms', $this->data);
