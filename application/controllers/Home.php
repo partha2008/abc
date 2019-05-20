@@ -18,37 +18,6 @@
 		{
 			//$this->output->cache(60); // Will expire in 60 minutes
 			$this->load->view('home', $this->data); 
-		}		
-
-		public function save_user_info(){
-			$post_data = $this->input->post();
-			unset($post_data['user']['id']);
-			$post_data['user']['last_login'] = time();
-			$post_data['user']['date_added'] = time();
-
-			$user = $this->userdata->grab_user_details(array("email" =>$post_data['user']['email']));
-
-			if(empty($user)){
-				$last_id = $this->userdata->insert_user($post_data['user']);
-				if($last_id){
-					$data['user_id'] = $last_id;
-					$data['email'] = $post_data['user']['email'];
-
-					$this->defaultdata->setFrontendLoginSession((object)$data);
-
-					$response['success'] = true;
-					$response['msg'] = "You have successfully registered & logged in.";
-				}
-			}else{
-				$this->userdata->update_user_details(array("user_id" => $user[0]->user_id), array("last_login" => time()));
-
-				$this->defaultdata->setFrontendLoginSession($user[0]);
-
-				$response['success'] = true;
-				$response['msg'] = "You have logged in successfully";
-			}
-
-			echo json_encode($response);
 		}
 
 		public function register(){	
@@ -267,6 +236,10 @@
 			$user = $this->userdata->grab_user_details(array("user_id" => $this->session->userdata('user_id')));
 
 			$this->data['user_details'] = $user[0];
+			
+			$this->data['inner'] = $this->load->view('partials/dashboard_inner', $this->data, true);
+			$this->data['page_name'] = 'Dashboard';
+			$this->data['container'] = $this->load->view('partials/container', $this->data, true);
 
 			$this->load->view('dashboard', $this->data); 
 		}
@@ -278,55 +251,22 @@
 
 			$this->data['cms_data'] = $cms_data;
 
-			$this->load->library('breadcrumb');
-
-			$this->breadcrumb->add('Home', base_url());
-			$this->breadcrumb->add($cms_data->title, base_url($cms)); 
-
-			$this->data['breadcrumb'] = $this->breadcrumb->output();
-
 			$this->load->view('cms', $this->data);
 		}
 
-		public function myaccount(){			
-			$this->load->library('breadcrumb');
-
-			$this->breadcrumb->add('Home', base_url());
-			$this->breadcrumb->add('My Account', base_url('myaccount')); 
-
-			$this->data['breadcrumb'] = $this->breadcrumb->output();
-			$this->data['sidebar'] = $this->load->view('partials/sidebar', null, true);
-
+		public function myaccount(){
 			if($this->session->userdata('has_error')){
 				$user = (object)$this->session->userdata;
 				$this->data['user'] = $user;
 			}else{
 				$user = $this->userdata->grab_user_details(array("user_id" => $this->session->userdata('user_id')));
-				$user = $user[0];
-				$this->data['user'] = $user;
+				$this->data['user_details'] = $user[0];
 			}
-
-			if($user->country_id){
-				$states = $this->defaultdata->grabStateData(array("country_id" => $user->country_id));
-				$this->data['states'] = $states;
-			}
-
-			$country = $this->defaultdata->grabCountryData();
-			$this->data['country'] = $country;
+			$this->data['inner'] = $this->load->view('partials/myaccount_inner', $this->data, true);
+			$this->data['page_name'] = 'My Profile';
+			$this->data['container'] = $this->load->view('partials/container', $this->data, true);
 
 			$this->load->view('myaccount', $this->data);
-		}
-
-		public function get_state_by_country(){
-			$post_data = $this->input->post();
-
-			$states = $this->defaultdata->grabStateData(array("country_id" => $post_data['country_id']));
-			
-			if(!empty($states)){
-				foreach ($states as $state) {
-					echo '<option value="'.$state->state_id.'">'.$state->name.'</option>';
-				}
-			}
 		}
 
 		public function update_account(){
@@ -372,107 +312,6 @@
 
 				$this->session->set_userdata('has_error', false);
 				$this->session->set_userdata('myaccount_notification', "Your account updated successfully");
-			}
-			redirect($this->agent->referrer());
-		}
-
-		public function contact(){
-			$this->load->library('breadcrumb');
-			$this->breadcrumb->add('Home', base_url());
-			$this->breadcrumb->add('Contact Us', base_url('contact')); 
-			$this->data['breadcrumb'] = $this->breadcrumb->output();
-
-			$this->load->view('contact', $this->data);
-		}
-
-		public function add_contact(){
-			$post_data = $this->input->post();
-			$general_settings = $this->data['general_settings'];
-			$admin_profile = $this->data['admin_profile'];
-
-			$this->load->library('form_validation');
-			
-			$this->form_validation->set_rules('fullname', 'Full Name', 'trim|required');
-			$this->form_validation->set_rules('phonenumber', 'Phone Number', 'trim|required|numeric|exact_length[10]');
-			$this->form_validation->set_rules('email', 'Email Address', 'trim|required|valid_email');
-			$this->form_validation->set_rules('message', 'Message', 'trim|required');
-			
-			$this->session->unset_userdata($post_data);
-			if($this->form_validation->run() == FALSE)
-			{	
-				$this->session->set_userdata($post_data);
-				$this->session->set_userdata('has_error', true);
-				$this->session->set_userdata('contact_notification', validation_errors());
-			}else{
-				// send mail to admin		
-				$this->data['site_title'] = rtrim(preg_replace("(^https?://www.)", "",$general_settings->siteaddress), '/');
-				$this->data['site_logo'] = UPLOAD_LOGO_PATH.$general_settings->logoname;
-				$this->data['site_url'] = $general_settings->siteaddress;
-				$this->data['site_name'] = $general_settings->sitename;					
-				$this->data['fb_img'] = base_url('resources/images/facebook.jpg'); 
-				$this->data['fb_link'] = $general_settings->facebook_page_url; 
-				$this->data['tw_img'] = base_url('resources/images/twitter.jpg');
-				$this->data['tw_link'] = ''; 
-				$this->data['email_banner'] = base_url('resources/images/email-banner.jpg');
-				$this->data['boder'] = base_url('resources/images/boder.jpg');				
-				
-				$this->data['first_name'] = ucfirst($admin_profile->username);
-				$this->data['fullname'] = $post_data['fullname'];
-				$this->data['phonenumber'] = $post_data['phonenumber'];
-				$this->data['email'] = $post_data['email'];
-				$this->data['message'] = $post_data['message'];
-				
-				$message = $this->load->view('email_template/contact', $this->data, true);
-				$mail_config = array(
-					"from" => $admin_profile->email,
-					"to" => array($admin_profile->email),
-					"subject" => $general_settings->sitename.": Contact Us",
-					"message" => $message
-				);
-				
-				$this->defaultdata->_send_mail($mail_config);
-
-				$this->session->set_userdata('has_error', false);
-				$this->session->set_userdata('contact_notification', "Your message has been received. We will catch you shortly. Please stay in touch.");
-			}
-			redirect($this->agent->referrer());
-		}
-
-		public function changepassword(){
-			$this->load->library('breadcrumb');
-
-			$this->breadcrumb->add('Home', base_url());
-			$this->breadcrumb->add('Change Password', base_url('changepassword')); 
-
-			$this->data['breadcrumb'] = $this->breadcrumb->output();
-			$this->data['sidebar'] = $this->load->view('partials/sidebar', null, true);
-			
-			$this->load->view('changepassword', $this->data);
-		}
-
-		public function update_password(){
-			$post_data = $this->input->post();
-				
-			$this->load->library('form_validation');
-
-			$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[6]|max_length[20]');
-			$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|matches[password]');
-			
-			$this->session->unset_userdata($post_data);
-			if($this->form_validation->run() == FALSE)
-			{	
-				$this->session->set_userdata($post_data);
-				$this->session->set_userdata('has_error', true);
-				$this->session->set_userdata('password_notification', validation_errors());
-			}else{
-				unset($post_data['confirm_password']);
-				$post_data['password'] = base64_encode(hash("sha256", $post_data['password'], True));
-				$post_data['date_modified'] = time();
-				
-				$this->userdata->update_user_details(array("user_id" => $this->session->userdata('user_id')), $post_data);
-
-				$this->session->set_userdata('has_error', false);
-				$this->session->set_userdata('password_notification', "Your password updated successfully");
 			}
 			redirect($this->agent->referrer());
 		}
