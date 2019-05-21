@@ -112,12 +112,6 @@
 						"subject" => $general_settings->sitename.": New Registration",
 						"message" => $message
 					);
-
-					echo "<pre>";
-					print_r($mail_config);
-
-					echo $message;
-					die();
 					
 					$this->defaultdata->_send_mail($mail_config);
 				}
