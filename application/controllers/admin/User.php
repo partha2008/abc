@@ -363,29 +363,14 @@
 			
 			$this->load->view('admin/user_list', $this->data);
 		}
-
-		public function get_state_by_country(){
-			$post_data = $this->input->post();
-
-			$states = $this->defaultdata->grabStateData(array("country_id" => $post_data['country_id']));
-			
-			if(!empty($states)){
-				foreach ($states as $state) {
-					echo '<option value="'.$state->state_id.'">'.$state->name.'</option>';
-				}
-			}
-		}
 		
 		public function user_add(){				
 			if($this->session->userdata('has_error')){
 				$user_details = (object)$this->session->userdata;
 				$this->data['user_details'] = $user_details;
-
-				if($user_details->country_id){
-					$states = $this->defaultdata->grabStateData(array("country_id" => $user_details->country_id));
-					$this->data['states'] = $states;
-				}
 			}
+			$this->data['states'] = $this->defaultdata->grabStateData();
+			$this->data['sponsors'] = $this->userdata->grab_user_details(array("status" => "Y"));
 			
 			$this->load->view('admin/user_add', $this->data);
 		}
@@ -399,12 +384,15 @@
 			$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
 			$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[6]|max_length[20]');
 			$this->form_validation->set_rules('email', 'E-mail', 'trim|required|valid_email|is_unique['.TABLE_USER.'.email]');
-			$this->form_validation->set_rules('phone', 'Phone', 'trim|required|is_unique['.TABLE_USER.'.phone]');
-			$this->form_validation->set_rules('address1', 'Address1', 'trim|required');
+			$this->form_validation->set_rules('mobile_no', 'Mobile No', 'trim|required'.$is_unique1);
+			$this->form_validation->set_rules('address', 'Address', 'trim|required');
 			$this->form_validation->set_rules('city', 'City', 'trim|required');
+			$this->form_validation->set_rules('district', 'District', 'trim|required');
 			$this->form_validation->set_rules('post_code', 'Post Code', 'trim|required');
-			$this->form_validation->set_rules('country_id', 'Country', 'trim|required');
 			$this->form_validation->set_rules('state_id', 'State', 'trim|required');
+			$this->form_validation->set_rules('nominee_info', 'Nominee Information', 'trim|required');
+			$this->form_validation->set_rules('nominee_relation', 'Nominee Relation', 'trim|required');
+			$this->form_validation->set_rules('about_me', 'About Me', 'trim|required');	
 			
 			$this->session->unset_userdata($post_data);
 			if($this->form_validation->run() == FALSE)
@@ -415,14 +403,26 @@
 				
 				redirect($this->agent->referrer());
 			}else{
-				$post_data['date_added'] = time();
-				$post_data['password'] = base64_encode(hash("sha256", $post_data['password'], True));
+				$active_users = $this->userdata->grab_user_details(array("parent_id" => $post_data['user_id'], "status" => "Y"));
+				$max_count = $this->config->item('site_info')['max_active_user'];
+				if((count($active_users) > $max_count) && ($post_data['status'] == 'Y')){
+					$this->session->set_userdata($post_data);
+				
+					$this->session->set_userdata('has_error', true);
+					$this->session->set_userdata('useredit_notification', "Active users with same level can not be more than ".$max_count);
 
-				$this->userdata->insert_user($post_data);
-				
-				$this->session->set_userdata('has_error', false);
-				
-				redirect(base_url('admin/user-list'));
+					redirect($this->agent->referrer());
+				}else{
+					$post_data['sponsor_id'] = $this->defaultdata->getUserId();
+					$post_data['date_added'] = time();
+					$post_data['password'] = base64_encode(hash("sha256", $post_data['password'], True));
+
+					$this->userdata->insert_user($post_data);
+					
+					$this->session->set_userdata('has_error', false);
+					
+					redirect(base_url('admin/user-list'));
+				}
 			}
 		}
 		
@@ -436,6 +436,7 @@
 				$user_details = (object)$this->session->userdata;
 			}
 			$this->data['user_details'] = $user_details;
+			$this->data['states'] = $this->defaultdata->grabStateData();
 			
 			$this->load->view('admin/user_edit', $this->data);
 		}
@@ -451,8 +452,8 @@
 				$is_unique =  '';
 			}
 
-			if($post_data['phone'] != $post_data['old_phone']){	
-				$is_unique1 =  '|is_unique['.TABLE_USER.'.phone]';	
+			if($post_data['mobile_no'] != $post_data['old_mobile_no']){	
+				$is_unique1 =  '|is_unique['.TABLE_USER.'.mobile_no]';	
 			}else{
 				$is_unique1 =  '';
 			}
@@ -463,12 +464,15 @@
 				$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[6]|max_length[20]');
 			}
 			$this->form_validation->set_rules('email', 'E-mail', 'trim|required|valid_email'.$is_unique);
-			$this->form_validation->set_rules('phone', 'Phone', 'trim|required'.$is_unique1);
-			$this->form_validation->set_rules('address1', 'Address1', 'trim|required');
+			$this->form_validation->set_rules('mobile_no', 'Mobile No', 'trim|required'.$is_unique1);
+			$this->form_validation->set_rules('address', 'Address', 'trim|required');
 			$this->form_validation->set_rules('city', 'City', 'trim|required');
+			$this->form_validation->set_rules('district', 'District', 'trim|required');
 			$this->form_validation->set_rules('post_code', 'Post Code', 'trim|required');
-			$this->form_validation->set_rules('country_id', 'Country', 'trim|required');
-			$this->form_validation->set_rules('state_id', 'State', 'trim|required');			
+			$this->form_validation->set_rules('state_id', 'State', 'trim|required');
+			$this->form_validation->set_rules('nominee_info', 'Nominee Information', 'trim|required');
+			$this->form_validation->set_rules('nominee_relation', 'Nominee Relation', 'trim|required');
+			$this->form_validation->set_rules('about_me', 'About Me', 'trim|required');			
 			
 			$this->session->unset_userdata($post_data);
 			if($this->form_validation->run() == FALSE)
@@ -479,23 +483,34 @@
 				$this->session->set_userdata('useredit_notification', validation_errors());
 				
 				redirect($this->agent->referrer());
-			}else{
-				$cond['user_id'] = $post_data['user_id'];
-
-				if($post_data['password']){
-					$post_data['password'] = base64_encode(hash("sha256", $post_data['password'], True));
-				}else{
-					unset($post_data['password']);
-				}
-				unset($post_data['user_id']);
-				unset($post_data['old_email']);
-				unset($post_data['old_phone']);
-
-				$post_data['date_modified'] = time();
-
-				$this->userdata->update_user_details($cond, $post_data);
+			}else{				
+				$active_users = $this->userdata->grab_user_details(array("parent_id" => $post_data['user_id'], "status" => "Y"));
+				$max_count = $this->config->item('site_info')['max_active_user'];
+				if((count($active_users) > $max_count) && ($post_data['status'] == 'Y')){
+					$this->session->set_userdata($post_data);
 				
-				redirect(base_url('admin/user-list'));
+					$this->session->set_userdata('has_error', true);
+					$this->session->set_userdata('useredit_notification', "Active users with same level can not be more than ".$max_count);
+
+					redirect($this->agent->referrer());
+				}else{
+					$cond['user_id'] = $post_data['user_id'];
+
+					if($post_data['password']){
+						$post_data['password'] = base64_encode(hash("sha256", $post_data['password'], True));
+					}else{
+						unset($post_data['password']);
+					}
+					unset($post_data['user_id']);
+					unset($post_data['old_email']);
+					unset($post_data['old_mobile_no']);
+
+					$post_data['date_modified'] = time();
+
+					$this->userdata->update_user_details($cond, $post_data);
+					
+					redirect(base_url('admin/user-list'));
+				}				
 			}
 		}
 		
@@ -511,106 +526,6 @@
 		{
 			$this->defaultdata->unsetLoginSession();
 			redirect(base_url('admin'));
-		}
-
-		public function newsletter(){	
-			$like = array();
-			parse_str($_SERVER['QUERY_STRING'], $like);
-			unset($like['page']);
-			
-			$search_key = $this->input->get('email');
-			if(isset($search_key) && $search_key){
-				$this->data['search_key'] = $search_key;
-			}else{
-				$this->data['search_key'] = '';
-			}
-			
-			
-			$list = $this->userdata->get_newsletter();
-			
-			//pagination settings
-			$config['base_url'] = base_url('admin/newsletter');
-			$config['total_rows'] = count($list);
-			
-			$pagination = $this->config->item('pagination');
-			
-			$pagination = array_merge($config, $pagination);
-
-			$this->pagination->initialize($pagination);
-			$this->data['page'] = ($this->input->get('page')) ? $this->input->get('page') : 0;		
-
-			$this->data['pagination'] = $this->pagination->create_links();
-			
-			$list = $this->userdata->get_newsletter(array(), array(PAGINATION_PER_PAGE, $this->data['page']), $like);			
-			
-			$this->data['news'] = $list;
-			
-			$this->load->view('admin/newsletter', $this->data);
-		}
-
-		public function newsletter_edit($newsletter_id, $status){
-			if($this->userdata->update_newsletter(array("newsletter_id" => $newsletter_id), array("status" => $status))){
-				redirect(base_url('admin/newsletter'));
-			}			
-		}
-
-		public function ads(){
-			$ads_section = $this->adsdata->grab_ads_section();
-			if(!empty($ads_section)){
-				foreach ($ads_section as $value) {
-					$value->ads = $this->adsdata->grab_ads(array("parent_id" => $value->ads_section_id));
-				}
-			}
-			$this->data['ads_section'] = $ads_section;
-
-			$this->load->view('admin/ads', $this->data);
-		}
-
-		public function update_ads(){
-			$post_data = $this->input->post();
-
-			if(isset($post_data['section'])){
-				$status = 'Y';				
-			}else{
-				$status = 'N';
-			}
-			$this->adsdata->update_ads_section(array("ads_section_id" => $post_data['ads_section_id']), array("status" => $status));
-
-			$uploaded_files = $_FILES;
-			if(!empty($uploaded_files)){
-				$this->load->library('image_lib');
-				foreach ($uploaded_files as $key => $value) {
-					if($value['error'] == 0){
-						$ads = $this->adsdata->grab_ads(array("sort_order" => $key+1, "parent_id" => $post_data['ads_section_id']));
-
-						// remove previous image
-						if($ads[0]->image_path && file_exists(UPLOAD_RELATIVE_ADS_PATH.$ads[0]->image_path)){							
-							if(unlink(UPLOAD_RELATIVE_ADS_PATH.$ads[0]->image_path)){
-								$file_ext = strtolower(pathinfo($ads[0]->image_path, PATHINFO_EXTENSION));
-								$file_name = basename($ads[0]->image_path, ".".$file_ext);
-
-								if(file_exists(UPLOAD_RELATIVE_ADS_PATH.$file_name.'_thumb.'.$file_ext)){
-									if(unlink(UPLOAD_RELATIVE_ADS_PATH.$file_name.'_thumb.'.$file_ext)){
-										$this->adsdata->delete_ads(array("sort_order" => $key+1, "parent_id" => $post_data['ads_section_id']));
-									}
-								}
-							}
-						}
-
-						$file_ext = strtolower(pathinfo($value['name'], PATHINFO_EXTENSION));
-						$new_file_only_name = md5(time().'_'.$key);
-						$new_file_name = $new_file_only_name.'.'.$file_ext;
-						if(move_uploaded_file($value['tmp_name'], UPLOAD_RELATIVE_ADS_PATH.$new_file_name)){
-
-							$this->defaultdata->create_thumb(UPLOAD_RELATIVE_ADS_PATH.$new_file_name, '_thumb', $post_data['width'], $post_data['height']);
-
-							$this->adsdata->insert_ads(array("image_path" => $new_file_name, "parent_id" => $post_data['ads_section_id'], "sort_order" => $key+1));
-						}
-					}
-				}
-			}
-
-			redirect(base_url('admin/ads'));
 		}
 	}
 ?>

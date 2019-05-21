@@ -7,6 +7,7 @@
 		"smtp_email" => "",
 		"smtp_password" => "",
 		"max_register_user" => 10,
+		"max_active_user" => 4,
 		"google_captcha_site_key" => "6LcSjaQUAAAAAAmNa_3MEmKWFdycM-RQWeMAJOSb",
 		"google_captcha_secret_key" => "6LcSjaQUAAAAABkotuBc7mGVGveQND2a_hlOmAM-"
 	);

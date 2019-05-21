@@ -32,6 +32,10 @@
 								<div class="col-lg-12">
 									<form action="<?php echo base_url('admin/user/edit_user');?>" method="POST" role="form" novalidate>
 										<div class="form-group">
+											<label class="control-label">Sponsor Id <span style="color:#a94442;">*</span></label>
+											<input readonly class="form-control" type="text" name="sponsor_id" placeholder="Enter Sponsor Id" value="<?php if(isset($user_details->sponsor_id) && $user_details->sponsor_id){echo $user_details->sponsor_id;}?>">
+										</div>
+										<div class="form-group">
 											<label class="control-label">First Name <span style="color:#a94442;">*</span></label>
 											<input class="form-control" type="text" name="first_name" placeholder="Enter First Name" value="<?php if(isset($user_details->first_name) && $user_details->first_name){echo $user_details->first_name;}?>">
 										</div>
@@ -48,39 +52,24 @@
 											<input class="form-control" type="email" name="email" placeholder="Enter Email" value="<?php if(isset($user_details->email) && $user_details->email){echo $user_details->email;}?>">
 										</div>
 										<div class="form-group">
-											<label class="control-label">Phone <span style="color:#a94442;">*</span></label>
-											<input class="form-control" type="text" name="phone" placeholder="Enter Phone" value="<?php if(isset($user_details->phone) && $user_details->phone){echo $user_details->phone;}?>">
+											<label class="control-label">Mobile No <span style="color:#a94442;">*</span></label>
+											<input class="form-control" type="text" name="mobile_no" placeholder="Enter Phone" value="<?php if(isset($user_details->mobile_no) && $user_details->mobile_no){echo $user_details->mobile_no;}?>">
 										</div>
 										<div class="form-group">
-											<label class="control-label">Address1 <span style="color:#a94442;">*</span></label>
-											<textarea class="form-control" name="address1" placeholder="Enter Address1"><?php if(isset($user_details->address1) && $user_details->address1){echo $user_details->address1;}?></textarea>
-										</div>
-										<div class="form-group">
-											<label class="control-label">Address2</label>
-											<textarea class="form-control" name="address2" placeholder="Enter Address2"><?php if(isset($user_details->address2) && $user_details->address2){echo $user_details->address2;}?></textarea>
+											<label class="control-label">Address <span style="color:#a94442;">*</span></label>
+											<textarea class="form-control" name="address" placeholder="Enter Address"><?php if(isset($user_details->address) && $user_details->address){echo $user_details->address;}?></textarea>
 										</div>
 										<div class="form-group">
 											<label class="control-label">City <span style="color:#a94442;">*</span></label>
 											<input class="form-control" type="text" name="city" placeholder="Enter City" value="<?php if(isset($user_details->city) && $user_details->city){echo $user_details->city;}?>">
 										</div>
 										<div class="form-group">
-											<label class="control-label">Post Code <span style="color:#a94442;">*</span></label>
-											<input class="form-control" type="text" name="post_code" placeholder="Enter Post Code" value="<?php if(isset($user_details->post_code) && $user_details->post_code){echo $user_details->post_code;}?>">
+											<label class="control-label">District <span style="color:#a94442;">*</span></label>
+											<input class="form-control" type="text" name="district" placeholder="Enter District" value="<?php if(isset($user_details->district) && $user_details->district){echo $user_details->district;}?>">
 										</div>
 										<div class="form-group">
-											<label class="control-label">Country <span style="color:#a94442;">*</span></label>
-											<select id="country_id" name="country_id" class="form-control">
-												<option value="">Select Country</option>
-												<?php
-													if(!empty($country)){
-														foreach ($country as $value) {
-												?>
-												<option value="<?php echo $value->country_id;?>" <?php if(isset($user_details) && ($value->country_id == $user_details->country_id)){echo 'selected';}?>><?php echo $value->name;?></option>
-												<?php
-														}
-													}
-												?>
-											</select>
+											<label class="control-label">Post Code <span style="color:#a94442;">*</span></label>
+											<input class="form-control" type="text" name="post_code" placeholder="Enter Post Code" value="<?php if(isset($user_details->post_code) && $user_details->post_code){echo $user_details->post_code;}?>">
 										</div>
 										<div class="form-group">
 											<label class="control-label">State <span style="color:#a94442;">*</span></label>
@@ -97,6 +86,18 @@
 											</select>
 										</div>
 										<div class="form-group">
+											<label class="control-label">Nominee Information <span style="color:#a94442;">*</span></label>
+											<input class="form-control" type="text" name="nominee_info" placeholder="Enter Nominee Information" value="<?php if(isset($user_details->nominee_info) && $user_details->nominee_info){echo $user_details->nominee_info;}?>">
+										</div>
+										<div class="form-group">
+											<label class="control-label">Nominee Relation <span style="color:#a94442;">*</span></label>
+											<input class="form-control" type="text" name="nominee_relation" placeholder="Enter Nominee Relation" value="<?php if(isset($user_details->nominee_relation) && $user_details->nominee_relation){echo $user_details->nominee_relation;}?>">
+										</div>
+										<div class="form-group">
+											<label class="control-label">About Me <span style="color:#a94442;">*</span></label>
+											<textarea class="form-control" name="about_me" placeholder="Enter About Me"><?php if(isset($user_details->about_me) && $user_details->about_me){echo $user_details->about_me;}?></textarea>
+										</div>
+										<div class="form-group">
 											<label class="control-label">Status</label>
 											<label class="radio-inline">
 												<input type="radio" name="status" value="Y" <?php if(isset($user_details->status)){if($user_details->status == "Y"){echo 'checked';}}else{echo 'checked';}?>>Active
@@ -106,8 +107,9 @@
 											</label>
 										</div>
 										<input type="hidden" name="old_email" value="<?php echo $user_details->email;?>">
-										<input type="hidden" name="old_phone" value="<?php echo $user_details->phone;?>">
+										<input type="hidden" name="old_mobile_no" value="<?php echo $user_details->mobile_no;?>">
 										<input type="hidden" name="user_id" value="<?php echo $user_details->user_id;?>">
+										<input type="hidden" name="parent_id" value="<?php echo $user_details->parent_id;?>">
 										<button type="submit" class="btn btn-primary">Save Changes</button>
 									</form>
 								</div>
