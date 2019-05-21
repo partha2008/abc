@@ -99,7 +99,7 @@
 					$this->data['site_logo'] = UPLOAD_LOGO_PATH.$general_settings->logoname;
 					$this->data['site_url'] = $general_settings->siteaddress;
 					$this->data['site_title'] = $general_settings->sitename;
-					$this->data['user_id'] = $post_data['email'];
+					$this->data['user_id'] = $post_data['sponsor_id'];
 					$this->data['password'] = $given_password;
 					
 					$message = $this->load->view('email_template/register', $this->data, true);
@@ -222,7 +222,7 @@
 					$this->data['site_logo'] = UPLOAD_LOGO_PATH.$general_settings->logoname;
 					$this->data['site_url'] = $general_settings->siteaddress;
 					$this->data['site_title'] = $general_settings->sitename;
-					$this->data['user_id'] = $post_data['email'];
+					$this->data['user_id'] = $user[0]->sponsor_id;
 					$this->data['password'] = $given_password;
 					
 					$message = $this->load->view('email_template/forget', $this->data, true);

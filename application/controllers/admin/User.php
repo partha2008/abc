@@ -116,19 +116,10 @@
 					$this->userdata->update_backend_user_details(array("email" => $email), array("password" => $this->defaultdata->getSha256Base64Hash($password), "original_password" => $password));
 					
 					// Send mail to admin for password recovery
-					$this->data['site_title'] = rtrim(preg_replace("(^https?://www.)", "",$general_settings->siteaddress), '/');
 					$this->data['site_logo'] = UPLOAD_LOGO_PATH.$general_settings->logoname;
 					$this->data['site_url'] = $general_settings->siteaddress;
-					$this->data['site_name'] = $general_settings->sitename;					
-					$this->data['fb_img'] = base_url('assets/images/facebook.jpg'); 
-					$this->data['fb_link'] = $general_settings->facebook_page_url; 
-					$this->data['tw_img'] = base_url('assets/images/twitter.jpg');
-					$this->data['tw_link'] = ''; 
-					$this->data['email_banner'] = base_url('resources/images/email-banner.jpg');
-					$this->data['boder'] = base_url('assets/images/boder.jpg');
-
-					$this->data['first_name'] = ucfirst($user_data[0]->username);
-					$this->data['email'] = $email;
+					$this->data['site_title'] = $general_settings->sitename;
+					$this->data['user_id'] = $user_data[0]->username;
 					$this->data['password'] = $password;
 					
 					$message = $this->load->view('email_template/forget', $this->data, true);
