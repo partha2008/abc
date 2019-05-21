@@ -121,6 +121,7 @@
 					$this->data['site_title'] = $general_settings->sitename;
 					$this->data['user_id'] = $user_data[0]->username;
 					$this->data['password'] = $password;
+					$this->data['user'] = 'Admin';
 					
 					$message = $this->load->view('email_template/forget', $this->data, true);
 					$mail_config = array(

@@ -86,6 +86,8 @@
 					unset($post_data['confirm_password']);
 					unset($post_data['sponsor_id']);
 
+					$given_password = $post_data['password'];
+
 					$post_data['sponsor_id'] = $this->defaultdata->getUserId();
 					$post_data['password'] = base64_encode(hash("sha256", $post_data['password'], True));
 					$post_data['date_added'] = time();
@@ -101,6 +103,7 @@
 					$this->data['site_title'] = $general_settings->sitename;
 					$this->data['user_id'] = $post_data['sponsor_id'];
 					$this->data['password'] = $given_password;
+					$this->data['user'] = $post_data['first_name'];
 					
 					$message = $this->load->view('email_template/register', $this->data, true);
 					$mail_config = array(
@@ -109,6 +112,12 @@
 						"subject" => $general_settings->sitename.": New Registration",
 						"message" => $message
 					);
+
+					echo "<pre>";
+					print_r($mail_config);
+
+					echo $message;
+					die();
 					
 					$this->defaultdata->_send_mail($mail_config);
 				}
@@ -224,6 +233,7 @@
 					$this->data['site_title'] = $general_settings->sitename;
 					$this->data['user_id'] = $user[0]->sponsor_id;
 					$this->data['password'] = $given_password;
+					$this->data['user'] = $user[0]->first_name;
 					
 					$message = $this->load->view('email_template/forget', $this->data, true);
 					$mail_config = array(
