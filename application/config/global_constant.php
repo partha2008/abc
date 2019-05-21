@@ -51,7 +51,7 @@
 	// Ends
 	
 	// SMTP configuration
-	$config['smtp']['protocol'] = "sendmail";
+	$config['smtp']['protocol'] = "smtp";
 	$config['smtp']['smtp_host'] = "localhost";
 	$config['smtp']['smtp_port'] = "25";
 	$config['smtp']['smtp_user'] = ""; 
