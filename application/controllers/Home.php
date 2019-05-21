@@ -94,20 +94,13 @@
 
 					$this->session->set_userdata('has_error', false);
 					$this->session->set_userdata('register_notification', "Thank you for registering with us. An Email has been sent your email address to get the login credentials");
-					/*
+					
 					// an email should be sent to user			
-					$this->data['site_title'] = rtrim(preg_replace("(^https?://www.)", "",$general_settings->siteaddress), '/');
 					$this->data['site_logo'] = UPLOAD_LOGO_PATH.$general_settings->logoname;
 					$this->data['site_url'] = $general_settings->siteaddress;
-					$this->data['site_name'] = $general_settings->sitename;				
-					$this->data['fb_img'] = base_url('resources/images/facebook.jpg'); 
-					$this->data['fb_link'] = $general_settings->facebook_page_url; 
-					$this->data['tw_img'] = base_url('resources/images/twitter.jpg');
-					$this->data['tw_link'] = ''; 
-					$this->data['email_banner'] = base_url('resources/images/email-banner.jpg');
-					$this->data['boder'] = base_url('resources/images/boder.jpg');
-
-					$this->data['first_name'] = $post_data['first_name'];
+					$this->data['site_title'] = $general_settings->sitename;
+					$this->data['user_id'] = $post_data['email'];
+					$this->data['password'] = $given_password;
 					
 					$message = $this->load->view('email_template/register', $this->data, true);
 					$mail_config = array(
@@ -117,7 +110,7 @@
 						"message" => $message
 					);
 					
-					$this->defaultdata->_send_mail($mail_config);*/
+					$this->defaultdata->_send_mail($mail_config);
 				}
 			}
 
@@ -224,21 +217,12 @@
 					$this->session->set_userdata('has_error', false);
 					$this->session->set_userdata('forget_notification', "You have successfully reset your password. A new password generated & sent to your given email address. Please check your inbox to get your login credential.");
 
-					/*
-					// an email should be sent to user			
-					$this->data['site_title'] = rtrim(preg_replace("(^https?://www.)", "",$general_settings->siteaddress), '/');
+					
+					// an email should be sent to user	
 					$this->data['site_logo'] = UPLOAD_LOGO_PATH.$general_settings->logoname;
 					$this->data['site_url'] = $general_settings->siteaddress;
-					$this->data['site_name'] = $general_settings->sitename;					
-					$this->data['fb_img'] = base_url('resources/images/facebook.jpg'); 
-					$this->data['fb_link'] = $general_settings->facebook_page_url; 
-					$this->data['tw_img'] = base_url('resources/images/twitter.jpg');
-					$this->data['tw_link'] = ''; 
-					$this->data['email_banner'] = base_url('resources/images/email-banner.jpg');
-					$this->data['boder'] = base_url('resources/images/boder.jpg');
-
-					$this->data['first_name'] = $user[0]->first_name;
-					$this->data['email'] = $post_data['email'];
+					$this->data['site_title'] = $general_settings->sitename;
+					$this->data['user_id'] = $post_data['email'];
 					$this->data['password'] = $given_password;
 					
 					$message = $this->load->view('email_template/forget', $this->data, true);
@@ -249,7 +233,7 @@
 						"message" => $message
 					);
 					
-					$this->defaultdata->_send_mail($mail_config);*/
+					$this->defaultdata->_send_mail($mail_config);
 				}
 			}
 

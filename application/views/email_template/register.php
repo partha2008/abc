@@ -1,75 +1,67 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title><?php echo $site_name;?></title>
-<style>
-    @import url(http://fonts.googleapis.com/css?family=Merienda);
-   /* All your usual CSS here */
-</style>
-</head>
-
-<body style="width:100%; padding:0px; margin:0px;  font-family:Helvetica, Arial, Verdana, Trebuchet MS; ">
-<div style=" width:745px; max-width:98%; padding:0px; margin:0 auto; background:#ffffff; height:auto; -webkit-box-shadow: 0px 5px 16px 0px rgba(0, 0, 0, 0.11);
--moz-box-shadow:0px 5px 16px 0px rgba(0, 0, 0, 0.11); box-shadow:0px 5px 16px 0px rgba(0, 0, 0, 0.11);">
-<div style=" width:100%; margin:0px; padding:0px; text-align:center; clear:both;"><img src="<?php echo $site_logo;?>" alt="logo" style="max-width:100%; height:auto;" /></div>
-
-
-<!------content------>
-<div style=" display:block; max-width:80%; clear:both; padding:15px 0px 0px 0px; margin:0px auto;">
-<h1 style="width:100%; padding:0px 0px 30px 0px; margin:0px; color:#e4097f; font-size:30px; font-weight:bold; clear:both;">Welcome, <?php echo $first_name;?>!</h1>
-<h2  style="width:100%; padding:0px 0px 20px 0px; margin:0px; color:#615e5e; font-size:20px; font-weight:normal; clear:both;">Thank you for signing up with <?php echo $site_title;?>. We produce high quality saree that you can.</h2>
-<div style="clear:both"></div>
-
-<div style="width:100%; padding:20px 0; margin:0px; text-align:center; clear:both;">
-<a href="<?php echo $site_url;?>" class="button button--green" target="_blank" style="-webkit-text-size-adjust: none; background: #22BC66; border-color: #22bc66; border-radius: 3px; border-style: solid; border-width: 10px 18px; box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16); box-sizing: border-box; color: #FFF; display: inline-block; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; text-decoration: none;">Visit Our Site </a>
+<div class="rcmBody" style="background: #F2F2F2">
+    <div style="padding: 0px; background: #F2F2F2">
+        <table style="margin: 0px auto" border="0" cellpadding="0" cellspacing="0" width="100%" align="center">
+            <tbody>
+            <tr>
+                <td valign="top" style="padding: 40px 20px">
+                    <table cellpadding="0" cellspacing="0" width="90%" style="margin: 0px auto">
+                        <tbody>
+                        <tr>
+                            <td valign="top" bgcolor="#FFFFFF" style="border: 1px solid #dadada; padding: 30px 30px 20px">
+                                <div style="font-family: Lucida Grande,Lucida Sans,Lucida Sans Unicode,Arial,Helvetica,Verdana,sans-serif; font-size: 14px; line-height: 1.5em; font-weight: normal; color: #222222">
+                                    <?php echo $user;?>,
+									<div style="padding: 10px 0px;width:100%;text-align:center;">
+										<a href="<?php echo $site_url;?>">
+											<img style="max-width:100%;height:auto;" src="<?php echo $site_logo;?>" border="0" alt="Logo">
+										</a>
+									</div>
+									Here is your login details: 
+                                    <div style="padding: 10px 0px">                                        
+										<div style="border: 1px solid #F2F2F2; border-left: none">
+                                            <table cellpadding="0" cellspacing="0" width="100%" bgcolor="#FFFFFF" style="box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.1); -moz-box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.1); -webkit-box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.1)">
+                                                <tbody>
+                                                <tr>
+                                                    <td width="2" bgcolor="#a82700"></td>
+                                                    <td>
+                                                        <table cellpadding="0" cellspacing="0" width="100%" style="padding: 10px 20px">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td align="left" style="padding: 10px 5px 10px 0px" width="105" valign="top">
+                                                                    <div style="font-family: Lucida Grande,Lucida Sans,Lucida Sans Unicode,Arial,Helvetica,Verdana,sans-serif; font-size: 14px">
+                                                                        <span style="color: #999999; font-size: 14px; font-weight:bold;">
+																			<table class="tbl_msg_body_content" cellpadding="2" cellspacing="2" width="100%">
+																				<tr>
+																					<td style="color: #353535;width:30%;">User ID: </td>
+																					<td style="color: #999999;width:70%;"><?php echo $user_id;?></td>
+																				</tr>
+																				<tr>
+																					<td style="vertical-align:top;color: #353535;width:30%;">Password: </td>
+																					<td style="color: #999999;width:70%;"><?php echo $password;?></td>
+																				</tr>
+																			</table>
+																		</span>
+																	</div>
+																</td>
+															</tr>
+															</tbody>
+														</table>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>										
+										
+										<div style="padding-top: 20px;">Thanks & Regards, </div>
+										<div style="font-family: Lucida Grande,Lucida Sans,Lucida Sans Unicode,Arial,Helvetica,Verdana,sans-serif; font-size: 14px; line-height: 1.5em; font-weight: normal; color: #222222;padding-top:10px;"><?php echo $site_title;?></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
-
-
-</div>
-
-<!------content---[end]--->
-
-
-
-
-
-<div style="clear:both"></div>
-
-<div style="clear:both"></div>
-<div style=" width:100%; display:block;max-width:80%; clear:both; padding:55px 0px 32px 0px; margin:0 auto; background:url(<?php echo $boder;?>) no-repeat top center;">
-<h2  style="width:100%; padding:0px 0px 55px 0px; margin:0px; color:#615e5e; font-size:16px; font-weight:normal; text-align:center; clear:both;">Hope you enjoyed with us.</h2>
-
-<div style="clear:both"></div>
-</div>
-<div style="clear:both"></div>
-<div style="width:100%; padding:0px 0px 30px 0px; margin:0; border:none; outline:none; text-align:center; max-width:100%">
-  <img src="<?php echo $email_banner;?>" alt="banner" style="max-width:100%; height:auto;" /></div>
-  
-<div style="clear:both"></div>
-<div style=" width:100%; display:block; clear:both; padding:0px 0px 32px 0px; margin:0 auto;">
-<h1 style="width:100%; padding:0px 0px 20px 0px; margin:0px; color:#e4097f; font-size:30px; font-weight:bold; clear:both; text-align:center; text-transform:uppercase; font-weight:bold;">
-FOLLOW US</h1>
-<div style="width:100%; max-width:100%; display:block; padding:0px 0px 0px 0px; margin:0px; clear:both;">
-<a href="<?php echo $fb_link;?>" style=" width:48%; background-size:contain; height:93px; background: url(<?php echo $fb_img;?>) no-repeat left top #3b5998; float:left; text-decoration:none;"><span style=" display:block; padding:22px 0px 0px 154px; padding-left:40%; 
-margin:0px;  font-size:22px; color:#ffffff; text-align:left; font-weight:bold;">Like <br /><?php echo $site_name;?></span></a>
-
-<a href="<?php echo $tw_link;?>" style=" width:48%; background-size:contain; height:93px; background: url(<?php echo $tw_img;?>) no-repeat left top #00aced; float:right; text-decoration:none;"><span style=" display:block; padding:22px 0px 0px 154px; padding-left:40%; 
-margin:0px;  font-size:22px; color:#ffffff; text-align:left; font-weight:bold;">Like <br /><?php echo $site_name;?></span></a>
-<div style="clear:both"></div>
-</div>
-</div>
-
-<div style="clear:both"></div>
-</div>
-<div style="clear:both"></div>
-<div style=" width:745px; max-width:98%; padding:30px 0px 40px 0px; margin:0 auto; font-size:12px; line-height:14px; color:#b5b4b4; text-align:center;" >
-You received this email because you are registered on <?php echo $site_name;?> with the email<br />
-<h3 style="width:100%; font-size:16px; font-weight:bold;">CONTACT US</h3> 
-<?php echo $admin_profile->address;?>
-&copy; 2018, <?php echo $site_title;?>
-
-
-</div>
-</body>
-</html>
