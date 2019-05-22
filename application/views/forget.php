@@ -22,7 +22,7 @@
                 if(!$msg && isset($msg)){
               ?>  
               <div class="alert alert-success alert-dismissible fade show">   
-                <h4 class="alert-heading">Error!</h4> <?php echo $this->session->userdata('forget_notification');?>  
+                <h4 class="alert-heading">Success!</h4> <?php echo $this->session->userdata('forget_notification');?>  
               </div>
               <?php
                   }
