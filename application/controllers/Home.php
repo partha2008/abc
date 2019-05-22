@@ -81,6 +81,7 @@
 					$user = $this->userdata->grab_user_details(array("parent_id" => $post_data['parent_id']));
 
 					if(count($user) > $this->config->item('site_info')['max_register_user']){
+						$this->session->set_userdata($post_data);
 						$this->session->set_userdata('has_error', true);
 						$this->session->set_userdata('register_notification', "Registration failed. Maximum user exceeds the limit with the sponsor id.");
 					}else{
@@ -117,6 +118,7 @@
 						$this->defaultdata->_send_mail($mail_config);
 					}
 				}else{
+					$this->session->set_userdata($post_data);
 					$this->session->set_userdata('has_error', true);
 					$this->session->set_userdata('register_notification', "Registration failed. The given Sponsor ID is not active.");
 				}
