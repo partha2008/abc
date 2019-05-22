@@ -5,7 +5,7 @@
 		
 		public $data = array();
 		private $perPage = 6;
-		public $loggedin_method_arr = array('myaccount', 'dashboard');
+		public $loggedin_method_arr = array('myaccount', 'dashboard', 'changepassword');
 
 		public $loggedout_method_arr = array('login', 'register', 'forget_password');
 		
@@ -15,7 +15,7 @@
 			$this->load->model('userdata');
 
 			$this->data = $this->defaultdata->getFrontendDefaultData();
-
+			
 			if(in_array($this->data['tot_segments'][2], $this->loggedin_method_arr))
 			{
 				if($this->defaultdata->is_user_session_active() == 0)
