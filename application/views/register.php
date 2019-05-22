@@ -93,7 +93,7 @@
                       </div>
                     </div>
                     <div class="col-lg-6">
-                      <div class="form-group required">
+                      <div class="form-group">
                         <label class="form-control-label" for="email">Email ID</label>
                         <input type="email" id="email" class="form-control form-control-alternative" placeholder="Email ID" name="email" value="<?php if(isset($user_details->email) && $user_details->email){echo $user_details->email;}?>">
                       </div>

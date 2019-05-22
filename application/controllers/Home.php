@@ -15,7 +15,7 @@
 			$this->load->model('userdata');
 
 			$this->data = $this->defaultdata->getFrontendDefaultData();
-			
+
 			if(in_array($this->data['tot_segments'][2], $this->loggedin_method_arr))
 			{
 				if($this->defaultdata->is_user_session_active() == 0)
@@ -62,7 +62,7 @@
 			$this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
 			$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
 			$this->form_validation->set_rules('mobile_no', 'Mobile No', 'trim|required|exact_length[10]');
-			$this->form_validation->set_rules('email', 'Email Address', 'trim|required|valid_email|is_unique['.TABLE_USER.'.email]');
+			//$this->form_validation->set_rules('email', 'Email Address', 'trim|required|valid_email|is_unique['.TABLE_USER.'.email]');
 			$this->form_validation->set_rules('address', 'Address', 'trim|required');
 			$this->form_validation->set_rules('city', 'City', 'trim|required');
 			$this->form_validation->set_rules('district', 'District', 'trim|required');
@@ -95,7 +95,7 @@
 					$this->userdata->insert_user($post_data);
 
 					$this->session->set_userdata('has_error', false);
-					$this->session->set_userdata('register_notification', "Thank you for registering with us. An Email has been sent to your email address to get the login credential");
+					$this->session->set_userdata('register_notification', "Thank you for registering with us. An Email has been sent to your email address to get the login credential. <br><br>Your User Id - ".$post_data['sponsor_id'].'<br>'. 'Password - '.$given_password);
 					
 					// an email should be sent to user			
 					$this->data['site_logo'] = UPLOAD_LOGO_PATH.$general_settings->logoname;
