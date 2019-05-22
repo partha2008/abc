@@ -77,44 +77,50 @@
 				$this->session->set_userdata('has_error', true);
 				$this->session->set_userdata('register_notification', validation_errors());
 			}else{
-				$user = $this->userdata->grab_user_details(array("parent_id" => $post_data['parent_id']));
+				if($post_data['parent_id']){
+					$user = $this->userdata->grab_user_details(array("parent_id" => $post_data['parent_id']));
 
-				if(count($user) > $this->config->item('site_info')['max_register_user']){
-					$this->session->set_userdata('has_error', true);
-					$this->session->set_userdata('register_notification', "Registration failed. Maximum user exceeds the limit with the sponsor id.");
+					if(count($user) > $this->config->item('site_info')['max_register_user']){
+						$this->session->set_userdata('has_error', true);
+						$this->session->set_userdata('register_notification', "Registration failed. Maximum user exceeds the limit with the sponsor id.");
+					}else{
+						unset($post_data['confirm_password']);
+						unset($post_data['sponsor_id']);
+
+						$given_password = $post_data['password'];
+
+						$post_data['sponsor_id'] = $this->defaultdata->getUserId();
+						$post_data['password'] = base64_encode(hash("sha256", $post_data['password'], True));
+						$post_data['date_added'] = time();
+
+						$this->userdata->insert_user($post_data);
+
+						$this->session->set_userdata('has_error', false);
+						$this->session->set_userdata('register_notification', "Thank you for registering with us. An Email has been sent to your email address to get the login credential. <br><br><h3 class='mb-0'>Your User Id - ".$post_data['sponsor_id'].'<br>'. 'Password - '.$given_password."</h3>");
+						
+						// an email should be sent to user			
+						$this->data['site_logo'] = UPLOAD_LOGO_PATH.$general_settings->logoname;
+						$this->data['site_url'] = $general_settings->siteaddress;
+						$this->data['site_title'] = $general_settings->sitename;
+						$this->data['user_id'] = $post_data['sponsor_id'];
+						$this->data['password'] = $given_password;
+						$this->data['user'] = $post_data['first_name'];
+						
+						$message = $this->load->view('email_template/register', $this->data, true);
+						$mail_config = array(
+							"from" => $admin_profile->email,
+							"to" => array($post_data['email']),
+							"subject" => $general_settings->sitename.": New Registration",
+							"message" => $message
+						);
+						
+						$this->defaultdata->_send_mail($mail_config);
+					}
 				}else{
-					unset($post_data['confirm_password']);
-					unset($post_data['sponsor_id']);
-
-					$given_password = $post_data['password'];
-
-					$post_data['sponsor_id'] = $this->defaultdata->getUserId();
-					$post_data['password'] = base64_encode(hash("sha256", $post_data['password'], True));
-					$post_data['date_added'] = time();
-
-					$this->userdata->insert_user($post_data);
-
-					$this->session->set_userdata('has_error', false);
-					$this->session->set_userdata('register_notification', "Thank you for registering with us. An Email has been sent to your email address to get the login credential. <br><br><h3 class='mb-0'>Your User Id - ".$post_data['sponsor_id'].'<br>'. 'Password - '.$given_password."</h3>");
-					
-					// an email should be sent to user			
-					$this->data['site_logo'] = UPLOAD_LOGO_PATH.$general_settings->logoname;
-					$this->data['site_url'] = $general_settings->siteaddress;
-					$this->data['site_title'] = $general_settings->sitename;
-					$this->data['user_id'] = $post_data['sponsor_id'];
-					$this->data['password'] = $given_password;
-					$this->data['user'] = $post_data['first_name'];
-					
-					$message = $this->load->view('email_template/register', $this->data, true);
-					$mail_config = array(
-						"from" => $admin_profile->email,
-						"to" => array($post_data['email']),
-						"subject" => $general_settings->sitename.": New Registration",
-						"message" => $message
-					);
-					
-					$this->defaultdata->_send_mail($mail_config);
+					$this->session->set_userdata('has_error', true);
+					$this->session->set_userdata('register_notification', "Registration failed. The given Sponsor ID is not active.");
 				}
+				
 			}
 
 			redirect($this->agent->referrer());
@@ -123,7 +129,7 @@
 		public function getSponsor(){
 			$post_data = $this->input->post();			
 
-			$user = $this->userdata->grab_user_details(array("sponsor_id" => $post_data['sponsor_id']));
+			$user = $this->userdata->grab_user_details(array("sponsor_id" => $post_data['sponsor_id'], "status" => "Y"));
 
 			if(!empty($user)){
 				$response['name'] = $user[0]->first_name." ".$user[0]->last_name;
