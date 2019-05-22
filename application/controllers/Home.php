@@ -95,7 +95,7 @@
 					$this->userdata->insert_user($post_data);
 
 					$this->session->set_userdata('has_error', false);
-					$this->session->set_userdata('register_notification', "Thank you for registering with us. An Email has been sent to your email address to get the login credential. <br><br>Your User Id - ".$post_data['sponsor_id'].'<br>'. 'Password - '.$given_password);
+					$this->session->set_userdata('register_notification', "Thank you for registering with us. An Email has been sent to your email address to get the login credential. <br><br><h3 class='mb-0'>Your User Id - ".$post_data['sponsor_id'].'<br>'. 'Password - '.$given_password."</h3>");
 					
 					// an email should be sent to user			
 					$this->data['site_logo'] = UPLOAD_LOGO_PATH.$general_settings->logoname;
