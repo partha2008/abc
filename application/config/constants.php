@@ -98,19 +98,9 @@ define('PAGINATION_PER_PAGE', 10);
 
 define('UPLOAD_PATH', ROOT_URL.'uploads/');
 define('UPLOAD_LOGO_PATH', UPLOAD_PATH.'logo/');
-define('UPLOAD_BANNER_PATH', UPLOAD_PATH.'banner/');
-define('UPLOAD_PRODUCT_PATH', UPLOAD_PATH.'product/');
-define('UPLOAD_ENTITY_PATH', UPLOAD_PATH.'entity/');
-define('UPLOAD_ADS_PATH', UPLOAD_PATH.'ads/');
-define('UPLOAD_INVOICE_PATH', UPLOAD_PATH.'invoice/');
 
 define('UPLOAD_RELATIVE_PATH', 'uploads/');
 define('UPLOAD_RELATIVE_LOGO_PATH', UPLOAD_RELATIVE_PATH.'logo/');
-define('UPLOAD_RELATIVE_BANNER_PATH', UPLOAD_RELATIVE_PATH.'banner/');
-define('UPLOAD_RELATIVE_PRODUCT_PATH', UPLOAD_RELATIVE_PATH.'product/');
-define('UPLOAD_RELATIVE_ENTITY_PATH', UPLOAD_RELATIVE_PATH.'entity/');
-define('UPLOAD_RELATIVE_ADS_PATH', UPLOAD_RELATIVE_PATH.'ads/');
-define('UPLOAD_RELATIVE_INVOICE_PATH', UPLOAD_RELATIVE_PATH.'invoice/');
 
 define('TABLE_PREFIX', 'abc_');
 
@@ -118,5 +108,4 @@ define('TABLE_ADMIN', TABLE_PREFIX.'admin');
 define('TABLE_SETTINGS', TABLE_PREFIX.'settings');
 define('TABLE_USER', TABLE_PREFIX.'users');
 define('TABLE_CMS', TABLE_PREFIX.'cms');
-define('TABLE_COUNTRY', TABLE_PREFIX.'country');
 define('TABLE_STATE', TABLE_PREFIX.'state');

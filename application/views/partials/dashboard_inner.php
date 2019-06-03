@@ -59,7 +59,7 @@
             </div>
             
             <div class="col-xl-6 col-lg-6">
-              <a href="javascript:void(0);"><div class="card card-stats mb-4 mb-xl-0 Profile-image">
+              <a href="javascript:void(0);"><div class="card card-stats mb-4 mb-xl-4 Profile-image">
                 <div class="card-body">
                   	<div class="dashboard-box">
                     	<div class="icon">
@@ -73,13 +73,66 @@
             </div>
             
             <div class="col-xl-6 col-lg-6">
-              <a href="javascript:void(0);"><div class="card card-stats mb-4 mb-xl-0 Profile-image">
+              <a href="javascript:void(0);"><div class="card card-stats mb-4 mb-xl-4 Profile-image">
                 <div class="card-body">
                   	<div class="dashboard-box">
                     	<div class="icon">
                           <i class="ni ni-money-coins"></i>
                         </div>
                         <span>Income</span>
+                    </div>
+                  
+                </div>
+              </div></a>
+            </div>
+
+            <div class="col-xl-3 col-lg-3">
+              <a href="<?php echo base_url('member/create_form/Form-1');?>"><div class="card card-stats mb-4 mb-xl-0 Profile-image">
+                <div class="card-body">
+                    <div class="dashboard-box">
+                      <div class="icon">
+                          <i class="ni ni-cloud-download-95"></i>
+                        </div>
+                        <span>Form1</span>
+                    </div>
+                  
+                </div>
+              </div></a>
+            </div>
+            <div class="col-xl-3 col-lg-3">
+              <a href="javascript:void(0);"><div class="card card-stats mb-4 mb-xl-0 Profile-image">
+                <div class="card-body">
+                    <div class="dashboard-box">
+                      <div class="icon">
+                          <i class="ni ni-cloud-download-95"></i>
+                        </div>
+                        <span>Form2</span>
+                    </div>
+                  
+                </div>
+              </div></a>
+            </div>
+            <div class="col-xl-3 col-lg-3">
+              <a href="javascript:void(0);"><div class="card card-stats mb-4 mb-xl-0 Profile-image">
+                <div class="card-body">
+                    <div class="dashboard-box">
+                      <div class="icon">
+                          <i class="ni ni-cloud-download-95"></i>
+                        </div>
+                        <span>Form3</span>
+                    </div>
+                  
+                </div>
+              </div></a>
+            </div>
+            <div class="col-xl-3 col-lg-3">
+              <a href="javascript:void(0);"><div class="card card-stats mb-4 mb-xl-0 Profile-image">
+                <div class="card-body">
+                    <div class="dashboard-box">
+                      <div class="icon">
+                          <i class="ni ni-cloud-download-95"></i>
+                        </div>
+                        <span>Form4</span>
                     </div>
                   
                 </div>
