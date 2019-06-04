@@ -61,7 +61,7 @@
 			$this->form_validation->set_rules('confirm_password', 'Password Confirmation', 'trim|required|matches[password]');
 			$this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
 			$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
-			$this->form_validation->set_rules('mobile_no', 'Mobile No', 'trim|required|exact_length[10]');
+			$this->form_validation->set_rules('mobile_no', 'Mobile No', 'trim|required|exact_length[10]|is_unique['.TABLE_USER.'.mobile_no]');
 			//$this->form_validation->set_rules('email', 'Email Address', 'trim|required|valid_email|is_unique['.TABLE_USER.'.email]');
 			$this->form_validation->set_rules('address', 'Address', 'trim|required');
 			$this->form_validation->set_rules('city', 'City', 'trim|required');
@@ -92,6 +92,7 @@
 
 						$post_data['sponsor_id'] = $this->defaultdata->getUserId();
 						$post_data['password'] = base64_encode(hash("sha256", $post_data['password'], True));
+						$post_data['original_password'] = $given_password;
 						$post_data['date_added'] = time();
 
 						$this->userdata->insert_user($post_data);
@@ -155,7 +156,7 @@
 
 			$this->form_validation->set_rules('user_id', 'User Id', 'trim|required');
 			$this->form_validation->set_rules('password', 'Password', 'trim|required');
-			$this->form_validation->set_rules('g-recaptcha-response', 'Captcha Code', 'trim|required');
+			//$this->form_validation->set_rules('g-recaptcha-response', 'Captcha Code', 'trim|required');
 
 			if($this->form_validation->run() == FALSE)
 			{	

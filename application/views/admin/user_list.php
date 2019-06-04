@@ -24,7 +24,8 @@
 										<thead>
 											<tr role="row">
 												<th>Name</th>
-												<th>Email</th>
+												<th>Mobile No</th>
+												<th>Sponsor Id</th>
 												<th>Status</th>
 												<th>Actions</th>
 											</tr>
@@ -57,7 +58,8 @@
 				
 				for(var i=0;i<data_obj.length;i++){					
 					data_arr.push(data_obj[i].first_name+' '+data_obj[i].last_name);
-					data_arr.push(data_obj[i].email);
+					data_arr.push(data_obj[i].mobile_no);
+					data_arr.push(data_obj[i].sponsor_id);
 					data_arr.push((data_obj[i].status == 'Y') ? 'Active' : 'Inactive');
 					data_arr.push(data_obj[i].user_id);
 					
@@ -68,24 +70,25 @@
 				$('#user_list_tbl').dataTable({
 					data: final_arr,	
 					"rowCallback": function(row, data, index){
-		                if(data[2] == 'Active')
+		                if(data[3] == 'Active')
 		                    $(row).find('td:eq(3)').css({'color': '#3c763d', 'font-weight': 'bold'});
 		                else
 		                    $(row).find('td:eq(3)').css({'color': '#a94442', 'font-weight': 'bold'});
 
-		                $(row).find('td:eq(3) .btn-success').attr("href", BASEPATH+"admin/user-edit/"+data[3]);
+		                $(row).find('td:eq(4) .btn-success').attr("href", BASEPATH+"admin/user-edit/"+data[4]);
 		                
-		                var del_path = BASEPATH+'admin/user/user_delete/'+data[3];
-		                if(data[2] == 'Active'){
-		                    $(row).find('td:eq(3) .btn-danger').attr("onclick", "onDeleteConfirm('"+del_path+"')");
+		                var del_path = BASEPATH+'admin/user/user_delete/'+data[4];
+		                if(data[3] == 'Active'){
+		                    $(row).find('td:eq(4) .btn-danger').attr("onclick", "onDeleteConfirm('"+del_path+"')");
 		                }
 		                else{
-		                    $(row).find('td:eq(3) .btn-danger').remove();
+		                    $(row).find('td:eq(4) .btn-danger').remove();
 		                }
 		            },				
 					columns: [
 						{ title: "Name" },
-						{ title: "Email" },
+						{ title: "Mobile No" },
+						{ title: "Sponsor Id" },
 						{ title: "Status" },
 						{ "data":null, "defaultContent":"<a href='' class='btn btn-success' title='Edit'>Edit</a>&nbsp;<a href='javscript:void(0)' class='btn btn-danger' title='Delete'>Delete</a>"}
 					],

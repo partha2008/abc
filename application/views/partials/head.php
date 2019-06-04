@@ -35,7 +35,7 @@
   <?php
     }elseif($tot_segments[1] == 'login'){
   ?>
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <!--<script src="https://www.google.com/recaptcha/api.js" async defer></script>-->
   <?php
     }
   ?>

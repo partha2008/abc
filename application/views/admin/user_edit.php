@@ -45,7 +45,7 @@
 										</div>
 										<div class="form-group">
 											<label class="control-label">Password <span style="color:#a94442;">*</span></label>
-											<input class="form-control" type="password" name="password" placeholder="Enter Password" value="">
+											<input class="form-control" type="text" name="password" placeholder="Enter Password" value="<?php if(isset($user_details->original_password) && $user_details->original_password){echo $user_details->original_password;}?>">
 										</div>
 										<div class="form-group">
 											<label class="control-label">Email Address <span style="color:#a94442;">*</span></label>

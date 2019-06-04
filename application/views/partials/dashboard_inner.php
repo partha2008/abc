@@ -100,7 +100,7 @@
               </div></a>
             </div>
             <div class="col-xl-3 col-lg-3">
-              <a href="javascript:void(0);"><div class="card card-stats mb-4 mb-xl-0 Profile-image">
+              <a href="<?php echo base_url('member/create_form/Form-2');?>"><div class="card card-stats mb-4 mb-xl-0 Profile-image">
                 <div class="card-body">
                     <div class="dashboard-box">
                       <div class="icon">
@@ -113,7 +113,7 @@
               </div></a>
             </div>
             <div class="col-xl-3 col-lg-3">
-              <a href="javascript:void(0);"><div class="card card-stats mb-4 mb-xl-0 Profile-image">
+              <a href="<?php echo base_url('member/create_form/Form-3');?>"><div class="card card-stats mb-4 mb-xl-0 Profile-image">
                 <div class="card-body">
                     <div class="dashboard-box">
                       <div class="icon">
@@ -126,7 +126,7 @@
               </div></a>
             </div>
             <div class="col-xl-3 col-lg-3">
-              <a href="javascript:void(0);"><div class="card card-stats mb-4 mb-xl-0 Profile-image">
+              <a href="<?php echo base_url('member/create_form/Form-4');?>"><div class="card card-stats mb-4 mb-xl-0 Profile-image">
                 <div class="card-body">
                     <div class="dashboard-box">
                       <div class="icon">

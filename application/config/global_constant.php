@@ -9,7 +9,9 @@
 		"max_register_user" => 10,
 		"max_active_user" => 4,
 		"google_captcha_site_key" => "6LcSjaQUAAAAAAmNa_3MEmKWFdycM-RQWeMAJOSb",
-		"google_captcha_secret_key" => "6LcSjaQUAAAAABkotuBc7mGVGveQND2a_hlOmAM-"
+		"google_captcha_secret_key" => "6LcSjaQUAAAAABkotuBc7mGVGveQND2a_hlOmAM-",
+		"activation_fees" => 3200,
+		"donation_per_basis" => 1000
 	);
 	
 	// Bootstrap Pagination Configuration
@@ -73,3 +75,9 @@
 	$config['month'][] = 'October'; 
 	$config['month'][] = 'November'; 
 	$config['month'][] = 'December';
+
+	// payment info
+	$config['payment'][1] = array(2 => 1000, 3 => 1000, 4 => 1000);
+	$config['payment'][2] = array(5 => 1000, 6 => 1000, 7 => 1000);
+	$config['payment'][3] = array(8 => 1000, 9 => 1000, 10 => 1000);
+	$config['payment'][4] = array(1 => 3200); 

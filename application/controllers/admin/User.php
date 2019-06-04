@@ -351,7 +351,7 @@
 			
 			$user_paginated_data = $this->userdata->grab_user_details(array("parent_id !=" => 0), array(PAGINATION_PER_PAGE, $this->data['page']), $like);			
 			
-			$this->data['user_details'] = $user_paginated_data;
+			$this->data['user_details'] = $user_data;
 			
 			$this->load->view('admin/user_list', $this->data);
 		}
@@ -375,7 +375,9 @@
 			$this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
 			$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
 			$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[6]|max_length[20]');
-			$this->form_validation->set_rules('email', 'E-mail', 'trim|required|valid_email|is_unique['.TABLE_USER.'.email]');
+			if($post_data['email']){
+				$this->form_validation->set_rules('email', 'E-mail', 'trim|required|valid_email|is_unique['.TABLE_USER.'.email]');
+			}
 			$this->form_validation->set_rules('mobile_no', 'Mobile No', 'trim|required'.$is_unique1);
 			$this->form_validation->set_rules('address', 'Address', 'trim|required');
 			$this->form_validation->set_rules('city', 'City', 'trim|required');
@@ -407,7 +409,8 @@
 				}else{
 					$post_data['sponsor_id'] = $this->defaultdata->getUserId();
 					$post_data['date_added'] = time();
-					$post_data['password'] = base64_encode(hash("sha256", $post_data['password'], True));
+					$post_data['original_password'] = $post_data['password'];
+					$post_data['password'] = base64_encode(hash("sha256", $post_data['password'], True));					
 
 					$this->userdata->insert_user($post_data);
 					
@@ -455,7 +458,9 @@
 			if($post_data['password']){
 				$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[6]|max_length[20]');
 			}
-			$this->form_validation->set_rules('email', 'E-mail', 'trim|required|valid_email'.$is_unique);
+			if($post_data['email']){
+				$this->form_validation->set_rules('email', 'E-mail', 'trim|required|valid_email'.$is_unique);
+			}
 			$this->form_validation->set_rules('mobile_no', 'Mobile No', 'trim|required'.$is_unique1);
 			$this->form_validation->set_rules('address', 'Address', 'trim|required');
 			$this->form_validation->set_rules('city', 'City', 'trim|required');
@@ -489,9 +494,11 @@
 					$cond['user_id'] = $post_data['user_id'];
 
 					if($post_data['password']){
+						$post_data['original_password'] = $post_data['password'];
 						$post_data['password'] = base64_encode(hash("sha256", $post_data['password'], True));
 					}else{
 						unset($post_data['password']);
+						unset($post_data['original_password']);
 					}
 					unset($post_data['user_id']);
 					unset($post_data['old_email']);

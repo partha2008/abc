@@ -40,10 +40,10 @@
                     <input class="form-control" id="password" placeholder="Password" type="password" name="password">
                   </div>
                 </div>
-                <div class="form-group">
+                <!--<div class="form-group">
                   <label class="field-titel">Captcha Code</label>
                   <div class="g-recaptcha" data-sitekey="<?php echo $this->config->item('site_info')['google_captcha_site_key'];?>"></div>
-                </div>
+                </div>-->
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary my-4">Sign in</button>
                 </div>

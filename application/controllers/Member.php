@@ -42,11 +42,16 @@
 
 			$downloaded_date = time();
 
+			$sql = "SELECT c1.first_name, c1.last_name, c1.address, c1.sponsor_id, c1.city, c1.district, c1.post_code, c1.state_id FROM ".TABLE_USER."  c1 LEFT JOIN ".TABLE_USER." c2 ON (c1.parent_id = c2.user_id) WHERE c1.parent_id <> 0 && c1.status='Y' ORDER BY c1.user_id DESC LIMIT 0,10";		
+			$query = $this->db->query($sql);		
+			$res = $query->result();
+
 			$this->data['downloaded_date'] = $downloaded_date;
 			$this->data['invoice_name'] = $formname;
 			$this->data['donor_code'] = $sponsor[0]->sponsor_id;
+			$this->data['parents'] = array_reverse($res);
 
-			$this->load->view('admin/pdfreport', $this->data);
+			$this->load->view('pdfreport', $this->data);
 		}
 	}
 ?>
