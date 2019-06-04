@@ -103,6 +103,6 @@
 					}]
 				});
 				
-				$("#user_list_tbl_wrapper").find("select, input").addClass("form-control").attr("placeholder", "Name / Email");
+				$("#user_list_tbl_wrapper").find("select, input").addClass("form-control").attr("placeholder", "Type here...");
 			});
 		</script>

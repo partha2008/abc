@@ -106,6 +106,26 @@
 												<input type="radio" name="status" value="N" <?php if(isset($user_details->status)){if($user_details->status == "N"){echo 'checked';}}?>>Inactive
 											</label>
 										</div>
+										<div class="panel panel-primary">
+									      <div class="panel-heading">PNR Details</div>
+									      <div class="panel-body">
+									      	
+									      	<div class="form-inline" action="/action_page.php">
+											    <div class="form-group col-sm-4">
+											    	<label class="control-label">PNR1: </label>
+											    	<input type="email" class="form-control" <?php if($user_details->pnr1){echo 'readonly';}?> placeholder="Enter PNR1"  name="pnr1" value="<?php if(isset($user_details->pnr1) && $user_details->pnr1){echo $user_details->pnr1;}?>">
+											    </div>
+											    <div class="form-group col-sm-4">
+											    	<label class="control-label">PNR2: </label>
+											    	<input type="email" class="form-control" <?php if($user_details->pnr2){echo 'readonly';}?> placeholder="Enter PNR2"  name="pnr2" value="<?php if(isset($user_details->pnr2) && $user_details->pnr2){echo $user_details->pnr2;}?>">
+											    </div>
+											    <div class="form-group col-sm-4">
+											    	<label class="control-label">PNR3: </label>
+											    	<input type="email" class="form-control" <?php if($user_details->pnr3){echo 'readonly';}?>  placeholder="Enter PNR3"  name="pnr3" value="<?php if(isset($user_details->pnr3) && $user_details->pnr3){echo $user_details->pnr3;}?>">
+											    </div>
+  											</div>
+									      </div>
+									    </div>
 										<input type="hidden" name="old_email" value="<?php echo $user_details->email;?>">
 										<input type="hidden" name="old_mobile_no" value="<?php echo $user_details->mobile_no;?>">
 										<input type="hidden" name="user_id" value="<?php echo $user_details->user_id;?>">

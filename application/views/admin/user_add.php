@@ -34,7 +34,7 @@
 										<div class="form-group">
 											<label class="control-label">Sponsor Name <span style="color:#a94442;">*</span></label>
 											<select name="parent_id" class="form-control">
-												<option value="">Select Sponsor Name</option>
+												<option value="">Select Sponsor Id</option>
 												<?php 
 													if(!empty($sponsors)){
 														foreach ($sponsors as $value) {

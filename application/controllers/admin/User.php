@@ -469,7 +469,12 @@
 			$this->form_validation->set_rules('state_id', 'State', 'trim|required');
 			$this->form_validation->set_rules('nominee_info', 'Nominee Information', 'trim|required');
 			$this->form_validation->set_rules('nominee_relation', 'Nominee Relation', 'trim|required');
-			$this->form_validation->set_rules('about_me', 'About Me', 'trim|required');			
+			$this->form_validation->set_rules('about_me', 'About Me', 'trim|required');	
+			if($post_data['status'] == "Y"){
+				$this->form_validation->set_rules('pnr1', 'PNR1', 'trim|required');	
+				$this->form_validation->set_rules('pnr2', 'PNR2', 'trim|required');
+				$this->form_validation->set_rules('pnr3', 'PNR3', 'trim|required');
+			}
 			
 			$this->session->unset_userdata($post_data);
 			if($this->form_validation->run() == FALSE)
