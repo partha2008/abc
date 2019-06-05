@@ -53,5 +53,51 @@
 
 			$this->load->view('pdfreport', $this->data);
 		}
+
+		public function member_tree(){
+			$user = $this->userdata->grab_user_details(array("user_id" => $this->session->userdata('user_id')));
+			$user_id = $this->session->userdata('user_id');
+
+			$sql = "SELECT * FROM abc_users WHERE FIND_IN_SET(user_id,(SELECT GROUP_CONCAT(lv SEPARATOR ',') FROM (SELECT @pv:=(SELECT GROUP_CONCAT(user_id SEPARATOR ',') FROM abc_users WHERE parent_id IN (@pv)) AS lv FROM abc_users JOIN (SELECT @pv:=$user_id)tmp WHERE parent_id IN (@pv)) a)) AND status='Y'";
+			$query = $this->db->query($sql);		
+			$children = $query->result();
+
+			if(isset($children[0]->parent_id)){
+				$tree = $this->generateTreeMenu($children, $children[0]->parent_id, 0, true);
+			}else{
+				$tree = '';
+			}			
+						
+			$this->data['user_details'] = $user[0];
+			$this->data['tree'] = $tree;
+			$this->data['inner'] = $this->load->view('partials/member_tree_inner', $this->data, true);
+			$this->data['page_name'] = 'Member Tree';
+			$this->data['container'] = $this->load->view('partials/container', $this->data, true);
+
+			$this->load->view('member_tree', $this->data);
+		}
+
+		public function generateTreeMenu($datas, $parent = 0, $limit=0, $flag=false){
+            $tree = '';
+            if($flag){
+            	$tree .= '<ul class="tree">';
+            }else{
+            	$tree .= '<ul>';
+            } 
+            for($i=0, $ni=count($datas); $i < $ni; $i++){
+                if($datas[$i]->parent_id == $parent){
+                	$state = $this->defaultdata->grabStateData(array("state_id" => $datas[$i]->state_id));
+					$address = $datas[$i]->address.', '.$datas[$i]->city.', '.$datas[$i]->district.', '.$datas[$i]->post_code.', '.$state[0]->name;
+					$title = $datas[$i]->first_name.' '.$datas[$i]->last_name.'<br>('.$datas[$i]->sponsor_id.')<br>'.$address;
+                    $tree .= '<li><div data-placement="right" data-html="true" data-toggle="tooltip" title="'.$title.'">';
+                    $tree .= $datas[$i]->sponsor_id.'</div>';
+                    $tree .= $this->generateTreeMenu($datas, $datas[$i]->user_id, $limit++);
+                    $tree .= '</li>';
+                }
+            }
+            $tree .= '</ul>';
+
+            return $tree;
+		} 
 	}
 ?>

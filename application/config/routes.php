@@ -60,6 +60,7 @@ $route['dashboard'] = 'home/dashboard';
 $route['myaccount'] = 'home/myaccount';
 $route['changepassword'] = 'home/changepassword';
 $route['logout'] = 'home/logout';
+$route['member-tree'] = 'member/member_tree';
 
 $route['admin'] = 'admin/user/index';
 

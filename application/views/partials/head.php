@@ -17,7 +17,13 @@
   <!-- global.css -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/global.css" />
   <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/main.css" />
-
+  <?php
+    if($tot_segments[1] == "member-tree") {
+  ?>
+  <link href="<?php echo base_url(); ?>resources/css/jquery.tree.css" rel="stylesheet" type="text/css">
+  <?php
+    }
+  ?>
   <script>
     var BASEPATH = '<?php echo base_url();?>';
     var PAGENAME = '<?php echo $tot_segments[1];?>';
@@ -36,6 +42,25 @@
     }elseif($tot_segments[1] == 'login'){
   ?>
   <!--<script src="https://www.google.com/recaptcha/api.js" async defer></script>-->
+  <?php
+    }elseif($tot_segments[1] == "member-tree") {
+  ?>
+  <script src="<?php echo base_url(); ?>resources/js/jquery.tree.min.js"></script>
+  <script>
+    $(document).ready(function() {
+        $('.tree').tree_structure({
+            'add_option': false,
+            'edit_option': false,
+            'delete_option': false,
+            'confirm_before_delete': false,
+            'animate_option': false,
+            'fullwidth_option': false,
+            'align_option': 'center',
+            'draggable_option': false
+        });
+        $('[data-toggle="tooltip"]').tooltip(); 
+    });
+  </script>
   <?php
     }
   ?>

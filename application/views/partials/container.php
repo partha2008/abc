@@ -44,7 +44,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="teamdetails">
                   <a class="dropdown-item" href="javascript:void(0);"><i class="ni ni-bold-right"></i>Direct List</a>
-                  <a class="dropdown-item" href="javascript:void(0);"><i class="ni ni-bold-right"></i>Member Tree</a>
+                  <a class="dropdown-item" href="<?php echo base_url('member-tree');?>"><i class="ni ni-bold-right"></i>Member Tree</a>
                   <a class="dropdown-item" href="javascript:void(0);"><i class="ni ni-bold-right"></i>Team Level</a>
                 </div>
           </li>

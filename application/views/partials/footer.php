@@ -1,6 +1,6 @@
   <!-- Footer -->
-  <footer class="<?php echo ($tot_segments[1] == 'dashboard') ? 'footer' : '';?>">
-    <div class="<?php echo ($tot_segments[1] != 'dashboard') ? 'container' : '';?>">
+  <footer class="<?php echo ($tot_segments[1] == 'dashboard') ? 'footer' : 'footer';?>">
+    <div class="<?php echo ($tot_segments[1] != 'dashboard') ? 'container' : 'container';?>">
       <div class="row align-items-center justify-content-xl-between">
         <div class="col-xl-6">
           <div class="copyright text-center text-xl-left text-muted">
