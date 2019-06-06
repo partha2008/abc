@@ -1,5 +1,6 @@
 <?php
   echo $head;
+  //echo $tot_segments[1]; die();
 ?>
 <body>
   <!-- Sidenav -->
@@ -25,26 +26,26 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('dashboard');?>">
+            <a class="nav-link <?php if($tot_segments[1] == 'dashboard'){echo 'active';}?>" href="<?php echo base_url('dashboard');?>">
               <i class="ni ni-single-copy-04 text-green"></i> Dashboard
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link dropdown-toggle " href="JavaScript:Void(0);" id="profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle <?php if($tot_segments[1] == 'myaccount' || $tot_segments[1] == 'changepassword'){echo 'active';}?>" href="JavaScript:Void(0);" id="profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="ni ni-single-02 text-yellow"></i> Profile
             </a>
-            <div class="dropdown-menu" aria-labelledby="profile">
-                  <a class="dropdown-item" href="<?php echo base_url('myaccount');?>"><i class="ni ni-bold-right"></i>Update Profile</a>
-                  <a class="dropdown-item" href="<?php echo base_url('changepassword');?>"><i class="ni ni-bold-right"></i>Change Password</a>
+            <div class="dropdown-menu <?php if($tot_segments[1] == 'myaccount' || $tot_segments[1] == 'changepassword'){echo 'show';}?>" aria-labelledby="profile">
+                  <a class="dropdown-item <?php if($tot_segments[1] == 'myaccount'){echo 'active';}?>" href="<?php echo base_url('myaccount');?>"><i class="ni ni-bold-right"></i>Update Profile</a>
+                  <a class="dropdown-item <?php if($tot_segments[1] == 'changepassword'){echo 'active';}?>" href="<?php echo base_url('changepassword');?>"><i class="ni ni-bold-right"></i>Change Password</a>
                 </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link dropdown-toggle " href="JavaScript:Void(0);" id="teamdetails" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle <?php if($tot_segments[1] == 'member-tree'){echo 'show';}?>" href="JavaScript:Void(0);" id="teamdetails" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="ni ni-badge text-orange"></i> Team Details
             </a>
-            <div class="dropdown-menu" aria-labelledby="teamdetails">
+            <div class="dropdown-menu <?php if($tot_segments[1] == 'member-tree'){echo 'show';}?>" aria-labelledby="teamdetails">
                   <a class="dropdown-item" href="javascript:void(0);"><i class="ni ni-bold-right"></i>Direct List</a>
-                  <a class="dropdown-item" href="<?php echo base_url('member-tree');?>"><i class="ni ni-bold-right"></i>Member Tree</a>
+                  <a class="dropdown-item <?php if($tot_segments[1] == 'member-tree'){echo 'active';}?>" href="<?php echo base_url('member-tree');?>"><i class="ni ni-bold-right"></i>Member Tree</a>
                   <a class="dropdown-item" href="javascript:void(0);"><i class="ni ni-bold-right"></i>Team Level</a>
                 </div>
           </li>

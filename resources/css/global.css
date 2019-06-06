@@ -22113,3 +22113,46 @@ margin-bottom:20px !important;
 	width:100%;
 	text-align:center;
 }
+
+
+
+ul.tree li > div{
+       background: transparent !important;
+       width: 40px;
+       height: 40px;
+       position: relative;; 
+}
+
+
+ul.tree li > div i{
+        font-size: 37px;
+    color: #27a9e3;
+    position: absolute;
+    margin-left: 0;
+    margin-top: 0;
+    left: -22px;
+    top: -13px;
+}
+
+ul.tree li div.current i{
+    color: #28b779;
+}
+
+ul.tree li div.children i{
+    color: #ffb848;
+}
+
+ul.tree li div.parent i {
+    color: #852b99;
+}
+
+ul.tree li b.thide {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    bottom: 12px;
+    left: -25px;
+    background: transparent !important;
+    cursor: pointer;
+    z-index: 9999;
+}

@@ -90,7 +90,7 @@
 					$address = $datas[$i]->address.', '.$datas[$i]->city.', '.$datas[$i]->district.', '.$datas[$i]->post_code.', '.$state[0]->name;
 					$title = $datas[$i]->first_name.' '.$datas[$i]->last_name.'<br>('.$datas[$i]->sponsor_id.')<br>'.$address;
                     $tree .= '<li><div data-placement="right" data-html="true" data-toggle="tooltip" title="'.$title.'">';
-                    $tree .= $datas[$i]->sponsor_id.'</div>';
+                    $tree .= '<i class="ni ni-single-02"></i></div>';
                     $tree .= $this->generateTreeMenu($datas, $datas[$i]->user_id, $limit++);
                     $tree .= '</li>';
                 }

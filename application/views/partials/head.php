@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/nucleo.css" />
   <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/all.min.css" />
   <!-- global.css -->
-  <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/global.css" />
+  
   <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/main.css" />
   <?php
     if($tot_segments[1] == "member-tree") {
@@ -24,6 +24,7 @@
   <?php
     }
   ?>
+  <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/global.css" />
   <script>
     var BASEPATH = '<?php echo base_url();?>';
     var PAGENAME = '<?php echo $tot_segments[1];?>';
