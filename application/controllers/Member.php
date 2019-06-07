@@ -37,12 +37,14 @@
 		{
 			$this->load->helper('pdf_helper');
 
-			$logged_user = $this->userdata->grab_user_details(array("user_id" => $this->session->userdata('user_id')));
+			$user_id = $this->session->userdata('user_id');
+			$logged_user = $this->userdata->grab_user_details(array("user_id" => $user_id));
 			$sponsor = $this->userdata->grab_user_details(array("user_id" => $logged_user[0]->parent_id));
 
 			$downloaded_date = time();
 
-			$sql = "SELECT c1.first_name, c1.last_name, c1.address, c1.sponsor_id, c1.city, c1.district, c1.post_code, c1.state_id FROM ".TABLE_USER."  c1 LEFT JOIN ".TABLE_USER." c2 ON (c1.parent_id = c2.user_id) WHERE c1.parent_id <> 0 && c1.status='Y' ORDER BY c1.user_id DESC LIMIT 0,10";		
+			$sql = "SELECT T2.first_name, T2.last_name, T2.address, T2.sponsor_id, T2.city, T2.district, T2.post_code, T2.state_id FROM (SELECT @r AS _id, (SELECT @r := parent_id FROM ".TABLE_USER." WHERE user_id = _id) AS parent_id, @l := @l + 1 AS lvl FROM (SELECT @r := 14, @l := 0) vars, ".TABLE_USER." m WHERE @r <> 0) T1 JOIN ".TABLE_USER." T2 ON T1._id = T2.user_id WHERE T2.parent_id < ".$logged_user[0]->parent_id." ORDER BY T1.lvl ASC LIMIT 0,10";	
+
 			$query = $this->db->query($sql);		
 			$res = $query->result();
 
@@ -56,11 +58,14 @@
 
 		public function member_tree(){
 			$user = $this->userdata->grab_user_details(array("user_id" => $this->session->userdata('user_id')));
+			$active_user = $this->userdata->grab_user_details(array("status" => "Y", "user_id" => $this->session->userdata('user_id')));
 			$user_id = $this->session->userdata('user_id');
 
 			$sql = "SELECT * FROM abc_users WHERE FIND_IN_SET(user_id,(SELECT GROUP_CONCAT(lv SEPARATOR ',') FROM (SELECT @pv:=(SELECT GROUP_CONCAT(user_id SEPARATOR ',') FROM abc_users WHERE parent_id IN (@pv)) AS lv FROM abc_users JOIN (SELECT @pv:=$user_id)tmp WHERE parent_id IN (@pv)) a)) AND status='Y'";
-			$query = $this->db->query($sql);		
-			$children = $query->result();
+			$query = $this->db->query($sql);
+			if(!empty($active_user)){
+				$children = array_merge($active_user, $query->result());
+			}
 
 			if(isset($children[0]->parent_id)){
 				$tree = $this->generateTreeMenu($children, $children[0]->parent_id, 0, true);

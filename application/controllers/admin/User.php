@@ -471,9 +471,9 @@
 			$this->form_validation->set_rules('nominee_relation', 'Nominee Relation', 'trim|required');
 			$this->form_validation->set_rules('about_me', 'About Me', 'trim|required');	
 			if($post_data['status'] == "Y"){
-				$this->form_validation->set_rules('pnr1', 'PNR1', 'trim|required');	
-				$this->form_validation->set_rules('pnr2', 'PNR2', 'trim|required');
-				$this->form_validation->set_rules('pnr3', 'PNR3', 'trim|required');
+				$this->form_validation->set_rules('pnr1', 'PNR1', 'trim|required|is_unique['.TABLE_USER.'.pnr1]');	
+				$this->form_validation->set_rules('pnr2', 'PNR2', 'trim|required|is_unique['.TABLE_USER.'.pnr2]');
+				$this->form_validation->set_rules('pnr3', 'PNR3', 'trim|required|is_unique['.TABLE_USER.'.pnr3]');
 			}
 			
 			$this->session->unset_userdata($post_data);
@@ -485,36 +485,45 @@
 				$this->session->set_userdata('useredit_notification', validation_errors());
 				
 				redirect($this->agent->referrer());
-			}else{				
-				$active_users = $this->userdata->grab_user_details(array("parent_id" => $post_data['user_id'], "status" => "Y"));
-				$max_count = $this->config->item('site_info')['max_active_user'];
-				if((count($active_users) > $max_count) && ($post_data['status'] == 'Y')){
+			}else{		
+				if (($post_data['pnr1'] == $post_data['pnr2']) && ($post_data['pnr2'] == $post_data['pnr3'])) {	
 					$this->session->set_userdata($post_data);
 				
 					$this->session->set_userdata('has_error', true);
-					$this->session->set_userdata('useredit_notification', "Active users with same level can not be more than ".$max_count);
+					$this->session->set_userdata('useredit_notification', "PNR can not be same");
 
 					redirect($this->agent->referrer());
 				}else{
-					$cond['user_id'] = $post_data['user_id'];
-
-					if($post_data['password']){
-						$post_data['original_password'] = $post_data['password'];
-						$post_data['password'] = base64_encode(hash("sha256", $post_data['password'], True));
-					}else{
-						unset($post_data['password']);
-						unset($post_data['original_password']);
-					}
-					unset($post_data['user_id']);
-					unset($post_data['old_email']);
-					unset($post_data['old_mobile_no']);
-
-					$post_data['date_modified'] = time();
-
-					$this->userdata->update_user_details($cond, $post_data);
+					$active_users = $this->userdata->grab_user_details(array("parent_id" => $post_data['parent_id'], "status" => "Y"));
+					$max_count = $this->config->item('site_info')['max_active_user'];
+					if((count($active_users) > $max_count) && ($post_data['status'] == 'Y')){
+						$this->session->set_userdata($post_data);
 					
-					redirect(base_url('admin/user-list'));
-				}				
+						$this->session->set_userdata('has_error', true);
+						$this->session->set_userdata('useredit_notification', "Active users with same level can not be more than ".$max_count);
+
+						redirect($this->agent->referrer());
+					}else{
+						$cond['user_id'] = $post_data['user_id'];
+
+						if($post_data['password']){
+							$post_data['original_password'] = $post_data['password'];
+							$post_data['password'] = base64_encode(hash("sha256", $post_data['password'], True));
+						}else{
+							unset($post_data['password']);
+							unset($post_data['original_password']);
+						}
+						unset($post_data['user_id']);
+						unset($post_data['old_email']);
+						unset($post_data['old_mobile_no']);
+
+						$post_data['date_modified'] = time();
+
+						$this->userdata->update_user_details($cond, $post_data);
+						
+						redirect(base_url('admin/user-list'));
+					}
+				}			
 			}
 		}
 		
