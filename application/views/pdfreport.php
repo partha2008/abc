@@ -127,5 +127,5 @@
 	$pdf->writeHTML($cart_data_html, true, false, false, false, 'C');
 
 	//Close and output PDF document
-	$pdf->Output($invoice_name.'.pdf', 'R');
+	$pdf->Output($invoice_name.'.pdf', 'D');
 ?>
