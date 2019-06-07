@@ -91,7 +91,7 @@
 
 	$cart_data_html = '<table cellspacing="0" cellpadding="1" border="1">';
 	$cart_data_html .= '<thead>';
-	$cart_data_html .= '<tr><th align="center">Sl. No.</th><th align="center">Name</th><th align="center">Sponsor Id</th><th align="center">Address</th><th align="center">Price</th><th align="center">PNR No.</th></tr>';
+	$cart_data_html .= '<tr><th align="center" width="40px"><b>Sl No</b></th><th align="center" width="430px"><b>Name</b></th><th align="center" width="50px"><b>Price</b></th><th align="center" width="120px"><b>PNR No</b></th></tr>';
 	$cart_data_html .= '</thead>';
 	$cart_data_html .= '<tbody>';
 	if(!empty($parents)){
@@ -104,7 +104,7 @@
 			$index = explode('-', $invoice_name)[1];
 			$payment = (isset($payments[$index][$counter])) ? $payments[$index][$counter] : 0;
 
-			$cart_data_html .= '<tr><td align="center">'.$counter.'</td><td align="center">'.$parent->first_name.' '.$parent->last_name.'</td><td align="center">'.$parent->sponsor_id.'</td><td align="center">'.$adress.'</td><td align="center">'.$payment.'</td><td align="center"></td></tr>';
+			$cart_data_html .= '<tr><td align="center" width="40px">'.$counter.'</td><td align="center" width="430px">'.$parent->first_name.' '.$parent->last_name.'<b>('.$parent->sponsor_id.')</b> '.$adress.'</td><td align="center" width="50px">'.$payment.'</td><td align="center" width="120px"></td></tr>';
 
 			$counter--;
 		}
@@ -127,5 +127,5 @@
 	$pdf->writeHTML($cart_data_html, true, false, false, false, 'C');
 
 	//Close and output PDF document
-	$pdf->Output($invoice_name.'.pdf', 'D');
+	$pdf->Output($invoice_name.'.pdf', 'I');
 ?>

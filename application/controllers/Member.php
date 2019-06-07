@@ -43,7 +43,7 @@
 
 			$downloaded_date = time();
 
-			$sql = "SELECT T2.first_name, T2.last_name, T2.address, T2.sponsor_id, T2.city, T2.district, T2.post_code, T2.state_id FROM (SELECT @r AS _id, (SELECT @r := parent_id FROM ".TABLE_USER." WHERE user_id = _id) AS parent_id, @l := @l + 1 AS lvl FROM (SELECT @r := 14, @l := 0) vars, ".TABLE_USER." m WHERE @r <> 0) T1 JOIN ".TABLE_USER." T2 ON T1._id = T2.user_id WHERE T2.parent_id < ".$logged_user[0]->parent_id." ORDER BY T1.lvl ASC LIMIT 0,10";	
+			$sql = "SELECT T2.first_name, T2.last_name, T2.address, T2.sponsor_id, T2.city, T2.district, T2.post_code, T2.state_id FROM (SELECT @r AS _id, (SELECT @r := parent_id FROM ".TABLE_USER." WHERE user_id = _id) AS parent_id, @l := @l + 1 AS lvl FROM (SELECT @r := $user_id, @l := 0) vars, ".TABLE_USER." m WHERE @r <> 0) T1 JOIN ".TABLE_USER." T2 ON T1._id = T2.user_id WHERE T2.parent_id < ".$logged_user[0]->parent_id." ORDER BY T1.lvl ASC LIMIT 0,10";	
 
 			$query = $this->db->query($sql);		
 			$res = $query->result();
