@@ -17,7 +17,7 @@
                   <strong>Sponsor ID:</strong> <?php echo $user_details->sponsor_id;?>
                 </h3>
                  <h4 class="name">
-                  <strong>Last Login:</strong> <?php date_default_timezone_set("Asia/Kolkata"); echo date('d-m-Y H:i:s', $user_details->last_login);?>
+                  <strong>Approved On:</strong> <?php date_default_timezone_set("Asia/Kolkata"); echo date('d-m-Y H:i:s', $user_details->approved_on);?>
                 </h4>                
               </div>
             </div>

@@ -61,7 +61,7 @@
 					data_arr.push(data_obj[i].parent_first_name+' '+data_obj[i].parent_last_name+'<br><b>'+data_obj[i].sponsor_id+'</b>');
 					data_arr.push(data_obj[i].mobile_no);		
 					data_arr.push((data_obj[i].status == 'Y') ? 'Active' : 'Inactive');
-					data_arr.push(data_obj[i].user_id);
+					data_arr.push(data_obj[i].id);
 					
 					final_arr.push(data_arr);
 					var data_arr = [];

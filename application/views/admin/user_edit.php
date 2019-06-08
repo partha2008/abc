@@ -100,10 +100,10 @@
 										<div class="form-group">
 											<label class="control-label">Status</label>
 											<label class="radio-inline">
-												<input type="radio" name="status" value="Y" <?php if(isset($user_details->status)){if($user_details->status == "Y"){echo 'checked';}}else{echo 'checked';}?>>Active
+												<input <?php if(isset($user_details->status)){if($user_details->status == "Y"){echo 'disabled';}}?> type="radio" name="status" value="Y" <?php if(isset($user_details->status)){if($user_details->status == "Y"){echo 'checked';}}else{echo 'checked';}?>>Active
 											</label>
 											<label class="radio-inline">
-												<input type="radio" name="status" value="N" <?php if(isset($user_details->status)){if($user_details->status == "N"){echo 'checked';}}?>>Inactive
+												<input <?php if(isset($user_details->status)){if($user_details->status == "Y"){echo 'disabled';}}?> type="radio" name="status" value="N" <?php if(isset($user_details->status)){if($user_details->status == "N"){echo 'checked';}}?>>Inactive
 											</label>
 										</div>
 										<div class="panel panel-primary">

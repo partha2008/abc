@@ -519,6 +519,10 @@
 						unset($post_data['old_email']);
 						unset($post_data['old_mobile_no']);
 
+						if($post_data['status'] == 'Y'){
+							$post_data['approved_on'] = time();
+						}
+
 						$post_data['date_modified'] = time();
 
 						$this->userdata->update_user_details($cond, $post_data);
