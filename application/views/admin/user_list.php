@@ -24,8 +24,8 @@
 										<thead>
 											<tr role="row">
 												<th>Name</th>
+												<th>Sponsor Name</th>
 												<th>Mobile No</th>
-												<th>Sponsor Id</th>
 												<th>Status</th>
 												<th>Actions</th>
 											</tr>
@@ -57,9 +57,9 @@
 				var final_arr = [];
 				
 				for(var i=0;i<data_obj.length;i++){					
-					data_arr.push(data_obj[i].first_name+' '+data_obj[i].last_name);
-					data_arr.push(data_obj[i].mobile_no);
-					data_arr.push(data_obj[i].sponsor_id);
+					data_arr.push(data_obj[i].first_name+' '+data_obj[i].last_name+'<br><b>'+data_obj[i].user_id+'</b>');
+					data_arr.push(data_obj[i].parent_first_name+' '+data_obj[i].parent_last_name+'<br><b>'+data_obj[i].sponsor_id+'</b>');
+					data_arr.push(data_obj[i].mobile_no);		
 					data_arr.push((data_obj[i].status == 'Y') ? 'Active' : 'Inactive');
 					data_arr.push(data_obj[i].user_id);
 					
@@ -87,8 +87,8 @@
 		            },				
 					columns: [
 						{ title: "Name" },
+						{ title: "Sponsor Name" },
 						{ title: "Mobile No" },
-						{ title: "Sponsor Id" },
 						{ title: "Status" },
 						{ "data":null, "defaultContent":"<a href='' class='btn btn-success' title='Edit'>Edit</a>&nbsp;<a href='javscript:void(0)' class='btn btn-danger' title='Delete'>Delete</a>"}
 					],

@@ -36,25 +36,10 @@
 	$pdf->address = "Email: ".$admin_profile->email."\nWhatsapp: ".$admin_profile->contact_no;
 	$pdf->downloaded_date = $downloaded_date;
 
-	// set document information
-	//$pdf->SetCreator(PDF_CREATOR);
-	//$pdf->SetAuthor('Nicola Asuni');
 	$pdf->SetTitle($invoice_name);
-	//$pdf->SetSubject('TCPDF Tutorial');
-	//$pdf->SetKeywords('TCPDF, PDF, example, test, guide');
-
-	// set default header data
-	$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
-
-	// set header and footer fonts
-	$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-	$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
-
-	// set default monospaced font
-	$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
 	// set margins
-	$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+	$pdf->SetMargins(PDF_MARGIN_LEFT, 20, PDF_MARGIN_RIGHT);
 	$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
 	$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 
@@ -64,28 +49,8 @@
 	// set image scale factor
 	$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
-	// set font
-	$pdf->SetFont('courier', 'BI', 12);
-
 	// add a page
 	$pdf->AddPage();
-
-	$style = array(
-		'position' => '',
-		'align' => 'C',
-		'stretch' => false,
-		'fitwidth' => true,
-		'cellfitalign' => '',
-		'border' => true,
-		'hpadding' => 'auto',
-		'vpadding' => 'auto',
-		'fgcolor' => array(0,0,0),
-		'bgcolor' => false, //array(255,255,255),
-		'text' => true,
-		'font' => 'helvetica',
-		'fontsize' => 8,
-		'stretchtext' => 4
-	);
 	
 	$pdf->SetFont('courier', '', 11);
 
@@ -104,7 +69,7 @@
 			$index = explode('-', $invoice_name)[1];
 			$payment = (isset($payments[$index][$counter])) ? $payments[$index][$counter] : 0;
 
-			$cart_data_html .= '<tr><td align="center" width="40px">'.$counter.'</td><td align="center" width="430px">'.$parent->first_name.' '.$parent->last_name.'<b>('.$parent->sponsor_id.')</b> '.$adress.'</td><td align="center" width="50px">'.$payment.'</td><td align="center" width="120px"></td></tr>';
+			$cart_data_html .= '<tr><td align="center" width="40px">'.$counter.'</td><td align="center" width="430px"><b>'.$parent->first_name.' '.$parent->last_name.'('.$parent->sponsor_id.')</b><br>'.$adress.'</td><td align="center" width="50px">'.$payment.'</td><td align="center" width="120px"></td></tr>';
 
 			$counter--;
 		}
