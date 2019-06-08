@@ -14,7 +14,7 @@
                   <strong>Name:</strong> <?php echo $user_details->first_name.' '.$user_details->last_name;?>
                 </h3>
                  <h3 class="sponsorid">
-                  <strong>Sponsor ID:</strong> <?php echo $user_details->sponsor_id;?>
+                  <strong>User ID:</strong> <?php echo $user_details->sponsor_id;?>
                 </h3>
                  <h4 class="name">
                   <strong>Approved On:</strong> <?php date_default_timezone_set("Asia/Kolkata"); echo date('d-m-Y H:i:s', $user_details->approved_on);?>
@@ -45,7 +45,7 @@
             </div>
             
             <div class="col-xl-6 col-lg-6">
-              <a href="javascript:void(0);"><div class="card card-stats mb-4 mb-xl-4 Profile-image">
+              <a href="<?php echo base_url('member-tree');?>"><div class="card card-stats mb-4 mb-xl-4 Profile-image">
                 <div class="card-body">
                   	<div class="dashboard-box">
                     	<div class="icon">

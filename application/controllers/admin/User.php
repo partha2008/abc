@@ -323,18 +323,18 @@
 		
 		public function user_list()
 		{
-			/*$like = array();
+			$like = array();
 			parse_str($_SERVER['QUERY_STRING'], $like);
 			unset($like['page']);
 			
-			$search_key = $this->input->get('username');
+			$search_key = $this->input->get('search_key');
 			if(isset($search_key) && $search_key){
 				$this->data['search_key'] = $search_key;
 			}else{
 				$this->data['search_key'] = '';
 			}
 
-			$user_data = $this->userdata->grab_user_details(array("parent_id !=" => 0), array(), $like); 
+			$user_data = $this->userdata->grab_user_list(null, $like);	 
 			
 			//pagination settings
 			$config['base_url'] = base_url('admin/user-list');
@@ -348,10 +348,8 @@
 			$this->data['page'] = ($this->input->get('page')) ? $this->input->get('page') : 0;		
 
 			$this->data['pagination'] = $this->pagination->create_links();
-			
-			$user_paginated_data = $this->userdata->grab_user_details(array("parent_id !=" => 0), array(PAGINATION_PER_PAGE, $this->data['page']), $like);*/
 
-			$user_paginated_data = $this->userdata->grab_user_list();			
+			$user_paginated_data = $this->userdata->grab_user_list($this->data['page'], $like);	
 			
 			$this->data['user_details'] = $user_paginated_data;
 			

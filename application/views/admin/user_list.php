@@ -1,108 +1,93 @@
-		<?php echo $head;?>
-		
-		<div id="wrapper">
+<?php echo $head;?>
 
-			<?php echo $header;?>
-
-			<div id="page-wrapper" style="min-height: 374px;">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">List of Users</h1>
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
-            <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        
-						<div class="panel-body">
-							<div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-							  <div class="row">
-								 <div class="col-sm-12">
-									<table id="user_list_tbl" width="100%" class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline" id="dataTables-example" role="grid" aria-describedby="dataTables-example_info" style="width: 100%;">
-										<thead>
-											<tr role="row">
-												<th>Name</th>
-												<th>Sponsor Name</th>
-												<th>Mobile No</th>
-												<th>Status</th>
-												<th>Actions</th>
-											</tr>
-										</thead>
-									</table>
-								 </div>
-							  </div>
-							</div>
-							<!-- /.table-responsive -->
-							</div>
-                    </div>
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
-            <!-- /.row -->
-            
+<div id="wrapper">
+	<?php echo $header;?>
+	<div id="page-wrapper" style="min-height: 374px;">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">List of Users</h1>
         </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                
+				<div class="panel-body">
+					<div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+					  <div class="row">
+						 <div class="col-sm-6">
+							<a href="<?php echo base_url('admin/user-add');?>" class="btn btn-primary">Add User</a>
+						 </div>
+						 <div class="col-sm-6">
+							<form action="<?php echo base_url('admin/user-list');?>" method="GET" role="form">
+								<div id="dataTables-example_filter" class="dataTables_filter">
+									<label>Search by:<input name="search_key" type="search" class="form-control input-sm" placeholder="" aria-controls="dataTables-example" id="user-search" value="<?php echo $search_key;?>"></label>
+									<button type="submit" class="btn btn-primary">Search</button>
+								</div>
+							</form>
+						 </div>
+					  </div>
+					  <div class="row">
+						 <div class="col-sm-12">
+							<table width="100%" class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline" id="dataTables-example" role="grid" aria-describedby="dataTables-example_info" style="width: 100%;">
+							   <thead>
+								  <tr role="row">
+									<th>Name</th>
+									<th>User Id</th>
+									<th>Sponsor Name</th>
+									<th>Sponsor Id</th>
+									<th>Mobile No</th>
+									<th>Status</th>
+									<th>Actions</th>
+								  </tr>
+							   </thead>
+							   <tbody>
+							    <?php if(!empty($user_details)){ ?>
+								<?php foreach($user_details AS $detail) {?>
+								  <tr class="gradeA odd" role="row">
+									 <td><?php echo $detail->first_name.' '.$detail->last_name;?></td>	
+									 <td><?php echo $detail->user_id;?></td>
+									 <td><?php echo $detail->parent_first_name.' '.$detail->parent_last_name;?></td>	
+									 <td><?php echo $detail->sponsor_id;?></td>
+									 <td><?php echo $detail->mobile_no;?></td>
+									 <td class="center"><?php echo ($detail->status == 'Y' ? '<strong class="text-success">Active</strong>' : '<strong class="text-danger">Inactive</strong>');?></td>
+									 <td class="center">
+										<a href="<?php echo base_url('admin/user-edit/'.$detail->id);?>" class="btn btn-success" title="Edit">Edit</a>&nbsp;
+										<?php
+											if($detail->status == 'Y'){
+										?>
+										<a href="javascript:void(0);" onclick="onDeleteConfirm('<?php echo base_url('admin/user/user_delete/'.$detail->id);?>');" class="btn btn-danger" title="Delete">Delete<a>						
+										<?php
+											}
+										?>						
+									</td>
+								  </tr>
+								  <?php } ?>
+								  <?php }else{ ?>
+								  <tr class="gradeA odd" role="row"><td colspan="7" style="text-align:center;">No records found</td></tr>
+								  <?php } ?>
+							   </tbody>
+							</table>
+						 </div>
+					  </div>
+					 <div class="pagination" style="float:right;">            
+						<?php echo $pagination ?>            
+					</div>
+					</div>
+					<!-- /.table-responsive -->
+					</div>
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    
+</div>
 
-		</div>
-		<!-- /#wrapper -->
-		
-		<?php echo $footer; ?>
-		<script>
-			$(function () {
-				var dataset = '<?php echo json_encode($user_details);?>';
-				var data_obj = JSON.parse(dataset);
-				var data_arr = [];
-				var final_arr = [];
-				
-				for(var i=0;i<data_obj.length;i++){					
-					data_arr.push(data_obj[i].first_name+' '+data_obj[i].last_name+'<br><b>'+data_obj[i].user_id+'</b>');
-					data_arr.push(data_obj[i].parent_first_name+' '+data_obj[i].parent_last_name+'<br><b>'+data_obj[i].sponsor_id+'</b>');
-					data_arr.push(data_obj[i].mobile_no);		
-					data_arr.push((data_obj[i].status == 'Y') ? 'Active' : 'Inactive');
-					data_arr.push(data_obj[i].id);
-					
-					final_arr.push(data_arr);
-					var data_arr = [];
-				}
-				
-				$('#user_list_tbl').dataTable({
-					data: final_arr,	
-					"rowCallback": function(row, data, index){
-		                if(data[3] == 'Active')
-		                    $(row).find('td:eq(3)').css({'color': '#3c763d', 'font-weight': 'bold'});
-		                else
-		                    $(row).find('td:eq(3)').css({'color': '#a94442', 'font-weight': 'bold'});
+</div>
+<!-- /#wrapper -->
 
-		                $(row).find('td:eq(4) .btn-success').attr("href", BASEPATH+"admin/user-edit/"+data[4]);
-		                
-		                var del_path = BASEPATH+'admin/user/user_delete/'+data[4];
-		                if(data[3] == 'Active'){
-		                    $(row).find('td:eq(4) .btn-danger').attr("onclick", "onDeleteConfirm('"+del_path+"')");
-		                }
-		                else{
-		                    $(row).find('td:eq(4) .btn-danger').remove();
-		                }
-		            },				
-					columns: [
-						{ title: "Name" },
-						{ title: "Sponsor Name" },
-						{ title: "Mobile No" },
-						{ title: "Status" },
-						{ "data":null, "defaultContent":"<a href='' class='btn btn-success' title='Edit'>Edit</a>&nbsp;<a href='javscript:void(0)' class='btn btn-danger' title='Delete'>Delete</a>"}
-					],
-					processing: true,
-					searching: true,
-					paging: true,
-					info: true,
-					order: [],
-					columnDefs: [{
-						targets: [2, 3],
-						orderable: false
-					}]
-				});
-				
-				$("#user_list_tbl_wrapper").find("select, input").addClass("form-control").attr("placeholder", "Type here...");
-			});
-		</script>
+<?php echo $footer; ?>

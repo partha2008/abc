@@ -300,11 +300,11 @@
 		public function update_account(){
 			$post_data = $this->input->post();
 
-			if($post_data['email'] != $post_data['old_email']){
+			/*if($post_data['email'] != $post_data['old_email']){
 				$is_unique =  '|is_unique['.TABLE_USER.'.email]';
 			}else{
 				$is_unique =  '';
-			}
+			}*/
 
 			if($post_data['mobile_no'] != $post_data['old_mobile_no']){
 				$is_unique1 =  '|is_unique['.TABLE_USER.'.mobile_no]';
@@ -316,7 +316,7 @@
 			
 			$this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
 			$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
-			$this->form_validation->set_rules('email', 'Email ID', 'trim|required'.$is_unique);
+			//$this->form_validation->set_rules('email', 'Email ID', 'trim|required'.$is_unique);
 			$this->form_validation->set_rules('mobile_no', 'Mobile No', 'trim|required'.$is_unique1);
 			$this->form_validation->set_rules('address', 'Address', 'trim|required');
 			$this->form_validation->set_rules('city', 'City', 'trim|required');

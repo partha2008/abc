@@ -52,8 +52,16 @@ class Userdata extends CI_Model {
 		return $query->result();
 	}
 
-	public function grab_user_list(){	
-		$sql = "SELECT A.user_id AS id, A.first_name AS first_name, A.last_name AS last_name, A.mobile_no, A.sponsor_id AS user_id, A.status, B.first_name AS parent_first_name, B.last_name AS parent_last_name, B.sponsor_id FROM ".TABLE_USER." A, ".TABLE_USER." B WHERE A.parent_id = B.user_id";
+	public function grab_user_list($page=null, $like){	
+		$likes = '';
+		if(!empty($like)){
+			$likes = "AND (A.first_name LIKE '%".$like['search_key']."%' OR A.last_name LIKE '%".$like['search_key']."%' OR A.sponsor_id LIKE '%".$like['search_key']."%' OR A.mobile_no LIKE '%".$like['search_key']."%' OR B.sponsor_id LIKE '%".$like['search_key']."%' OR B.first_name LIKE '%".$like['search_key']."%' OR B.last_name LIKE '%".$like['search_key']."%')";
+		}
+		if(is_numeric($page)){
+			$sql = "SELECT A.user_id AS id, A.first_name AS first_name, A.last_name AS last_name, A.mobile_no, A.sponsor_id AS user_id, A.status, B.first_name AS parent_first_name, B.last_name AS parent_last_name, B.sponsor_id FROM ".TABLE_USER." A, ".TABLE_USER." B WHERE A.parent_id = B.user_id ".$likes." ORDER BY A.user_id DESC LIMIT ".$page.", ".PAGINATION_PER_PAGE;
+		}else{
+			$sql = "SELECT A.user_id AS id, A.first_name AS first_name, A.last_name AS last_name, A.mobile_no, A.sponsor_id AS user_id, A.status, B.first_name AS parent_first_name, B.last_name AS parent_last_name, B.sponsor_id FROM ".TABLE_USER." A, ".TABLE_USER." B WHERE A.parent_id = B.user_id ".$likes." ORDER BY A.user_id DESC";
+		}	
 		
 		$query = $this->db->query($sql);
 		
