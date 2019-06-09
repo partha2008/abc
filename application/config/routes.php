@@ -61,6 +61,8 @@ $route['myaccount'] = 'home/myaccount';
 $route['changepassword'] = 'home/changepassword';
 $route['logout'] = 'home/logout';
 $route['member-tree'] = 'member/member_tree';
+$route['direct-list'] = 'member/direct_list';
+$route['team-level'] = 'member/team_level';
 
 $route['admin'] = 'admin/user/index';
 

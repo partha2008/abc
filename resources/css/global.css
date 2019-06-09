@@ -22156,3 +22156,10 @@ ul.tree li b.thide {
     cursor: pointer;
     z-index: 9999;
 }
+
+.even-background tbody tr:nth-child(even) {background-color: #f6f9fc;}
+.table.even-background thead th{
+    font-size:12px;
+    color:#5e72e4;
+    font-weight:bold;
+}

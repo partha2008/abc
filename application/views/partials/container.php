@@ -40,13 +40,13 @@
                 </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link dropdown-toggle <?php if($tot_segments[1] == 'member-tree'){echo 'show';}?>" href="JavaScript:Void(0);" id="teamdetails" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle <?php if($tot_segments[1] == 'member-tree' || $tot_segments[1] == 'direct-list' || $tot_segments[1] == 'team-level'){echo 'show';}?>" href="JavaScript:Void(0);" id="teamdetails" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="ni ni-badge text-orange"></i> Team Details
             </a>
-            <div class="dropdown-menu <?php if($tot_segments[1] == 'member-tree'){echo 'show';}?>" aria-labelledby="teamdetails">
-                  <a class="dropdown-item" href="javascript:void(0);"><i class="ni ni-bold-right"></i>Direct List</a>
+            <div class="dropdown-menu <?php if($tot_segments[1] == 'member-tree' || $tot_segments[1] == 'direct-list' || $tot_segments[1] == 'team-level'){echo 'show';}?>" aria-labelledby="teamdetails">
+                  <a class="dropdown-item <?php if($tot_segments[1] == 'direct-list'){echo 'active';}?>" href="<?php echo base_url('direct-list');?>"><i class="ni ni-bold-right"></i>Direct List</a>
                   <a class="dropdown-item <?php if($tot_segments[1] == 'member-tree'){echo 'active';}?>" href="<?php echo base_url('member-tree');?>"><i class="ni ni-bold-right"></i>Member Tree</a>
-                  <a class="dropdown-item" href="javascript:void(0);"><i class="ni ni-bold-right"></i>Team Level</a>
+                  <a class="dropdown-item <?php if($tot_segments[1] == 'team-level'){echo 'active';}?>" href="<?php echo base_url('team-level');?>"><i class="ni ni-bold-right"></i>Team Level</a>
                 </div>
           </li>
           <li class="nav-item">

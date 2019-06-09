@@ -104,5 +104,46 @@
 
             return $tree;
 		} 
+
+		public function direct_list(){
+			$user = $this->userdata->grab_user_details(array("user_id" => $this->session->userdata('user_id')));
+			$children = $this->userdata->grab_user_details(array("parent_id" => $this->session->userdata('user_id'), "status" => "Y"));
+
+			$this->data['user_details'] = $user[0];
+			$this->data['children'] = $children;
+			$this->data['inner'] = $this->load->view('partials/direct_list_inner', $this->data, true);
+			$this->data['page_name'] = 'Direct List';
+			$this->data['container'] = $this->load->view('partials/container', $this->data, true);
+
+			$this->load->view('direct_list', $this->data);
+		}
+
+		public function team_level(){
+			$user = $this->userdata->grab_user_details(array("user_id" => $this->session->userdata('user_id')));
+			$active_user = $this->userdata->grab_user_details(array("status" => "Y", "user_id" => $this->session->userdata('user_id')));
+			$user_id = $this->session->userdata('user_id');
+
+			$sql = "SELECT * FROM abc_users WHERE FIND_IN_SET(user_id,(SELECT GROUP_CONCAT(lv SEPARATOR ',') FROM (SELECT @pv:=(SELECT GROUP_CONCAT(user_id SEPARATOR ',') FROM abc_users WHERE parent_id IN (@pv)) AS lv FROM abc_users JOIN (SELECT @pv:=$user_id)tmp WHERE parent_id IN (@pv)) a)) AND status='Y'";
+			$query = $this->db->query($sql);
+			$children = $query->result();
+
+			if(!empty($children)){
+				foreach ($children as $key => $value) {
+					$parent = $this->userdata->grab_user_details(array("user_id" => $value->parent_id));
+
+					$children[$key]->parent_first_name = $parent[0]->first_name;
+					$children[$key]->parent_last_name = $parent[0]->last_name;
+					$children[$key]->parent_sponsor_id = $parent[0]->sponsor_id;
+				}
+			}
+						
+			$this->data['user_details'] = $user[0];
+			$this->data['children'] = $children;
+			$this->data['inner'] = $this->load->view('partials/team_level_inner', $this->data, true);
+			$this->data['page_name'] = 'Team Level';
+			$this->data['container'] = $this->load->view('partials/container', $this->data, true);
+
+			$this->load->view('team_level', $this->data);
+		}
 	}
 ?>
