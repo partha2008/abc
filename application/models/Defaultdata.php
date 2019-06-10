@@ -143,12 +143,14 @@ class Defaultdata extends CI_Model {
 		{
 			$this->session->set_userdata('user_id', $user_data->user_id);
 			$this->session->set_userdata('user_email', $user_data->email);
+			$this->session->set_userdata('parent_id', $user_data->parent_id);
 		}
 	}
 	public function unsetFrontendLoginSession()
 	{
 		$this->session->unset_userdata('user_id');
 		$this->session->unset_userdata('user_email');	
+		$this->session->unset_userdata('parent_id');
 	}
 	public function getUserId($len=6) {
 		return "ABC".mt_rand(100000, 999999);

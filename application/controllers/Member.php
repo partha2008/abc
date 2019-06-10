@@ -124,18 +124,12 @@
 
 		public function team_level(){
 			$user = $this->userdata->grab_user_details(array("user_id" => $this->session->userdata('user_id')));
+			$current_parent_id = $this->session->userdata('parent_id');
 
-			$children = $this->get_children($this->session->userdata('user_id'));
+			$sql = "SELECT DISTINCT(parent_id) FROM `abc_users` WHERE parent_id >= ".$current_parent_id." AND status='Y' ORDER BY parent_id ASC";
+			$query = $this->db->query($sql);
+			$level = $query->result();
 
-			$level = array();
-
-			if(!empty($children)){
-				foreach ($children as $key => $value) {
-					if(!in_array($value->parent_id, $level)){
-						$level[] = $value->parent_id;
-					}					
-				}
-			}						
 			$this->data['user_details'] = $user[0];
 			$this->data['level'] = $level;
 			$this->data['inner'] = $this->load->view('partials/team_level_inner', $this->data, true);
@@ -147,8 +141,7 @@
 
 		public function getTeamLevel(){
 			$parent_id = $this->input->post('parent_id');
-			$parent = $this->userdata->grab_user_details(array("parent_id" => $parent_id));
-			$children = $this->get_children($parent[0]->user_id);
+			$children = $this->userdata->grab_user_details(array("parent_id >" => $parent_id));
 
 			if(!empty($children)){
 				foreach ($children as $key => $value) {

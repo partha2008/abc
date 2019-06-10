@@ -8,7 +8,7 @@
           if(!empty($level)){
             for($i=0;$i<count($level)-1;$i++){
         ?>
-              <option value="<?php echo $level[$i];?>"><?php echo $i+1;?></option>
+              <option value="<?php echo $level[$i]->parent_id;?>"><?php echo $i+1;?></option>
         <?php
             }
           }

@@ -30,7 +30,7 @@ class Userdata extends CI_Model {
 		return true;
 	}
 	
-	public function grab_user_details($cond = array(), $limit = array(), $like = array(), $where = null){
+	public function grab_user_details($cond = array(), $limit = array(), $like = array(), $where = null, $order_by = array()){
 		if(!empty($cond)){
 			$this->db->where($cond);			
 		}
@@ -46,7 +46,12 @@ class Userdata extends CI_Model {
 			$start = max(0, ( $offset -1 ) * $per_page);
 			$this->db->limit($per_page, $start);
 		}
-		$this->db->order_by('date_added','desc');
+		if(empty($order_by)){
+			$this->db->order_by('date_added','desc');
+		}else{
+			$this->db->order_by(key($order_by), current($order_by));
+		}
+		
 		$query = $this->db->get(TABLE_USER);
 		
 		return $query->result();
