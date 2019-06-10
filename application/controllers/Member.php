@@ -56,15 +56,19 @@
 			$this->load->view('pdfreport', $this->data);
 		}
 
+		public function get_children($user_id){
+			$sql = "SELECT * FROM abc_users WHERE FIND_IN_SET(user_id,(SELECT GROUP_CONCAT(lv SEPARATOR ',') FROM (SELECT @pv:=(SELECT GROUP_CONCAT(user_id SEPARATOR ',') FROM abc_users WHERE parent_id IN (@pv)) AS lv FROM abc_users JOIN (SELECT @pv:=$user_id)tmp WHERE parent_id IN (@pv)) a)) AND status='Y'";
+			$query = $this->db->query($sql);
+
+			return $query->result();
+		}
+
 		public function member_tree(){
 			$user = $this->userdata->grab_user_details(array("user_id" => $this->session->userdata('user_id')));
 			$active_user = $this->userdata->grab_user_details(array("status" => "Y", "user_id" => $this->session->userdata('user_id')));
-			$user_id = $this->session->userdata('user_id');
 
-			$sql = "SELECT * FROM abc_users WHERE FIND_IN_SET(user_id,(SELECT GROUP_CONCAT(lv SEPARATOR ',') FROM (SELECT @pv:=(SELECT GROUP_CONCAT(user_id SEPARATOR ',') FROM abc_users WHERE parent_id IN (@pv)) AS lv FROM abc_users JOIN (SELECT @pv:=$user_id)tmp WHERE parent_id IN (@pv)) a)) AND status='Y'";
-			$query = $this->db->query($sql);
 			if(!empty($active_user)){
-				$children = array_merge($active_user, $query->result());
+				$children = array_merge($active_user, $this->get_children($this->session->userdata('user_id')));
 			}
 
 			if(isset($children[0]->parent_id)){
@@ -120,12 +124,31 @@
 
 		public function team_level(){
 			$user = $this->userdata->grab_user_details(array("user_id" => $this->session->userdata('user_id')));
-			$active_user = $this->userdata->grab_user_details(array("status" => "Y", "user_id" => $this->session->userdata('user_id')));
-			$user_id = $this->session->userdata('user_id');
 
-			$sql = "SELECT * FROM abc_users WHERE FIND_IN_SET(user_id,(SELECT GROUP_CONCAT(lv SEPARATOR ',') FROM (SELECT @pv:=(SELECT GROUP_CONCAT(user_id SEPARATOR ',') FROM abc_users WHERE parent_id IN (@pv)) AS lv FROM abc_users JOIN (SELECT @pv:=$user_id)tmp WHERE parent_id IN (@pv)) a)) AND status='Y'";
-			$query = $this->db->query($sql);
-			$children = $query->result();
+			$children = $this->get_children($this->session->userdata('user_id'));
+
+			$level = array();
+
+			if(!empty($children)){
+				foreach ($children as $key => $value) {
+					if(!in_array($value->parent_id, $level)){
+						$level[] = $value->parent_id;
+					}					
+				}
+			}						
+			$this->data['user_details'] = $user[0];
+			$this->data['level'] = $level;
+			$this->data['inner'] = $this->load->view('partials/team_level_inner', $this->data, true);
+			$this->data['page_name'] = 'Team Level';
+			$this->data['container'] = $this->load->view('partials/container', $this->data, true);
+
+			$this->load->view('team_level', $this->data);
+		}
+
+		public function getTeamLevel(){
+			$parent_id = $this->input->post('parent_id');
+			$parent = $this->userdata->grab_user_details(array("parent_id" => $parent_id));
+			$children = $this->get_children($parent[0]->user_id);
 
 			if(!empty($children)){
 				foreach ($children as $key => $value) {
@@ -136,14 +159,14 @@
 					$children[$key]->parent_sponsor_id = $parent[0]->sponsor_id;
 				}
 			}
-						
-			$this->data['user_details'] = $user[0];
-			$this->data['children'] = $children;
-			$this->data['inner'] = $this->load->view('partials/team_level_inner', $this->data, true);
-			$this->data['page_name'] = 'Team Level';
-			$this->data['container'] = $this->load->view('partials/container', $this->data, true);
 
-			$this->load->view('team_level', $this->data);
+			if(!empty($children)){
+				$this->data['children'] = $children;
+				
+				echo $this->load->view('partials/team_level_inner_inner', $this->data, true);
+			}else{
+				echo '';
+			}
 		}
 	}
 ?>

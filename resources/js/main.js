@@ -14,3 +14,12 @@ function getSponsor(sponsor_id){
 		}		
 	});
 }
+
+function getTeamLevel(parent_id){
+	if(!parent_id){
+		return false;
+	}
+	$.post(BASEPATH+"member/getTeamLevel", {parent_id: parent_id}, function(data){
+		$("#team_level").html(data);		
+	});
+}

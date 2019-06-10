@@ -36,7 +36,7 @@
   <!-- coustome.js -->
   <script src="<?php echo base_url(); ?>resources/js/custom.js"></script>
   <?php
-    if($tot_segments[1] == 'register'){
+    if($tot_segments[1] == 'register' || $tot_segments[1] == 'team-level'){
   ?>
   <script src="<?php echo base_url(); ?>resources/js/main.js"></script>  
   <?php
