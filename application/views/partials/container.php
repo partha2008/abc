@@ -49,14 +49,11 @@
                   <a class="dropdown-item <?php if($tot_segments[1] == 'team-level'){echo 'active';}?>" href="<?php echo base_url('team-level');?>"><i class="ni ni-bold-right"></i>Team Level</a>
                 </div>
           </li>
+
           <li class="nav-item">
-            <a class="nav-link dropdown-toggle " href="JavaScript:Void(0);" id="message" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="ni ni-email-83 text-blue"></i> Message
+            <a class="nav-link <?php if($tot_segments[1] == 'message'){echo 'active';}?>" href="<?php echo base_url('message');?>">
+              <i class="ni ni-money-coins text-info"></i> Message
             </a>
-            <div class="dropdown-menu" aria-labelledby="message">
-                  <a class="dropdown-item" href="javascript:void(0);"><i class="ni ni-bold-right"></i>Message</a>
-                  <a class="dropdown-item" href="javascript:void(0);"><i class="ni ni-bold-right"></i>Message List</a>
-                </div>
           </li>
           
           <li class="nav-item">

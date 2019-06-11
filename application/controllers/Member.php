@@ -5,7 +5,7 @@
 		
 		public $data = array();
 		private $perPage = 6;
-		public $loggedin_method_arr = array();
+		public $loggedin_method_arr = array('my_income', 'member_tree', 'direct_list', 'team_level', 'message', 'create_form');
 
 		public $loggedout_method_arr = array();
 		
@@ -15,6 +15,7 @@
 			$this->load->model('userdata');
 
 			$this->data = $this->defaultdata->getFrontendDefaultData();
+			//die($this->data['tot_segments'][2]);
 
 			if(in_array($this->data['tot_segments'][2], $this->loggedin_method_arr))
 			{
@@ -79,8 +80,8 @@
 						
 			$this->data['user_details'] = $user[0];
 			$this->data['tree'] = $tree;
-			$this->data['inner'] = $this->load->view('partials/member_tree_inner', $this->data, true);
 			$this->data['page_name'] = 'Member Tree';
+			$this->data['inner'] = $this->load->view('partials/member_tree_inner', $this->data, true);
 			$this->data['container'] = $this->load->view('partials/container', $this->data, true);
 
 			$this->load->view('member_tree', $this->data);
@@ -115,8 +116,8 @@
 
 			$this->data['user_details'] = $user[0];
 			$this->data['children'] = $children;
-			$this->data['inner'] = $this->load->view('partials/direct_list_inner', $this->data, true);
 			$this->data['page_name'] = 'Direct List';
+			$this->data['inner'] = $this->load->view('partials/direct_list_inner', $this->data, true);
 			$this->data['container'] = $this->load->view('partials/container', $this->data, true);
 
 			$this->load->view('direct_list', $this->data);
@@ -132,8 +133,8 @@
 
 			$this->data['user_details'] = $user[0];
 			$this->data['level'] = $level;
-			$this->data['inner'] = $this->load->view('partials/team_level_inner', $this->data, true);
 			$this->data['page_name'] = 'Team Level';
+			$this->data['inner'] = $this->load->view('partials/team_level_inner', $this->data, true);
 			$this->data['container'] = $this->load->view('partials/container', $this->data, true);
 
 			$this->load->view('team_level', $this->data);
@@ -166,8 +167,8 @@
 			$user = $this->userdata->grab_user_details(array("user_id" => $this->session->userdata('user_id')));			
 
 			$this->data['user_details'] = $user[0];			
-			$this->data['inner'] = $this->load->view('partials/my_income_inner', $this->data, true);
 			$this->data['page_name'] = 'My Income';
+			$this->data['inner'] = $this->load->view('partials/my_income_inner', $this->data, true);
 			$this->data['container'] = $this->load->view('partials/container', $this->data, true);
 
 			$this->load->view('my_income', $this->data);
@@ -178,7 +179,7 @@
 			$to = $this->input->post('to');
 			$current_user_id = $this->session->userdata('user_id');
 
-			$sql = "SELECT * FROM ".TABLE_USER_PNR." WHERE user_id = ".$current_user_id." AND date BETWEEN ".strtotime($from)." AND ".strtotime($to)." ORDER BY user_pnr_id DESC";
+			$sql = "SELECT * FROM ".TABLE_USER_PNR." WHERE user_id = ".$current_user_id." AND FROM_UNIXTIME(date, '%d-%m-%Y') BETWEEN '".$from."' AND '".$to."' ORDER BY user_pnr_id DESC";
 			$query = $this->db->query($sql);
 			$user_pnr = $query->result();
 
@@ -192,6 +193,46 @@
 			$this->data['user_pnr'] = $user_pnr;
 
 			echo $this->load->view('partials/my_income_inner_inner', $this->data, true)."~".$total_amount;			
+		}
+
+		public function message(){
+			$user = $this->userdata->grab_user_details(array("user_id" => $this->session->userdata('user_id')));	
+			$messages = $this->userdata->grab_message_details(array("user_id" => $this->session->userdata('user_id')));		
+
+			$this->data['user_details'] = $user[0];
+			$this->data['messages'] = $messages;
+			$this->data['page_name'] = 'Message';			
+			$this->data['inner'] = $this->load->view('partials/message_inner', $this->data, true);	
+			$this->data['container'] = $this->load->view('partials/container', $this->data, true);
+
+			$this->load->view('my_income', $this->data);
+		}
+
+		public function send_message(){
+			$post_data = $this->input->post();
+				
+			$this->load->library('form_validation');
+
+			$this->form_validation->set_rules('subject', 'Subject', 'trim|required');
+			$this->form_validation->set_rules('message', 'Message', 'trim|required');
+
+			if($this->form_validation->run() == FALSE)
+			{	
+				$this->session->set_userdata('has_error', true);
+				$this->session->set_userdata('msg_notification', validation_errors());
+
+				redirect($this->agent->referrer());
+			}else{
+				$post_data['user_id'] = $this->session->userdata('user_id');
+				$post_data['date'] = time();
+
+				if($this->userdata->insert_message($post_data)){
+					$this->session->set_userdata('has_error', false);
+					$this->session->set_userdata('msg_notification', "Your message sent successfully");
+
+					redirect($this->agent->referrer());
+				}
+			}
 		}
 	}
 ?>

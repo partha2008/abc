@@ -110,3 +110,4 @@ define('TABLE_USER', TABLE_PREFIX.'users');
 define('TABLE_CMS', TABLE_PREFIX.'cms');
 define('TABLE_STATE', TABLE_PREFIX.'state');
 define('TABLE_USER_PNR', TABLE_PREFIX.'user_pnr');
+define('TABLE_MESSAGE', TABLE_PREFIX.'message');

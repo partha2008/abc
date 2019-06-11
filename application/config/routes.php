@@ -60,10 +60,12 @@ $route['dashboard'] = 'home/dashboard';
 $route['myaccount'] = 'home/myaccount';
 $route['changepassword'] = 'home/changepassword';
 $route['logout'] = 'home/logout';
+
 $route['member-tree'] = 'member/member_tree';
 $route['direct-list'] = 'member/direct_list';
 $route['team-level'] = 'member/team_level';
 $route['my-income'] = 'member/my_income';
+$route['message'] = 'member/message';
 
 $route['admin'] = 'admin/user/index';
 
@@ -72,6 +74,7 @@ $route['admin/dashboard'] = 'admin/user/dashboard';
 $route['admin/profile'] = 'admin/user/profile';
 $route['admin/settings'] = 'admin/user/settings';
 $route['admin/about'] = 'admin/user/cms';
+$route['admin/message-list'] = 'admin/message/message_list';
 $route['admin/user-list'] = 'admin/user/user_list';
 $route['admin/user-add'] = 'admin/user/user_add';
 $route['admin/user-edit/(:num)'] = 'admin/user/user_edit/$1';

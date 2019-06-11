@@ -22182,7 +22182,7 @@ ul.tree li b.thide {
     font-weight: bold;
 }
 
-.income-list{
+.income-list, .msg-list{
     margin-top: 25px;
 }
 
@@ -22206,4 +22206,8 @@ ul.tree li b.thide {
     right: 25px;
     margin-top: -8px;
     background-image: url(../images/loading.gif);
+}
+
+.msg-list td{
+    white-space: inherit;
 }

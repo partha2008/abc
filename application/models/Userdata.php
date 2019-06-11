@@ -151,4 +151,34 @@ class Userdata extends CI_Model {
 		
 		return $query->result();
 	}
+
+	public function insert_message($data = array()){
+
+		$this->db->insert(TABLE_MESSAGE, $data); 
+		
+		return $this->db->insert_id();;
+	}
+
+	public function grab_message_details($cond = array(), $limit = array(), $like = array(), $where = null){
+		if(!empty($cond)){
+			$this->db->where($cond);			
+		}
+		if($where){
+			$this->db->where($where);	
+		}		
+		if(!empty($like)){
+			$this->db->like($like);
+		}
+		if(!empty($limit)){
+			$per_page = $limit[0];
+			$offset = $limit[1];
+			$start = max(0, ( $offset -1 ) * $per_page);
+			$this->db->limit($per_page, $start);
+		}
+		$this->db->order_by('date','desc');
+		
+		$query = $this->db->get(TABLE_MESSAGE);
+		
+		return $query->result();
+	}
 }

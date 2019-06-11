@@ -3,7 +3,7 @@
     <div class="card-header border-0">
       <div class="row">
         
-        <div class="col-sm-8"><h3 class="mb-0">Team Level</h3></div>
+        <div class="col-sm-8"><h3 class="mb-0"><?php echo $page_name;?></h3></div>
         <div class="col-sm-4">
           <div class="team-level_block">
                    <select class="form-control" name="state_id" id="state_id" onchange="getTeamLevel(this.value);">

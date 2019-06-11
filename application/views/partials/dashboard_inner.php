@@ -59,7 +59,7 @@
             </div>
             
             <div class="col-xl-6 col-lg-6">
-              <a href="javascript:void(0);"><div class="card card-stats mb-4 mb-xl-4 Profile-image">
+              <a href="<?php echo base_url('message');?>"><div class="card card-stats mb-4 mb-xl-4 Profile-image">
                 <div class="card-body">
                   	<div class="dashboard-box">
                     	<div class="icon">
@@ -73,7 +73,7 @@
             </div>
             
             <div class="col-xl-6 col-lg-6">
-              <a href="javascript:void(0);"><div class="card card-stats mb-4 mb-xl-4 Profile-image">
+              <a href="<?php echo base_url('my-income');?>"><div class="card card-stats mb-4 mb-xl-4 Profile-image">
                 <div class="card-body">
                   	<div class="dashboard-box">
                     	<div class="icon">
