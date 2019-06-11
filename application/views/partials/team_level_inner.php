@@ -1,19 +1,29 @@
 <div class="col">
   <div class="card shadow">
     <div class="card-header border-0">
-      <h3 class="mb-0">Team Level</h3>
-      <select class="form-control" name="state_id" id="state_id" onchange="getTeamLevel(this.value);">
-        <option value="">Select Level</option>
-        <?php
-          if(!empty($level)){
-            for($i=0;$i<count($level)-1;$i++){
-        ?>
-              <option value="<?php echo $level[$i]->parent_id;?>"><?php echo $i+1;?></option>
-        <?php
-            }
-          }
-        ?>
-      </select>
+      <div class="row">
+        
+        <div class="col-sm-8"><h3 class="mb-0">Team Level</h3></div>
+        <div class="col-sm-4">
+          <div class="team-level_block">
+                   <select class="form-control" name="state_id" id="state_id" onchange="getTeamLevel(this.value);">
+                <option value="">Select Level</option>
+                <?php
+                  if(!empty($level)){
+                    for($i=0;$i<count($level)-1;$i++){
+                ?>
+                      <option value="<?php echo $level[$i]->parent_id;?>"><?php echo $i+1;?></option>
+                <?php
+                    }
+                  }
+                ?>
+              </select>
+              <span class="loader" id="team_level_spinner"></span>
+          </div>
+        </div>
+      </div>
+      
+     
     </div>
     <div class="table-responsive" id="team_level"></div>
     <!--<div class="card-footer py-4">

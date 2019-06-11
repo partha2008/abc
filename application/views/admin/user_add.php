@@ -105,7 +105,7 @@
 											<input class="form-control" type="text" name="nominee_relation" placeholder="Enter Nominee Relation" value="<?php if(isset($user_details->nominee_relation) && $user_details->nominee_relation){echo $user_details->nominee_relation;}?>">
 										</div>
 										<div class="form-group">
-											<label class="control-label">About Me <span style="color:#a94442;">*</span></label>
+											<label class="control-label">About Me</label>
 											<textarea class="form-control" name="about_me" placeholder="Enter About Me"><?php if(isset($user_details->about_me) && $user_details->about_me){echo $user_details->about_me;}?></textarea>
 										</div>
 										<div class="form-group">

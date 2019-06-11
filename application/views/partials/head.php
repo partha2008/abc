@@ -14,8 +14,13 @@
   <!-- Icons -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/nucleo.css" />
   <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/all.min.css" />
-  <!-- global.css -->
-  
+  <?php
+    if($tot_segments[1] == "my-income") {
+  ?>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">  
+  <?php
+    }
+  ?>
   <link rel="stylesheet" href="<?php echo base_url(); ?>resources/css/main.css" />
   <?php
     if($tot_segments[1] == "member-tree") {
@@ -36,7 +41,7 @@
   <!-- coustome.js -->
   <script src="<?php echo base_url(); ?>resources/js/custom.js"></script>
   <?php
-    if($tot_segments[1] == 'register' || $tot_segments[1] == 'team-level'){
+    if($tot_segments[1] == 'register' || $tot_segments[1] == 'team-level' || $tot_segments[1] == "my-income"){
   ?>
   <script src="<?php echo base_url(); ?>resources/js/main.js"></script>  
   <?php
@@ -60,6 +65,20 @@
             'draggable_option': false
         });
         $('[data-toggle="tooltip"]').tooltip(); 
+    });
+  </script>
+  <?php
+    }
+  ?>
+  <?php
+    if($tot_segments[1] == "my-income") {
+  ?>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+    $(document).ready(function() {
+      $( ".datepicker" ).datepicker({
+        dateFormat: "dd-mm-yy"
+      });
     });
   </script>
   <?php

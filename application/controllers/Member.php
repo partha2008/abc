@@ -57,7 +57,7 @@
 		}
 
 		public function get_children($user_id){
-			$sql = "SELECT * FROM abc_users WHERE FIND_IN_SET(user_id,(SELECT GROUP_CONCAT(lv SEPARATOR ',') FROM (SELECT @pv:=(SELECT GROUP_CONCAT(user_id SEPARATOR ',') FROM abc_users WHERE parent_id IN (@pv)) AS lv FROM abc_users JOIN (SELECT @pv:=$user_id)tmp WHERE parent_id IN (@pv)) a)) AND status='Y'";
+			$sql = "SELECT * FROM ".TABLE_USER." WHERE FIND_IN_SET(user_id,(SELECT GROUP_CONCAT(lv SEPARATOR ',') FROM (SELECT @pv:=(SELECT GROUP_CONCAT(user_id SEPARATOR ',') FROM ".TABLE_USER." WHERE parent_id IN (@pv)) AS lv FROM ".TABLE_USER." JOIN (SELECT @pv:=$user_id)tmp WHERE parent_id IN (@pv)) a)) AND status='Y'";
 			$query = $this->db->query($sql);
 
 			return $query->result();
@@ -126,7 +126,7 @@
 			$user = $this->userdata->grab_user_details(array("user_id" => $this->session->userdata('user_id')));
 			$current_parent_id = $this->session->userdata('parent_id');
 
-			$sql = "SELECT DISTINCT(parent_id) FROM `abc_users` WHERE parent_id >= ".$current_parent_id." AND status='Y' ORDER BY parent_id ASC";
+			$sql = "SELECT DISTINCT(parent_id) FROM ".TABLE_USER." WHERE parent_id >= ".$current_parent_id." AND status='Y' ORDER BY parent_id ASC";
 			$query = $this->db->query($sql);
 			$level = $query->result();
 
@@ -163,16 +163,35 @@
 		}
 
 		public function my_income(){
-			$user = $this->userdata->grab_user_details(array("user_id" => $this->session->userdata('user_id')));
-			$user_pnr = $this->userdata->grab_user_pnr_details(array("user_id" => $this->session->userdata('user_id')));
+			$user = $this->userdata->grab_user_details(array("user_id" => $this->session->userdata('user_id')));			
 
-			$this->data['user_details'] = $user[0];
-			$this->data['user_pnr'] = $user_pnr;
+			$this->data['user_details'] = $user[0];			
 			$this->data['inner'] = $this->load->view('partials/my_income_inner', $this->data, true);
 			$this->data['page_name'] = 'My Income';
 			$this->data['container'] = $this->load->view('partials/container', $this->data, true);
 
 			$this->load->view('my_income', $this->data);
+		}
+
+		public function get_my_income(){
+			$from = $this->input->post('from');
+			$to = $this->input->post('to');
+			$current_user_id = $this->session->userdata('user_id');
+
+			$sql = "SELECT * FROM ".TABLE_USER_PNR." WHERE user_id = ".$current_user_id." AND date BETWEEN ".strtotime($from)." AND ".strtotime($to)." ORDER BY user_pnr_id DESC";
+			$query = $this->db->query($sql);
+			$user_pnr = $query->result();
+
+			$total_amount = 0;
+			if(!empty($user_pnr)){
+				foreach ($user_pnr as $key => $value) {
+					$total_amount = $total_amount+$value->amount;
+				}
+			}
+
+			$this->data['user_pnr'] = $user_pnr;
+
+			echo $this->load->view('partials/my_income_inner_inner', $this->data, true)."~".$total_amount;			
 		}
 	}
 ?>
