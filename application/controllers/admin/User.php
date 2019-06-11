@@ -426,7 +426,11 @@
 				$cond['user_id'] = $user_id;
 				$user_data = $this->userdata->grab_user_details($cond);
 				
-				$user_details = $user_data[0];				
+				$user_details = $user_data[0];	
+				$user_pnr = $this->userdata->grab_user_pnr_details(array("approval_id" => $user_id));
+
+				$this->data['user_pnr'] = $user_pnr;
+				$this->data['radio_status'] = $user_details->status;
 			}else{
 				$user_details = (object)$this->session->userdata;
 			}
@@ -480,6 +484,9 @@
 				$this->form_validation->set_rules('pnr1', 'PNR1', 'trim|required|is_unique['.TABLE_USER.'.pnr1]');	
 				$this->form_validation->set_rules('pnr2', 'PNR2', 'trim|required|is_unique['.TABLE_USER.'.pnr2]');
 				$this->form_validation->set_rules('pnr3', 'PNR3', 'trim|required|is_unique['.TABLE_USER.'.pnr3]');
+				$this->form_validation->set_rules('remark1', 'Remark1', 'trim|required');
+				$this->form_validation->set_rules('remark2', 'Remark2', 'trim|required');
+				$this->form_validation->set_rules('remark3', 'Remark3', 'trim|required');
 			}
 			
 			$this->session->unset_userdata($post_data);
@@ -513,11 +520,19 @@
 							redirect($this->agent->referrer());
 						}else{
 							// assign donation to user
-							$this->userdata->insert_user_pnr(array("pnr" => $post_data['pnr1'], "user_id" => $post_data['user1'], "date" => $time));
+							$income = $this->config->item('site_info')['donation_per_basis'];
 
-							$this->userdata->insert_user_pnr(array("pnr" => $post_data['pnr2'], "user_id" => $post_data['user2'], "date" => $time));
+							$this->userdata->insert_user_pnr(array("pnr" => $post_data['pnr1'], "user_id" => $post_data['user1'], "approval_id" => $post_data['user_id'], "remark" => $post_data['remark1'], "amount" => $income, "date" => $time));
 
-							$this->userdata->insert_user_pnr(array("pnr" => $post_data['pnr3'], "user_id" => $post_data['user3'], "date" => $time));
+							$this->update_total_income($post_data['user1'], $income);
+
+							$this->userdata->insert_user_pnr(array("pnr" => $post_data['pnr2'], "user_id" => $post_data['user2'], "approval_id" => $post_data['user_id'], "remark" => $post_data['remark2'], "amount" => $income, "date" => $time));
+
+							$this->update_total_income($post_data['user2'], $income);
+
+							$this->userdata->insert_user_pnr(array("pnr" => $post_data['pnr3'], "user_id" => $post_data['user3'], "approval_id" => $post_data['user_id'], "remark" => $post_data['remark3'], "amount" => $income, "date" => $time));
+
+							$this->update_total_income($post_data['user3'], $income);
 						}
 					}
 					$cond['user_id'] = $post_data['user_id'];					
@@ -542,11 +557,24 @@
 					unset($post_data['user1']);
 					unset($post_data['user2']);
 					unset($post_data['user3']);
+					unset($post_data['remark1']);
+					unset($post_data['remark2']);
+					unset($post_data['remark3']);
 
 					$this->userdata->update_user_details($cond, $post_data);
 					
 					redirect(base_url('admin/user-list'));
 				}	
+			}
+		}
+
+		public function update_total_income($user_id, $income){
+			$user_details = $this->userdata->grab_user_details(array("user_id" => $user_id));
+
+			$total_income = $user_details[0]->total_income+$income;
+
+			if($this->userdata->update_user_details(array("user_id" => $user_id), array("total_income" => $total_income))){
+				return true;
 			}
 		}
 		

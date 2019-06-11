@@ -161,5 +161,18 @@
 				echo '';
 			}
 		}
+
+		public function my_income(){
+			$user = $this->userdata->grab_user_details(array("user_id" => $this->session->userdata('user_id')));
+			$user_pnr = $this->userdata->grab_user_pnr_details(array("user_id" => $this->session->userdata('user_id')));
+
+			$this->data['user_details'] = $user[0];
+			$this->data['user_pnr'] = $user_pnr;
+			$this->data['inner'] = $this->load->view('partials/my_income_inner', $this->data, true);
+			$this->data['page_name'] = 'My Income';
+			$this->data['container'] = $this->load->view('partials/container', $this->data, true);
+
+			$this->load->view('my_income', $this->data);
+		}
 	}
 ?>

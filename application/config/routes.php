@@ -63,6 +63,7 @@ $route['logout'] = 'home/logout';
 $route['member-tree'] = 'member/member_tree';
 $route['direct-list'] = 'member/direct_list';
 $route['team-level'] = 'member/team_level';
+$route['my-income'] = 'member/my_income';
 
 $route['admin'] = 'admin/user/index';
 

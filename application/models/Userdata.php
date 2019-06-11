@@ -129,4 +129,26 @@ class Userdata extends CI_Model {
 		
 		return $this->db->insert_id();;
 	}
+
+	public function grab_user_pnr_details($cond = array(), $limit = array(), $like = array(), $where = null, $order_by = array()){
+		if(!empty($cond)){
+			$this->db->where($cond);			
+		}
+		if($where){
+			$this->db->where($where);	
+		}		
+		if(!empty($like)){
+			$this->db->like($like);
+		}
+		if(!empty($limit)){
+			$per_page = $limit[0];
+			$offset = $limit[1];
+			$start = max(0, ( $offset -1 ) * $per_page);
+			$this->db->limit($per_page, $start);
+		}
+		
+		$query = $this->db->get(TABLE_USER_PNR);
+		
+		return $query->result();
+	}
 }

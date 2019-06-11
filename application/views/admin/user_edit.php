@@ -100,93 +100,88 @@
 										<div class="form-group">
 											<label class="control-label">Status</label>
 											<label class="radio-inline">
-												<input <?php if(isset($user_details->status)){if($user_details->status == "Y"){echo 'disabled';}}?> type="radio" name="status" value="Y" <?php if(isset($user_details->status)){if($user_details->status == "Y"){echo 'checked';}}else{echo 'checked';}?>>Active
+												<input <?php if(isset($radio_status) && $radio_status == "Y"){echo 'disabled';}?> type="radio" name="status" value="Y" <?php if(isset($user_details->status)){if($user_details->status == "Y"){echo 'checked';}}else{echo 'checked';}?>>Active
 											</label>
 											<label class="radio-inline">
-												<input <?php if(isset($user_details->status)){if($user_details->status == "Y"){echo 'disabled';}}?> type="radio" name="status" value="N" <?php if(isset($user_details->status)){if($user_details->status == "N"){echo 'checked';}}?>>Inactive
+												<input <?php if(isset($radio_status) && $radio_status == "Y"){echo 'disabled';}?> type="radio" name="status" value="N" <?php if(isset($user_details->status)){if($user_details->status == "N"){echo 'checked';}}?>>Inactive
 											</label>
 										</div>
 										<div class="panel panel-primary">
-									      <div class="panel-heading">PNR Details</div>
-									      <div class="panel-body">
-									      	<div class="form-group">
-										      	<div class="form-inline">
-												    <div class="form-group col-sm-4" style="margin-bottom: 15px;">
+									       <div class="panel-heading">PNR Details</div>
+									       <div class="panel-body">
+										      	<div class="form-horizontal">
+												    <div class="col-sm-4">
 												    	<label class="control-label">PNR1: </label>
-												    	<input type="text" class="form-control" <?php if($user_details->pnr1){echo 'readonly';}?> placeholder="Enter PNR1"  name="pnr1" value="<?php if(isset($user_details->pnr1) && $user_details->pnr1){echo $user_details->pnr1;}?>">
+												    	<input type="text" class="form-control" placeholder="Enter PNR1"  name="pnr1" value="<?php if(isset($user_details->pnr1) && $user_details->pnr1){echo $user_details->pnr1;}?>">
 												    </div>
-												    <div class="form-group col-sm-4" style="margin-bottom: 15px;">
+												    <div class="col-sm-4">
 												    	<label class="control-label">User1: </label>
-												    	<select class="form-control" name="user1" <?php if($user_details->pnr1){echo 'disabled';}?>>
+												    	<select class="form-control" name="user1">
 												    		<?php
 												    			if(!empty($parents)){
 												    				foreach ($parents as $key => $value){
 												    		?>
-												    			<option value="<?php echo $value->user_id;?>"><?php echo $value->first_name.' '.$value->last_name.' ('.$value->sponsor_id.')';?></option>
+												    			<option <?php if(isset($user_pnr) && !empty($user_pnr) && ($user_pnr[0]->user_id == $value->user_id)){echo 'selected';}elseif(isset($user_details->user1) && $user_details->user1 == $value->user_id){echo 'selected';} ?> value="<?php echo $value->user_id;?>"><?php echo $value->first_name.' '.$value->last_name.' ('.$value->sponsor_id.')';?></option>
 												    		<?php
 												    				}
 												    			}
 												    		?>		 		
 												    	</select>
 												    </div>	
-												    <div class="form-group col-sm-4" style="margin-bottom: 15px;">
-												    	<label class="control-label">Remark3: </label>
-												    	<input class="form-control" type="text" name="remark3">
+												    <div class="col-sm-4">
+												    	<label class="control-label">Remark1: </label>
+												    	<textarea class="form-control" name="remark1"><?php if(isset($user_pnr) && !empty($user_pnr)){echo $user_pnr[0]->remark;}elseif(isset($user_details->remark1) && $user_details->remark1){echo $user_details->remark1;}?></textarea>
 												    </div>
 	  											</div>
-	  										</div>
-	  										<div class="form-group">
-	  											<div class="form-inline">
-	  												<div class="form-group col-sm-4" style="margin-bottom: 15px;">
+	  										
+	  											<div class="form-horizontal">
+	  												<div class="col-sm-4">
 												    	<label class="control-label">PNR2: </label>
-												    	<input type="text" class="form-control" <?php if($user_details->pnr2){echo 'readonly';}?> placeholder="Enter PNR2"  name="pnr2" value="<?php if(isset($user_details->pnr2) && $user_details->pnr2){echo $user_details->pnr2;}?>">
+												    	<input type="text" class="form-control"  placeholder="Enter PNR2"  name="pnr2" value="<?php if(isset($user_details->pnr2) && $user_details->pnr2){echo $user_details->pnr2;}?>">
 												    </div>
-												    <div class="form-group col-sm-4" style="margin-bottom: 15px;">
+												    <div class="col-sm-4">
 												    	<label class="control-label">User2: </label>
-												    	<select class="form-control" name="user2" <?php if($user_details->pnr2){echo 'disabled';}?>>
+												    	<select class="form-control" name="user2">
 												    		<?php
 												    			if(!empty($parents)){
 												    				foreach ($parents as $key => $value){
 												    		?>
-												    			<option value="<?php echo $value->user_id;?>"><?php echo $value->first_name.' '.$value->last_name.' ('.$value->sponsor_id.')';?></option>
+												    			<option <?php if(isset($user_pnr) && !empty($user_pnr) && ($user_pnr[1]->user_id == $value->user_id)){echo 'selected';}elseif(isset($user_details->user1) && $user_details->user2 == $value->user_id){echo 'selected';} ?> value="<?php echo $value->user_id;?>"><?php echo $value->first_name.' '.$value->last_name.' ('.$value->sponsor_id.')';?></option>
 												    		<?php
 												    				}
 												    			}
 												    		?>	
 												    	</select>
 												    </div>
-												    <div class="form-group col-sm-4" style="margin-bottom: 15px;">
-												    	<label class="control-label">Remark3: </label>
-												    	<textarea class="form-control" name="remark3"></textarea>
-												    </div>	
+												    <div class="col-sm-4">
+												    	<label class="control-label">Remark2: </label>
+												    	<textarea class="form-control" name="remark2"><?php if(isset($user_pnr) && !empty($user_pnr)){echo $user_pnr[1]->remark;}elseif(isset($user_details->remark2) && $user_details->remark2){echo $user_details->remark2;}?></textarea>
+												    </div>
 												</div>
-	  										</div>
-	  										<div class="form-group">
-	  											<div class="form-inline">
-	  												<div class="form-group col-sm-4" style="margin-bottom: 15px;">
+	  											<div class="form-horizontal">
+	  												<div class="col-sm-4" style="margin-bottom: 15px;">
 												    	<label class="control-label">PNR3: </label>
-												    	<input type="text" class="form-control" <?php if($user_details->pnr3){echo 'readonly';}?>  placeholder="Enter PNR3"  name="pnr3" value="<?php if(isset($user_details->pnr3) && $user_details->pnr3){echo $user_details->pnr3;}?>">
+												    	<input type="text" class="form-control"  placeholder="Enter PNR3"  name="pnr3" value="<?php if(isset($user_details->pnr3) && $user_details->pnr3){echo $user_details->pnr3;}?>">
 												    </div>
-												    <div class="form-group col-sm-4" style="margin-bottom: 15px;">
+												    <div class="col-sm-4" style="margin-bottom: 15px;">
 												    	<label class="control-label">User3: </label>
-												    	<select class="form-control" name="user3" <?php if($user_details->pnr3){echo 'disabled';}?>>
+												    	<select class="form-control" name="user3">
 												    		<?php
 												    			if(!empty($parents)){
 												    				foreach ($parents as $key => $value){
 												    		?>
-												    			<option value="<?php echo $value->user_id;?>"><?php echo $value->first_name.' '.$value->last_name.' ('.$value->sponsor_id.')';?></option>
+												    			<option <?php if(isset($user_pnr) && !empty($user_pnr) && ($user_pnr[2]->user_id == $value->user_id)){echo 'selected';}elseif(isset($user_details->user1) && $user_details->user3 == $value->user_id){echo 'selected';} ?> value="<?php echo $value->user_id;?>"><?php echo $value->first_name.' '.$value->last_name.' ('.$value->sponsor_id.')';?></option>
 												    		<?php
 												    				}
 												    			}
 												    		?>	
 												    	</select>
 												    </div>
-												    <div class="form-group col-sm-4" style="margin-bottom: 15px;">
+												    <div class="col-sm-4">
 												    	<label class="control-label">Remark3: </label>
-												    	<textarea class="form-control" name="remark3"></textarea>
+												    	<textarea class="form-control" name="remark3"><?php if(isset($user_pnr) && !empty($user_pnr)){echo $user_pnr[2]->remark;}elseif(isset($user_details->remark3) && $user_details->remark3){echo $user_details->remark3;}?></textarea>
 												    </div>
 	  											</div>
-	  										</div>
 									      </div>
 									    </div>
 										<input type="hidden" name="old_email" value="<?php echo $user_details->email;?>">

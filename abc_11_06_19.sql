@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 11, 2019 at 05:31 AM
--- Server version: 10.1.37-MariaDB
--- PHP Version: 7.3.0
+-- Generation Time: Jun 11, 2019 at 02:43 PM
+-- Server version: 10.1.30-MariaDB
+-- PHP Version: 7.2.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -169,6 +169,7 @@ CREATE TABLE `abc_users` (
   `pnr1` varchar(255) NOT NULL,
   `pnr2` varchar(255) NOT NULL,
   `pnr3` varchar(255) NOT NULL,
+  `total_income` int(11) NOT NULL,
   `parent_id` int(11) NOT NULL,
   `status` enum('Y','N') NOT NULL DEFAULT 'N',
   `last_login` int(11) NOT NULL,
@@ -181,43 +182,43 @@ CREATE TABLE `abc_users` (
 -- Dumping data for table `abc_users`
 --
 
-INSERT INTO `abc_users` (`user_id`, `sponsor_id`, `first_name`, `last_name`, `email`, `password`, `original_password`, `mobile_no`, `address`, `city`, `district`, `post_code`, `state_id`, `nominee_info`, `nominee_relation`, `about_me`, `pnr1`, `pnr2`, `pnr3`, `parent_id`, `status`, `last_login`, `approved_on`, `date_added`, `date_modified`) VALUES
-(1, 'ABC999999', 'ABC Care Solution', '', '', '', '', '', '', '', '0', '', 0, '', '', '', '', '', '', 0, 'Y', 0, 0, 0, 0),
-(2, 'ABC891345', 'Partha2', 'Chowdhury', '', 'HguK9ZnSyhsvrFWHIVJoKm7UEistMtkNbpOEUy2bOJ0=', 'tester@123', '8981329979', '81(40/3/10) Shibtala Road, Khelaghar Garden', 'Barrackpore', 'North 24 PGS', '700122', 35, 'test', 'test', '', '', '', '', 1, 'Y', 1560020520, 0, 1558521750, 0),
-(3, 'ABC127571', 'Partha3', 'Chowdhury', '', 'HguK9ZnSyhsvrFWHIVJoKm7UEistMtkNbpOEUy2bOJ0=', 'tester@123', '8981329979', '81(40/3/10) Shibtala Road, Khelaghar Garden', 'Barrackpore', 'North 24 PGS', '700122', 35, 'test', 'test', '', '', '', '', 2, 'Y', 1559847234, 0, 1558521750, 0),
-(4, 'ABC124991', 'Partha4', 'Chowdhury', '', 'HguK9ZnSyhsvrFWHIVJoKm7UEistMtkNbpOEUy2bOJ0=', 'tester@123', '8981329979', '81(40/3/10) Shibtala Road, Khelaghar Garden', 'Barrackpore', 'North 24 PGS', '700122', 35, 'test', 'test', '', '', '', '', 3, 'Y', 1559646521, 0, 1558521750, 0),
-(5, 'ABC663229', 'Partha5', 'Chowdhury', '', 'HguK9ZnSyhsvrFWHIVJoKm7UEistMtkNbpOEUy2bOJ0=', 'tester@123', '8981329979', '81(40/3/10) Shibtala Road, Khelaghar Garden', 'Barrackpore', 'North 24 PGS', '700122', 35, 'test', 'test', '', '', '', '', 4, 'Y', 1559646521, 0, 1558521750, 0),
-(6, 'ABC526730', 'Partha6', 'Chowdhury', '', 'HguK9ZnSyhsvrFWHIVJoKm7UEistMtkNbpOEUy2bOJ0=', 'tester@123', '8981329979', '81(40/3/10) Shibtala Road, Khelaghar Garden', 'Barrackpore', 'North 24 PGS', '700122', 35, 'test', 'test', '', '', '', '', 5, 'Y', 1559646521, 0, 1558521750, 0),
-(7, 'ABC848526', 'Partha7', 'Chowdhury', '', 'HguK9ZnSyhsvrFWHIVJoKm7UEistMtkNbpOEUy2bOJ0=', 'tester@123', '8981329979', '81(40/3/10) Shibtala Road, Khelaghar Garden', 'Barrackpore', 'North 24 PGS', '700122', 35, 'test', 'test', '', '', '', '', 6, 'Y', 1559646521, 0, 1558521750, 0),
-(8, 'ABC245881', 'Partha8', 'Chowdhury', '', 'HguK9ZnSyhsvrFWHIVJoKm7UEistMtkNbpOEUy2bOJ0=', 'tester@123', '8981329979', '81(40/3/10) Shibtala Road, Khelaghar Garden', 'Barrackpore', 'North 24 PGS', '700122', 35, 'test', 'test', '', '', '', '', 7, 'Y', 1559762699, 0, 1558521750, 0),
-(9, 'ABC758458', 'Partha9', 'Chowdhury', '', 'HguK9ZnSyhsvrFWHIVJoKm7UEistMtkNbpOEUy2bOJ0=', 'tester@123', '8981329979', '81(40/3/10) Shibtala Road, Khelaghar Garden', 'Barrackpore', 'North 24 PGS', '700122', 35, 'test', 'test', '', '', '', '', 8, 'Y', 1559646521, 0, 1558521750, 0),
-(10, 'ABC178845', 'Partha10', 'Chowdhury', '', 'HguK9ZnSyhsvrFWHIVJoKm7UEistMtkNbpOEUy2bOJ0=', 'tester@123', '8981329979', '81(40/3/10) Shibtala Road, Khelaghar Garden', 'Barrackpore', 'North 24 PGS', '700122', 35, 'test', 'test', '', '', '', '', 9, 'Y', 1559646521, 0, 1558521750, 0),
-(11, 'ABC791417', 'Partha11', 'Chowdhury', '', 'HguK9ZnSyhsvrFWHIVJoKm7UEistMtkNbpOEUy2bOJ0=', 'tester@123', '8981329979', '81(40/3/10) Shibtala Road, Khelaghar Garden', 'Barrackpore', 'North 24 PGS', '700122', 35, 'test', 'test', 'test', '', '', '', 10, 'Y', 1560164548, 0, 1558521750, 1559659417),
-(12, 'ABC310641', 'Partha', 'Chowdhury', '', 'HguK9ZnSyhsvrFWHIVJoKm7UEistMtkNbpOEUy2bOJ0=', 'tester@123', '8981329979', 'test', 'Barrackpore', 'North 24 PGS', '700122', 35, 'test', 'test', '', '', '', '', 11, 'Y', 1560090174, 0, 1558521750, 0),
-(13, 'ABC310642', 'Partha', 'Chowdhury', '', 'HguK9ZnSyhsvrFWHIVJoKm7UEistMtkNbpOEUy2bOJ0=', 'tester@123', '8981329979', 'test', 'Barrackpore', 'North 24 PGS', '700122', 35, 'test', 'test', '', '', '', '', 11, 'Y', 1559968291, 0, 1558521750, 0),
-(14, 'ABC154701', 'Subhajit', 'Samanta', 'subhajit.s1995@gmail.com', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '9564464911', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', '24 PGS(N)', '700101', 35, 'Saraswati Samanta', 'Mother', 'done', '1234567890', '1234567890', '1234567890', 12, 'Y', 1560185543, 0, 1559843420, 1559875318),
-(15, 'ABC158105', 'Subha1', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '9564464910', 'Hdhdbd hshd jshdbsn snsnxhsbe kshshsbsh sbshd', 'Kolkata', '24PGS(N)', 'Agsjsjd', 35, 'Subhajit Samanta', 'Subhajit Samanta', 'PNR DONE', '123456666666666', '12345666554443', '12345678909987', 14, 'Y', 0, 0, 1559876089, 1559876275),
-(16, 'ABC750962', 'Subha2', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '1234567890', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', '24 PGS(N)', '700101', 35, 'XYZ', 'Mother', 'DONE', '123456789098765', '12345666554443', '12345678909987', 14, 'Y', 0, 0, 1559876651, 1559877991),
-(17, 'ABC502648', 'Subha3', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '1234567899', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', '24 PGS(N)', '700101', 35, 'XYZ', 'Mother', 'DONE', '123456789098765', '12345666554443', '12345678909987', 14, 'Y', 0, 0, 1559876750, 1559877680),
-(18, 'ABC430096', 'Subha4', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '1234567898', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', 'KOLKATA', '700101', 35, 'XYZ', 'Mother', 'DONE', '123456789098765', '12345666554443', '12345678909987', 14, 'Y', 0, 0, 1559876891, 1559878161),
-(19, 'ABC415851', 'Subha5', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '0987654321', 'Kolkata', 'Kolkata', '24PGS(N)', 'Agsjsjd', 35, 'Subhajit Samanta', 'Subhajit Samanta', 'DONE', '123456789098765', '123456789776544', '5363536373636353', 14, 'N', 0, 0, 1559877030, 1559877424),
-(20, 'ABC903364', 'RAM1', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '9876543212', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', '24 PGS(N)', '700101', 35, 'XYZ', 'Mother', 'DONE', '123456789098765', '12345666554443', '12345678909987', 15, 'Y', 1559984318, 0, 1559878684, 1559879051),
-(21, 'ABC722632', 'Ram2', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '5678904321', 'Kolkata', 'Kolkata', '24PGS(N)', 'Agsjsjd', 35, 'Subhajit Samanta', 'Subhajit Samanta', 'DONE', '1238', '1234', '1236', 15, 'Y', 0, 0, 1559878796, 1559906107),
-(22, 'ABC687580', 'Ram3', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '1234598765', 'Kolkata', 'Kolkata', '24PGS(N)', 'Agsjsjd', 35, 'Subhajit Samanta', 'Subhajit Samanta', 'DONE', '123456789098765', '12345666554443', '12345678909987', 15, 'N', 1559904406, 0, 1559878894, 1559905186),
-(23, 'ABC450735', 'SHYAM1', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '1234123412', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', 'KOLKATA', '700101', 35, 'Saraswati Samanta', 'Mother', 'DONE', '123456789098765', '12345666554443', '12345678909987', 22, 'Y', 1559881047, 0, 1559879558, 1559879783),
-(24, 'ABC636289', 'SHYAM2', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '9876543256', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', '24 PGS(N)', '700101', 35, 'XYZ', 'Mother', 'DONE', '12345', '12345', '12345', 22, 'Y', 0, 0, 1559879691, 1559879954),
-(25, 'ABC310742', 'mama', 'Chowdhury', '', 'HguK9ZnSyhsvrFWHIVJoKm7UEistMtkNbpOEUy2bOJ0=', 'tester@123', '8981329979', 'test', 'Barrackpore', 'North 24 PGS', '700122', 35, 'test', 'test', '', '', '', '', 14, 'N', 1559880579, 0, 1558521750, 0),
-(26, 'ABC755442', 'JODU1', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '8765432345', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', '24 PGS(N)', '700101', 35, 'XYZ', 'Mother', '', '', '', '', 23, 'N', 1559905530, 0, 1559905409, 0),
-(27, 'ABC210378', 'MODHU1', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '5436789321', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', '24 PGS(N)', '700101', 35, 'XYZ', 'Mother', 'DONE', '33', '89B', '56G', 20, 'Y', 1559925540, 0, 1559906460, 1559906928),
-(28, 'ABC428289', 'MADHU2', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '5555555555', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', '24 PGS(N)', '700101', 35, 'XYZ', 'Mother', 'DONE', 'DGH6', 'DJDH7', 'NCMFJ7', 20, 'Y', 0, 0, 1559906548, 1559906971),
-(29, 'ABC651969', 'MADHU3', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '9999999999', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', '24 PGS(N)', '700101', 15, 'XYZ', 'Mother', 'done', '765', '890', 'h765', 20, 'Y', 1559907014, 0, 1559906649, 1559930305),
-(30, 'ABC307531', 'JODU1', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '4567890678', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', '24 PGS(N)', '700101', 10, 'XYZ', 'XYZ', 'N', 'KLL', 'KKKK', 'K', 27, 'Y', 0, 0, 1559930521, 1559931135),
-(31, 'ABC366840', 'JODU2', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '3454334534', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', '24 PGS(N)', '700101', 10, 'XYZ', 'XYZ', 'D', 'GJHKJ', 'HJHKJ', 'AASA', 27, 'Y', 1559930755, 0, 1559930603, 1559931109),
-(32, 'ABC489588', 'RAHUL1', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '6666666660', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', '24 PGS(N)', '700101', 10, 'XYZ', 'XYZ', 'DONE', '678', 'JU87LK87', 'KI87', 30, 'Y', 0, 0, 1559968925, 1559969057),
-(33, 'ABC362562', 'SOUBHIK1', 'NSCHC', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '2345670972', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', '24 PGS(N)', '700101', 10, 'XYZ', 'XYZ', 'DONE', 'BV54', 'MN87', 'MN98', 32, 'Y', 0, 0, 1559969182, 1559969861),
-(34, 'ABC696654', 'ADI', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '9877897890', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', '24 PGS(N)', '700101', 10, 'XYZ', 'XYZ', 'D', 'N8', 'M9', 'M0', 33, 'Y', 0, 0, 1559970102, 1559970897),
-(35, 'ABC281479', 'XYZ', 'Samanta', 'sankhabaran.svms@gmail.com', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '3333333331', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, HDG, Prafulla Kanan West, Krishnapur', 'KOLKATASC', 'HSG', '700108', 3, 'XYZHH', 'XYZFF', 'JHDGD', '456TG', '890KJ', '098J', 34, 'Y', 1560013119, 0, 1559971230, 1559971907),
-(36, 'ABC113881', 'TANDRA', 'PANDIT', 'sankhabaran.svms@gmail.com', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '9732552067', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', 'KOLKATA', '700101', 35, 'XYZ', 'XYZ', 'NAME CHANGEw', 'sdre', 'wwww', 'qqq', 35, 'Y', 1559983945, 1560193922, 1559983630, 1560193922);
+INSERT INTO `abc_users` (`user_id`, `sponsor_id`, `first_name`, `last_name`, `email`, `password`, `original_password`, `mobile_no`, `address`, `city`, `district`, `post_code`, `state_id`, `nominee_info`, `nominee_relation`, `about_me`, `pnr1`, `pnr2`, `pnr3`, `total_income`, `parent_id`, `status`, `last_login`, `approved_on`, `date_added`, `date_modified`) VALUES
+(1, 'ABC999999', 'ABC Care Solution', '', '', '', '', '', '', '', '0', '', 0, '', '', '', '', '', '', 0, 0, 'Y', 0, 0, 0, 0),
+(2, 'ABC891345', 'Partha2', 'Chowdhury', '', 'HguK9ZnSyhsvrFWHIVJoKm7UEistMtkNbpOEUy2bOJ0=', 'tester@123', '8981329979', '81(40/3/10) Shibtala Road, Khelaghar Garden', 'Barrackpore', 'North 24 PGS', '700122', 35, 'test', 'test', '', '', '', '', 0, 1, 'Y', 1560020520, 0, 1558521750, 0),
+(3, 'ABC127571', 'Partha3', 'Chowdhury', '', 'HguK9ZnSyhsvrFWHIVJoKm7UEistMtkNbpOEUy2bOJ0=', 'tester@123', '8981329979', '81(40/3/10) Shibtala Road, Khelaghar Garden', 'Barrackpore', 'North 24 PGS', '700122', 35, 'test', 'test', '', '', '', '', 0, 2, 'Y', 1559847234, 0, 1558521750, 0),
+(4, 'ABC124991', 'Partha4', 'Chowdhury', '', 'HguK9ZnSyhsvrFWHIVJoKm7UEistMtkNbpOEUy2bOJ0=', 'tester@123', '8981329979', '81(40/3/10) Shibtala Road, Khelaghar Garden', 'Barrackpore', 'North 24 PGS', '700122', 35, 'test', 'test', '', '', '', '', 0, 3, 'Y', 1559646521, 0, 1558521750, 0),
+(5, 'ABC663229', 'Partha5', 'Chowdhury', '', 'HguK9ZnSyhsvrFWHIVJoKm7UEistMtkNbpOEUy2bOJ0=', 'tester@123', '8981329979', '81(40/3/10) Shibtala Road, Khelaghar Garden', 'Barrackpore', 'North 24 PGS', '700122', 35, 'test', 'test', '', '', '', '', 0, 4, 'Y', 1559646521, 0, 1558521750, 0),
+(6, 'ABC526730', 'Partha6', 'Chowdhury', '', 'HguK9ZnSyhsvrFWHIVJoKm7UEistMtkNbpOEUy2bOJ0=', 'tester@123', '8981329979', '81(40/3/10) Shibtala Road, Khelaghar Garden', 'Barrackpore', 'North 24 PGS', '700122', 35, 'test', 'test', '', '', '', '', 0, 5, 'Y', 1559646521, 0, 1558521750, 0),
+(7, 'ABC848526', 'Partha7', 'Chowdhury', '', 'HguK9ZnSyhsvrFWHIVJoKm7UEistMtkNbpOEUy2bOJ0=', 'tester@123', '8981329979', '81(40/3/10) Shibtala Road, Khelaghar Garden', 'Barrackpore', 'North 24 PGS', '700122', 35, 'test', 'test', '', '', '', '', 2000, 6, 'Y', 1559646521, 0, 1558521750, 0),
+(8, 'ABC245881', 'Partha8', 'Chowdhury', '', 'HguK9ZnSyhsvrFWHIVJoKm7UEistMtkNbpOEUy2bOJ0=', 'tester@123', '8981329979', '81(40/3/10) Shibtala Road, Khelaghar Garden', 'Barrackpore', 'North 24 PGS', '700122', 35, 'test', 'test', '', '', '', '', 0, 7, 'Y', 1559762699, 0, 1558521750, 0),
+(9, 'ABC758458', 'Partha9', 'Chowdhury', '', 'HguK9ZnSyhsvrFWHIVJoKm7UEistMtkNbpOEUy2bOJ0=', 'tester@123', '8981329979', '81(40/3/10) Shibtala Road, Khelaghar Garden', 'Barrackpore', 'North 24 PGS', '700122', 35, 'test', 'test', '', '', '', '', 0, 8, 'Y', 1559646521, 0, 1558521750, 0),
+(10, 'ABC178845', 'Partha10', 'Chowdhury', '', 'HguK9ZnSyhsvrFWHIVJoKm7UEistMtkNbpOEUy2bOJ0=', 'tester@123', '8981329979', '81(40/3/10) Shibtala Road, Khelaghar Garden', 'Barrackpore', 'North 24 PGS', '700122', 35, 'test', 'test', '', '', '', '', 0, 9, 'Y', 1559646521, 0, 1558521750, 0),
+(11, 'ABC791417', 'Partha11', 'Chowdhury', '', 'HguK9ZnSyhsvrFWHIVJoKm7UEistMtkNbpOEUy2bOJ0=', 'tester@123', '8981329979', '81(40/3/10) Shibtala Road, Khelaghar Garden', 'Barrackpore', 'North 24 PGS', '700122', 35, 'test', 'test', 'test', '', '', '', 0, 10, 'Y', 1560164548, 0, 1558521750, 1559659417),
+(12, 'ABC310641', 'Partha', 'Chowdhury', '', 'HguK9ZnSyhsvrFWHIVJoKm7UEistMtkNbpOEUy2bOJ0=', 'tester@123', '8981329979', 'test', 'Barrackpore', 'North 24 PGS', '700122', 35, 'test', 'test', '', '', '', '', 2000, 11, 'Y', 1560090174, 0, 1558521750, 0),
+(13, 'ABC310642', 'Partha', 'Chowdhury', '', 'HguK9ZnSyhsvrFWHIVJoKm7UEistMtkNbpOEUy2bOJ0=', 'tester@123', '8981329979', 'test', 'Barrackpore', 'North 24 PGS', '700122', 35, 'test', 'test', '', '', '', '', 0, 11, 'Y', 1559968291, 0, 1558521750, 0),
+(14, 'ABC154701', 'Subhajit', 'Samanta', 'subhajit.s1995@gmail.com', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '9564464911', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', '24 PGS(N)', '700101', 35, 'Saraswati Samanta', 'Mother', 'done', '1234567890', '1234567890', '1234567890', 0, 12, 'Y', 1560185543, 0, 1559843420, 1559875318),
+(15, 'ABC158105', 'Subha1', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '9564464910', 'Hdhdbd hshd jshdbsn snsnxhsbe kshshsbsh sbshd', 'Kolkata', '24PGS(N)', 'Agsjsjd', 35, 'Subhajit Samanta', 'Subhajit Samanta', 'PNR DONE', '123456666666666', '12345666554443', '12345678909987', 0, 14, 'Y', 0, 0, 1559876089, 1559876275),
+(16, 'ABC750962', 'Subha2', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '1234567890', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', '24 PGS(N)', '700101', 35, 'XYZ', 'Mother', 'DONE', '123456789098765', '12345666554443', '12345678909987', 0, 14, 'Y', 0, 0, 1559876651, 1559877991),
+(17, 'ABC502648', 'Subha3', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '1234567899', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', '24 PGS(N)', '700101', 35, 'XYZ', 'Mother', 'DONE', '123456789098765', '12345666554443', '12345678909987', 0, 14, 'Y', 0, 0, 1559876750, 1559877680),
+(18, 'ABC430096', 'Subha4', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '1234567898', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', 'KOLKATA', '700101', 35, 'XYZ', 'Mother', 'DONE', '123456789098765', '12345666554443', '12345678909987', 0, 14, 'Y', 0, 0, 1559876891, 1559878161),
+(19, 'ABC415851', 'Subha5', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '0987654321', 'Kolkata', 'Kolkata', '24PGS(N)', 'Agsjsjd', 35, 'Subhajit Samanta', 'Subhajit Samanta', 'DONE', '123456789098765', '123456789776544', '5363536373636353', 0, 14, 'N', 0, 0, 1559877030, 1559877424),
+(20, 'ABC903364', 'RAM1', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '9876543212', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', '24 PGS(N)', '700101', 35, 'XYZ', 'Mother', 'DONE', '123456789098765', '12345666554443', '12345678909987', 0, 15, 'Y', 1559984318, 0, 1559878684, 1559879051),
+(21, 'ABC722632', 'Ram2', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '5678904321', 'Kolkata', 'Kolkata', '24PGS(N)', 'Agsjsjd', 35, 'Subhajit Samanta', 'Subhajit Samanta', 'DONE', '1238', '1234', '1236', 0, 15, 'Y', 0, 0, 1559878796, 1559906107),
+(22, 'ABC687580', 'Ram3', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '1234598765', 'Kolkata', 'Kolkata', '24PGS(N)', 'Agsjsjd', 35, 'Subhajit Samanta', 'Subhajit Samanta', 'DONE', '123456789098765', '12345666554443', '12345678909987', 3000, 15, 'N', 1560252855, 0, 1559878894, 1559905186),
+(23, 'ABC450735', 'SHYAM1', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '1234123412', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', 'KOLKATA', '700101', 35, 'Saraswati Samanta', 'Mother', 'DONE', '123456789098765', '12345666554443', '12345678909987', 0, 22, 'Y', 1559881047, 0, 1559879558, 1559879783),
+(24, 'ABC636289', 'SHYAM2', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '9876543256', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', '24 PGS(N)', '700101', 35, 'XYZ', 'Mother', 'DONE', '12345', '12345', '12345', 0, 22, 'Y', 0, 0, 1559879691, 1559879954),
+(25, 'ABC310742', 'mama', 'Chowdhury', '', 'HguK9ZnSyhsvrFWHIVJoKm7UEistMtkNbpOEUy2bOJ0=', 'tester@123', '8981329979', 'test', 'Barrackpore', 'North 24 PGS', '700122', 35, 'test', 'test', '', '', '', '', 0, 14, 'N', 1559880579, 0, 1558521750, 0),
+(26, 'ABC755442', 'JODU1', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '8765432345', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', '24 PGS(N)', '700101', 35, 'XYZ', 'Mother', 'chgh', 'pnr1', 'pnr2', 'pnr3', 0, 23, 'Y', 1559905530, 1560256871, 1559905409, 1560256871),
+(27, 'ABC210378', 'MODHU1', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '5436789321', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', '24 PGS(N)', '700101', 35, 'XYZ', 'Mother', 'DONE', '33', '89B', '56G', 0, 20, 'Y', 1559925540, 0, 1559906460, 1559906928),
+(28, 'ABC428289', 'MADHU2', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '5555555555', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', '24 PGS(N)', '700101', 35, 'XYZ', 'Mother', 'DONE', 'DGH6', 'DJDH7', 'NCMFJ7', 0, 20, 'Y', 0, 0, 1559906548, 1559906971),
+(29, 'ABC651969', 'MADHU3', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '9999999999', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', '24 PGS(N)', '700101', 15, 'XYZ', 'Mother', 'done', '765', '890', 'h765', 0, 20, 'Y', 1559907014, 0, 1559906649, 1559930305),
+(30, 'ABC307531', 'JODU1', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '4567890678', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', '24 PGS(N)', '700101', 10, 'XYZ', 'XYZ', 'N', 'KLL', 'KKKK', 'K', 0, 27, 'Y', 0, 0, 1559930521, 1559931135),
+(31, 'ABC366840', 'JODU2', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '3454334534', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', '24 PGS(N)', '700101', 10, 'XYZ', 'XYZ', 'D', 'GJHKJ', 'HJHKJ', 'AASA', 0, 27, 'Y', 1559930755, 0, 1559930603, 1559931109),
+(32, 'ABC489588', 'RAHUL1', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '6666666660', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', '24 PGS(N)', '700101', 10, 'XYZ', 'XYZ', 'DONE', '678', 'JU87LK87', 'KI87', 0, 30, 'Y', 0, 0, 1559968925, 1559969057),
+(33, 'ABC362562', 'SOUBHIK1', 'NSCHC', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '2345670972', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', '24 PGS(N)', '700101', 10, 'XYZ', 'XYZ', 'DONE', 'BV54', 'MN87', 'MN98', 0, 32, 'Y', 0, 0, 1559969182, 1559969861),
+(34, 'ABC696654', 'ADI', 'Samanta', '', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '9877897890', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', '24 PGS(N)', '700101', 10, 'XYZ', 'XYZ', 'D', 'N8', 'M9', 'M0', 0, 33, 'Y', 0, 0, 1559970102, 1559970897),
+(35, 'ABC281479', 'XYZ', 'Samanta', 'sankhabaran.svms@gmail.com', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '3333333331', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, HDG, Prafulla Kanan West, Krishnapur', 'KOLKATASC', 'HSG', '700108', 3, 'XYZHH', 'XYZFF', 'JHDGD', '456TG', '890KJ', '098J', 0, 34, 'Y', 1560013119, 0, 1559971230, 1559971907),
+(36, 'ABC113881', 'TANDRA', 'PANDIT', 'sankhabaran.svms@gmail.com', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '123456', '9732552067', 'SD Tower, Shrijeeta Apartment, Block E, Flat no 5V, 4th floor, Prafulla Kanan West, Krishnapur', 'KOLKATA', 'KOLKATA', '700101', 35, 'XYZ', 'XYZ', 'NAME CHANGEw', 'sdre', 'wwww', 'qqq', 0, 35, 'Y', 1559983945, 1560193922, 1559983630, 1560193922);
 
 -- --------------------------------------------------------
 
@@ -228,7 +229,10 @@ INSERT INTO `abc_users` (`user_id`, `sponsor_id`, `first_name`, `last_name`, `em
 CREATE TABLE `abc_user_pnr` (
   `user_pnr_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
+  `approval_id` int(11) NOT NULL,
   `pnr` varchar(255) NOT NULL,
+  `remark` text NOT NULL,
+  `amount` int(11) NOT NULL,
   `date` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -236,10 +240,10 @@ CREATE TABLE `abc_user_pnr` (
 -- Dumping data for table `abc_user_pnr`
 --
 
-INSERT INTO `abc_user_pnr` (`user_pnr_id`, `user_id`, `pnr`, `date`) VALUES
-(1, 34, 'sdre', 1560193922),
-(2, 20, 'wwww', 1560193922),
-(3, 14, 'qqq', 1560193922);
+INSERT INTO `abc_user_pnr` (`user_pnr_id`, `user_id`, `approval_id`, `pnr`, `remark`, `amount`, `date`) VALUES
+(1, 22, 26, 'pnr1', 'Remarks1', 1000, 1560256871),
+(2, 12, 26, 'pnr2', 'Remarks2', 1000, 1560256871),
+(3, 7, 26, 'pnr3', 'Remarks3', 1000, 1560256871);
 
 --
 -- Indexes for dumped tables

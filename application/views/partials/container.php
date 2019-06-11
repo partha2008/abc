@@ -60,7 +60,7 @@
           </li>
           
           <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);">
+            <a class="nav-link <?php if($tot_segments[1] == 'my-income'){echo 'active';}?>" href="<?php echo base_url('my-income');?>">
               <i class="ni ni-money-coins text-info"></i> My Income
             </a>
           </li>
