@@ -109,21 +109,84 @@
 										<div class="panel panel-primary">
 									      <div class="panel-heading">PNR Details</div>
 									      <div class="panel-body">
-									      	
-									      	<div class="form-inline" action="/action_page.php">
-											    <div class="form-group col-sm-4">
-											    	<label class="control-label">PNR1: </label>
-											    	<input type="email" class="form-control" <?php if($user_details->pnr1){echo 'readonly';}?> placeholder="Enter PNR1"  name="pnr1" value="<?php if(isset($user_details->pnr1) && $user_details->pnr1){echo $user_details->pnr1;}?>">
-											    </div>
-											    <div class="form-group col-sm-4">
-											    	<label class="control-label">PNR2: </label>
-											    	<input type="email" class="form-control" <?php if($user_details->pnr2){echo 'readonly';}?> placeholder="Enter PNR2"  name="pnr2" value="<?php if(isset($user_details->pnr2) && $user_details->pnr2){echo $user_details->pnr2;}?>">
-											    </div>
-											    <div class="form-group col-sm-4">
-											    	<label class="control-label">PNR3: </label>
-											    	<input type="email" class="form-control" <?php if($user_details->pnr3){echo 'readonly';}?>  placeholder="Enter PNR3"  name="pnr3" value="<?php if(isset($user_details->pnr3) && $user_details->pnr3){echo $user_details->pnr3;}?>">
-											    </div>
-  											</div>
+									      	<div class="form-group">
+										      	<div class="form-inline">
+												    <div class="form-group col-sm-4" style="margin-bottom: 15px;">
+												    	<label class="control-label">PNR1: </label>
+												    	<input type="text" class="form-control" <?php if($user_details->pnr1){echo 'readonly';}?> placeholder="Enter PNR1"  name="pnr1" value="<?php if(isset($user_details->pnr1) && $user_details->pnr1){echo $user_details->pnr1;}?>">
+												    </div>
+												    <div class="form-group col-sm-4" style="margin-bottom: 15px;">
+												    	<label class="control-label">User1: </label>
+												    	<select class="form-control" name="user1" <?php if($user_details->pnr1){echo 'disabled';}?>>
+												    		<?php
+												    			if(!empty($parents)){
+												    				foreach ($parents as $key => $value){
+												    		?>
+												    			<option value="<?php echo $value->user_id;?>"><?php echo $value->first_name.' '.$value->last_name.' ('.$value->sponsor_id.')';?></option>
+												    		<?php
+												    				}
+												    			}
+												    		?>		 		
+												    	</select>
+												    </div>	
+												    <div class="form-group col-sm-4" style="margin-bottom: 15px;">
+												    	<label class="control-label">Remark3: </label>
+												    	<input class="form-control" type="text" name="remark3">
+												    </div>
+	  											</div>
+	  										</div>
+	  										<div class="form-group">
+	  											<div class="form-inline">
+	  												<div class="form-group col-sm-4" style="margin-bottom: 15px;">
+												    	<label class="control-label">PNR2: </label>
+												    	<input type="text" class="form-control" <?php if($user_details->pnr2){echo 'readonly';}?> placeholder="Enter PNR2"  name="pnr2" value="<?php if(isset($user_details->pnr2) && $user_details->pnr2){echo $user_details->pnr2;}?>">
+												    </div>
+												    <div class="form-group col-sm-4" style="margin-bottom: 15px;">
+												    	<label class="control-label">User2: </label>
+												    	<select class="form-control" name="user2" <?php if($user_details->pnr2){echo 'disabled';}?>>
+												    		<?php
+												    			if(!empty($parents)){
+												    				foreach ($parents as $key => $value){
+												    		?>
+												    			<option value="<?php echo $value->user_id;?>"><?php echo $value->first_name.' '.$value->last_name.' ('.$value->sponsor_id.')';?></option>
+												    		<?php
+												    				}
+												    			}
+												    		?>	
+												    	</select>
+												    </div>
+												    <div class="form-group col-sm-4" style="margin-bottom: 15px;">
+												    	<label class="control-label">Remark3: </label>
+												    	<textarea class="form-control" name="remark3"></textarea>
+												    </div>	
+												</div>
+	  										</div>
+	  										<div class="form-group">
+	  											<div class="form-inline">
+	  												<div class="form-group col-sm-4" style="margin-bottom: 15px;">
+												    	<label class="control-label">PNR3: </label>
+												    	<input type="text" class="form-control" <?php if($user_details->pnr3){echo 'readonly';}?>  placeholder="Enter PNR3"  name="pnr3" value="<?php if(isset($user_details->pnr3) && $user_details->pnr3){echo $user_details->pnr3;}?>">
+												    </div>
+												    <div class="form-group col-sm-4" style="margin-bottom: 15px;">
+												    	<label class="control-label">User3: </label>
+												    	<select class="form-control" name="user3" <?php if($user_details->pnr3){echo 'disabled';}?>>
+												    		<?php
+												    			if(!empty($parents)){
+												    				foreach ($parents as $key => $value){
+												    		?>
+												    			<option value="<?php echo $value->user_id;?>"><?php echo $value->first_name.' '.$value->last_name.' ('.$value->sponsor_id.')';?></option>
+												    		<?php
+												    				}
+												    			}
+												    		?>	
+												    	</select>
+												    </div>
+												    <div class="form-group col-sm-4" style="margin-bottom: 15px;">
+												    	<label class="control-label">Remark3: </label>
+												    	<textarea class="form-control" name="remark3"></textarea>
+												    </div>
+	  											</div>
+	  										</div>
 									      </div>
 									    </div>
 										<input type="hidden" name="old_email" value="<?php echo $user_details->email;?>">
