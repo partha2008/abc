@@ -130,6 +130,14 @@ class Userdata extends CI_Model {
 		return $this->db->insert_id();;
 	}
 
+	public function delete_user_pnr($cond = array()){
+		$this->db->where($cond);
+		
+		$this->db->delete(TABLE_USER_PNR);
+		
+		return true;
+	}
+
 	public function grab_user_pnr_details($cond = array(), $limit = array(), $like = array(), $where = null, $order_by = array()){
 		if(!empty($cond)){
 			$this->db->where($cond);			
@@ -178,6 +186,22 @@ class Userdata extends CI_Model {
 		$this->db->order_by('date','desc');
 		
 		$query = $this->db->get(TABLE_MESSAGE);
+		
+		return $query->result();
+	}
+
+	public function grab_message_list($likes = array(), $limit = null){
+		$like = '';
+		if(!empty($likes)){
+			$like = "AND (A.first_name LIKE '%".current($likes)."%' OR A.last_name LIKE '%".current($likes)."%' OR B.subject LIKE '%".current($likes)."%' OR B.message LIKE '%".current($likes)."%')";
+		}	
+		if($limit){
+			$limit = ($limit-1)*10;
+			$limit = "LIMIT ".$limit.", ".PAGINATION_PER_PAGE;
+		}
+		$sql = "SELECT A.first_name, A.last_name, B.subject, B.message, B.date FROM ".TABLE_USER." A, ".TABLE_MESSAGE." B WHERE A.user_id = B.user_id ".$like." ORDER BY B.date DESC ".$limit;
+
+		$query = $this->db->query($sql);
 		
 		return $query->result();
 	}

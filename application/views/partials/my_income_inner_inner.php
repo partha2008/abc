@@ -5,7 +5,7 @@
 <tr>
   	<td><?php echo $value->pnr;?></td>
     <td><?php echo $value->amount;?></td>
-    <td><?php date_default_timezone_set("Asia/Kolkata"); echo date('d-m-Y H:i:s', $value->date);?></td>
+    <td><?php echo date('d-m-Y H:i:s', $value->date);?></td>
     <td><?php echo $value->remark;?></td>
   </tr>
   <?php
