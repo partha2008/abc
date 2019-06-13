@@ -501,7 +501,7 @@
 			}else{
 				$active_users = $this->userdata->grab_user_details(array("parent_id" => $post_data['parent_id'], "status" => "Y"));
 				$max_count = $this->config->item('site_info')['max_active_user'];
-				if((count($active_users) > $max_count) && ($post_data['status'] == 'Y')){
+				if((count($active_users) > $max_count-1) && ($post_data['status'] == 'Y')){
 					$this->session->set_userdata($post_data);
 				
 					$this->session->set_userdata('has_error', true);
