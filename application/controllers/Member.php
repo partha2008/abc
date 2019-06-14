@@ -57,12 +57,24 @@
 			$this->load->view('pdfreport', $this->data);
 		}
 
-		public function get_children($parent_id){
-			$sql = "select  * from (select * from ".TABLE_USER." order by parent_id, user_id) ".TABLE_USER.", (select @pv := '".$parent_id."') initialisation where find_in_set(parent_id, @pv) > 0 and @pv:= concat(@pv, ',', user_id)";
+		public function get_children($user_id){
+			$sql = "SELECT GROUP_CONCAT(lv SEPARATOR ',') children FROM (SELECT @pv:=(SELECT GROUP_CONCAT(user_id SEPARATOR ',') FROM ".TABLE_USER." WHERE parent_id IN (@pv)) AS lv FROM ".TABLE_USER." JOIN (SELECT @pv:=".$user_id.")tmp WHERE parent_id IN (@pv)) a";
 
 			$query = $this->db->query($sql);
 
-			return $query->result();
+			$result = $query->result();
+			$children_arr = explode(",", $user_id.','.$result[0]->children);
+			if(!empty($children_arr)){
+				$children_str = '';
+				foreach ($children_arr as $key => $value) {
+					$children_str .= "'".$value."',";
+				}
+			}
+
+			$sql1 = "SELECT * FROM ".TABLE_USER." WHERE user_id IN (".rtrim($children_str, ",").")";
+			$query1 = $this->db->query($sql1);
+
+			return $query1->result();
 		}
 
 		public function member_tree(){
@@ -129,7 +141,7 @@
 			$user = $this->userdata->grab_user_details(array("user_id" => $this->session->userdata('user_id')));
 			$current_parent_id = $this->session->userdata('parent_id');
 
-			$sql = "SELECT DISTINCT(parent_id) FROM ".TABLE_USER." WHERE parent_id >= ".$current_parent_id." AND status='Y' ORDER BY parent_id ASC";
+			$sql = "SELECT DISTINCT(parent_id) FROM ".TABLE_USER." WHERE parent_id > ".$current_parent_id." AND status='Y' ORDER BY parent_id ASC LIMIT 0,11";
 			$query = $this->db->query($sql);
 			$level = $query->result();
 
@@ -144,7 +156,7 @@
 
 		public function getTeamLevel(){
 			$parent_id = $this->input->post('parent_id');
-			$children = $this->userdata->grab_user_details(array("parent_id >" => $parent_id));
+			$children = $this->userdata->grab_user_details(array("parent_id" => $parent_id));
 
 			if(!empty($children)){
 				foreach ($children as $key => $value) {
