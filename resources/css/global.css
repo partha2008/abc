@@ -22125,13 +22125,17 @@ ul.tree li > div{
 
 
 ul.tree li > div i{
-        font-size: 37px;
+    font-size: 37px;
     color: #27a9e3;
     position: absolute;
     margin-left: 0;
     margin-top: 0;
     left: -22px;
     top: -13px;
+}
+
+ul.tree li > div i.inactive{
+    color: #c83334;
 }
 
 ul.tree li div.current i{

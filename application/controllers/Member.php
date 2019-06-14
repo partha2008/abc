@@ -57,8 +57,9 @@
 			$this->load->view('pdfreport', $this->data);
 		}
 
-		public function get_children($user_id){
-			$sql = "SELECT * FROM ".TABLE_USER." WHERE FIND_IN_SET(user_id,(SELECT GROUP_CONCAT(lv SEPARATOR ',') FROM (SELECT @pv:=(SELECT GROUP_CONCAT(user_id SEPARATOR ',') FROM ".TABLE_USER." WHERE parent_id IN (@pv)) AS lv FROM ".TABLE_USER." JOIN (SELECT @pv:=$user_id)tmp WHERE parent_id IN (@pv)) a)) AND status='Y'";
+		public function get_children($parent_id){
+			$sql = "select  * from (select * from abc_users order by parent_id, user_id) abc_users, (select @pv := '".$parent_id."') initialisation where   find_in_set(parent_id, @pv) > 0 and @pv:= concat(@pv, ',', user_id)";
+
 			$query = $this->db->query($sql);
 
 			return $query->result();
@@ -100,7 +101,11 @@
 					$address = $datas[$i]->address.', '.$datas[$i]->city.', '.$datas[$i]->district.', '.$datas[$i]->post_code.', '.$state[0]->name;
 					$title = $datas[$i]->first_name.' '.$datas[$i]->last_name.'<br>('.$datas[$i]->sponsor_id.')<br>'.$address;
                     $tree .= '<li><div data-placement="right" data-html="true" data-toggle="tooltip" title="'.$title.'">';
-                    $tree .= '<i class="ni ni-single-02"></i></div>';
+                    if($datas[$i]->status == "Y"){
+                    	$tree .= '<i class="ni ni-single-02"></i></div>';
+                    }else{
+                    	$tree .= '<i class="ni ni-single-02 inactive"></i></div>';
+                    }                    
                     $tree .= $this->generateTreeMenu($datas, $datas[$i]->user_id, $limit++);
                     $tree .= '</li>';
                 }
