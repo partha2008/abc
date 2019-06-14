@@ -63,11 +63,13 @@
 		$counter = 10;
 		foreach ($parents as $parent) {
 			$state = $this->defaultdata->grabStateData(array("state_id" => $parent->state_id));
-			$adress = $parent->address.','.$parent->city.','.$parent->district.','.$parent->post_code.','.$state[0]->name;
-
 			$payments = $this->config->item('payment');
 			$index = explode('-', $invoice_name)[1];
 			$payment = (isset($payments[$index][$counter])) ? $payments[$index][$counter] : 0;
+			if($payment == 0)
+				$adress = '';
+			else
+				$adress = $parent->address.','.$parent->city.','.$parent->district.','.$parent->post_code.','.$state[0]->name;
 
 			$cart_data_html .= '<tr><td align="center" width="40px">'.$counter.'</td><td align="center" width="430px"><b>'.$parent->first_name.' '.$parent->last_name.'('.$parent->sponsor_id.')</b><br>'.$adress.'</td><td align="center" width="50px">'.$payment.'</td><td align="center" width="120px"></td></tr>';
 

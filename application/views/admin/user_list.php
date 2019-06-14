@@ -17,13 +17,13 @@
 				<div class="panel-body">
 					<div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
 					  <div class="row">
-						 <div class="col-sm-6">
+						 <div class="col-sm-4">
 							<a href="<?php echo base_url('admin/user-add');?>" class="btn btn-primary">Add User</a>
 						 </div>
-						 <div class="col-sm-6">
+						 <div class="col-sm-4">
 							<form action="<?php echo base_url('admin/user-list');?>" method="GET" role="form">
 								<div id="dataTables-example_filter" class="dataTables_filter">
-									<label>Search by:<input name="search_key" type="search" class="form-control input-sm" placeholder="" aria-controls="dataTables-example" id="user-search" value="<?php echo $search_key;?>"></label>
+									<label>Search by:<input name="search_key" type="search" class="form-control input-sm" placeholder="Type here..." aria-controls="dataTables-example" id="user-search" value="<?php echo $search_key;?>"></label>
 									<button type="submit" class="btn btn-primary">Search</button>
 								</div>
 							</form>

@@ -58,7 +58,7 @@
 		}
 
 		public function get_children($parent_id){
-			$sql = "select  * from (select * from abc_users order by parent_id, user_id) abc_users, (select @pv := '".$parent_id."') initialisation where   find_in_set(parent_id, @pv) > 0 and @pv:= concat(@pv, ',', user_id)";
+			$sql = "select  * from (select * from ".TABLE_USER." order by parent_id, user_id) ".TABLE_USER.", (select @pv := '".$parent_id."') initialisation where find_in_set(parent_id, @pv) > 0 and @pv:= concat(@pv, ',', user_id)";
 
 			$query = $this->db->query($sql);
 
@@ -67,11 +67,8 @@
 
 		public function member_tree(){
 			$user = $this->userdata->grab_user_details(array("user_id" => $this->session->userdata('user_id')));
-			$active_user = $this->userdata->grab_user_details(array("status" => "Y", "user_id" => $this->session->userdata('user_id')));
 
-			if(!empty($active_user)){
-				$children = array_merge($active_user, $this->get_children($this->session->userdata('user_id')));
-			}
+			$children = $this->get_children($this->session->userdata('user_id'));
 
 			if(isset($children[0]->parent_id)){
 				$tree = $this->generateTreeMenu($children, $children[0]->parent_id, 0, true);
