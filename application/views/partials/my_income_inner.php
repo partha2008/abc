@@ -12,14 +12,14 @@
             <div class="col-sm-6">
                 <div class="form-group required">
                 <label class="form-control-label" for="user_id">From:</label>
-                <input type="text" class="form-control datepicker" id="datepicker_from">
+                <input type="text" class="form-control datepicker" id="datepicker_from" readonly>
               </div>
 
             </div>
             <div class="col-sm-6">
                 <div class="form-group required">
                 <label class="form-control-label" for="user_id">To:</label>
-                <input type="text" class="form-control datepicker" id="datepicker_to">
+                <input type="text" class="form-control datepicker" id="datepicker_to" readonly>
               </div>
 
             </div>
