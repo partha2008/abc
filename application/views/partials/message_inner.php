@@ -62,7 +62,7 @@
             <tr>
                 <td><?php echo $value->subject;?></td>
                 <td><?php echo $value->message;?></td>
-                <td><?php date_default_timezone_set("Asia/Kolkata"); echo date('d-m-Y H:i:s', $value->date);?></td>
+                <td><?php echo date('d-m-Y H:i:s', $value->date);?></td>
               </tr>
               <?php
                 }

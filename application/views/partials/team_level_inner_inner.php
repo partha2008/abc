@@ -21,8 +21,8 @@
         <td><?php echo $value->parent_first_name.' '.$value->parent_last_name;?></td>
         <td><?php echo $value->parent_sponsor_id;?></td>              
         <td><?php echo $value->mobile_no;?></td>
-        <td><?php date_default_timezone_set("Asia/Kolkata"); echo date('d-m-Y H:i:s', $value->date_added);?></td>
-        <td><?php date_default_timezone_set("Asia/Kolkata"); echo date('d-m-Y H:i:s', $value->approved_on);?></td>
+        <td><?php echo date('d-m-Y H:i:s', $value->date_added);?></td>
+        <td><?php echo date('d-m-Y H:i:s', $value->approved_on);?></td>
       </tr>
       <?php
   			}

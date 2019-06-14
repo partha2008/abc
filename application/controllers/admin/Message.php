@@ -45,24 +45,24 @@
 				$this->data['search_key'] = '';
 			}
 
-			$user_data = $this->userdata->grab_message_details(null, $like);	 
+			$msg_data = $this->userdata->grab_message_list($like);	 
 			
 			//pagination settings
 			$config['base_url'] = base_url('admin/message-list');
-			$config['total_rows'] = count($user_data);
+			$config['total_rows'] = count($msg_data);
 			
 			$pagination = $this->config->item('pagination');
 			
 			$pagination = array_merge($config, $pagination);
 
 			$this->pagination->initialize($pagination);
-			$this->data['page'] = ($this->input->get('page')) ? $this->input->get('page') : 0;		
+			$this->data['page'] = ($this->input->get('page')) ? $this->input->get('page') : 1;		
 
 			$this->data['pagination'] = $this->pagination->create_links();
 
-			$user_paginated_data = $this->userdata->grab_message_details($this->data['page'], $like);	
+			$msg_paginated_data = $this->userdata->grab_message_list($like, $this->data['page']);
 			
-			$this->data['message_details'] = $user_paginated_data;
+			$this->data['message_details'] = $msg_paginated_data;
 			
 			$this->load->view('admin/message_list', $this->data);
 		}

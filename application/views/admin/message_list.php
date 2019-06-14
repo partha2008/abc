@@ -40,13 +40,12 @@
 							   <tbody>
 							    <?php if(!empty($message_details)){ ?>
 								<?php foreach($message_details AS $detail) {
-									$user = $this->userdata->grab_user_details(array("user_id" => $detail->user_id));
 								?>
 								  <tr class="gradeA odd" role="row">	
-									 <td><?php echo $user[0]->first_name.' '.$user[0]->last_name;?></td>
+									 <td><?php echo $detail->first_name.' '.$detail->last_name;?></td>
 									 <td><?php echo $detail->subject;?></td>
 									 <td><?php echo $detail->message;?></td>
-									 <td><?php date_default_timezone_set("Asia/Kolkata"); echo date('d-m-Y H:i:s', $detail->date);?></td>
+									 <td><?php echo date('d-m-Y', $detail->date);?></td>
 								  </tr>
 								  <?php } ?>
 								  <?php }else{ ?>
