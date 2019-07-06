@@ -17,16 +17,30 @@
 				<div class="panel-body">
 					<div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
 					  <div class="row">
-						 <div class="col-sm-4">
+						 <div class="col-sm-2">
 							<a href="<?php echo base_url('admin/user-add');?>" class="btn btn-primary">Add User</a>
-						 </div>
-						 <div class="col-sm-4">
-							<form action="<?php echo base_url('admin/user-list');?>" method="GET" role="form">
-								<div id="dataTables-example_filter" class="dataTables_filter">
-									<label>Search by:<input name="search_key" type="search" class="form-control input-sm" placeholder="Type here..." aria-controls="dataTables-example" id="user-search" value="<?php echo $search_key;?>"></label>
+						 </div>						 
+						 <div class="col-sm-10">							
+								<div class="dataTables_filter">
+									<form action="<?php echo base_url('admin/user-list');?>" method="GET" role="form">
+									<label>Search:
+										<select name="sponsor_id" class="form-control input-sm">
+											<option value="">Select Sponsor</option>
+											<?php 
+												if(!empty($sponsors)){
+													foreach ($sponsors as $value) {
+											?>
+											<option value="<?php echo $value->user_id;?>" <?php if($sponsor_id == $value->user_id){echo 'selected';}?>><?php echo $value->sponsor_id;?></option>
+											<?php
+													}
+												}
+											?>
+										</select>
+										<input name="search_key" type="search" class="form-control input-sm" placeholder="Type here..." aria-controls="dataTables-example" id="user-search" value="<?php echo $search_key;?>">										
+									</label>
 									<button type="submit" class="btn btn-primary">Search</button>
+									</form>
 								</div>
-							</form>
 						 </div>
 					  </div>
 					  <div class="row">

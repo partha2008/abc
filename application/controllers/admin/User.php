@@ -334,6 +334,13 @@
 				$this->data['search_key'] = '';
 			}
 
+			$sponsor_id = $this->input->get('sponsor_id');
+			if(isset($sponsor_id) && $sponsor_id){
+				$this->data['sponsor_id'] = $sponsor_id;
+			}else{
+				$this->data['sponsor_id'] = '';
+			}
+
 			$user_data = $this->userdata->grab_user_list(null, $like);	 
 			
 			//pagination settings
@@ -352,6 +359,7 @@
 			$user_paginated_data = $this->userdata->grab_user_list($this->data['page'], $like);	
 			
 			$this->data['user_details'] = $user_paginated_data;
+			$this->data['sponsors'] = $this->userdata->grab_user_details();
 			
 			$this->load->view('admin/user_list', $this->data);
 		}

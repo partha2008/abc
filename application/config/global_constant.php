@@ -11,7 +11,7 @@
 		"google_captcha_site_key" => "6LcSjaQUAAAAAAmNa_3MEmKWFdycM-RQWeMAJOSb",
 		"google_captcha_secret_key" => "6LcSjaQUAAAAABkotuBc7mGVGveQND2a_hlOmAM-",
 		"activation_fees" => 3200,
-		"donation_per_basis" => 1000
+		"donation_per_basis" => 600
 	);
 	
 	// Bootstrap Pagination Configuration

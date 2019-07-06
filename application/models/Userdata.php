@@ -57,10 +57,31 @@ class Userdata extends CI_Model {
 		return $query->result();
 	}
 
+	public function get_children($user_id){
+		$sql = "SELECT GROUP_CONCAT(lv SEPARATOR ',') children FROM (SELECT @pv:=(SELECT GROUP_CONCAT(user_id SEPARATOR ',') FROM ".TABLE_USER." WHERE parent_id IN (@pv)) AS lv FROM ".TABLE_USER." JOIN (SELECT @pv:=".$user_id.")tmp WHERE parent_id IN (@pv)) a";
+
+		$query = $this->db->query($sql);
+
+		$result = $query->result();
+		$children_arr = explode(",", $user_id.','.$result[0]->children);
+		if(!empty($children_arr)){
+			$children_str = '';
+			foreach ($children_arr as $key => $value) {
+				$children_str .= "'".$value."',";
+			}
+		}
+
+		return rtrim($children_str, ",");
+	}
+
 	public function grab_user_list($page=null, $like){	
 		$likes = '';
+		$sponsors = '';
 		if(!empty($like)){
-			$likes = "AND (A.first_name LIKE '%".$like['search_key']."%' OR A.last_name LIKE '%".$like['search_key']."%' OR A.sponsor_id LIKE '%".$like['search_key']."%' OR A.mobile_no LIKE '%".$like['search_key']."%' OR B.sponsor_id LIKE '%".$like['search_key']."%' OR B.first_name LIKE '%".$like['search_key']."%' OR B.last_name LIKE '%".$like['search_key']."%')";
+			if($like['sponsor_id']){
+				$sponsors = " AND A.user_id IN (".$this->get_children($like['sponsor_id']).")";
+			}
+			$likes = "AND (A.first_name LIKE '%".$like['search_key']."%' OR A.last_name LIKE '%".$like['search_key']."%' OR A.sponsor_id LIKE '%".$like['search_key']."%' OR A.mobile_no LIKE '%".$like['search_key']."%' OR B.sponsor_id LIKE '%".$like['search_key']."%' OR B.first_name LIKE '%".$like['search_key']."%' OR B.last_name LIKE '%".$like['search_key']."%')".$sponsors;
 		}
 		if(is_numeric($page)){
 			$sql = "SELECT A.user_id AS id, A.first_name AS first_name, A.last_name AS last_name, A.mobile_no, A.sponsor_id AS user_id, A.status, B.first_name AS parent_first_name, B.last_name AS parent_last_name, B.sponsor_id FROM ".TABLE_USER." A, ".TABLE_USER." B WHERE A.parent_id = B.user_id ".$likes." ORDER BY A.user_id DESC LIMIT ".$page.", ".PAGINATION_PER_PAGE;
