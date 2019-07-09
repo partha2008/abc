@@ -3,29 +3,49 @@
 
 	// Extend the TCPDF class to create custom Header and Footer
 	class MYPDF extends TCPDF {
+
+		protected $header = '';
+
 		//Page header
 		public function Header() {
+
+			$this->Rect(0,0,$this->getPageWidth(),$this->getPageHeight(),'F','',$fill_color = array(242, 238, 227));	
+
+			// Define the path to the image that you want to use as watermark.
+        	$img_file = base_url('resources/images/blue.png');
+
+        	$this->Image($img_file, 80, 100, 50, 50, '', '', '', false, 0);
+
 			// Set font
-			$this->SetFont('courier', '', 10);
+			$this->SetFont('courier', 'B', 10);
 
-			$this->writeHTMLCell(60, '', 10, $this->getY(), $this->donor, 0, 0, 0, true, 'R', true);
+			$this->SetTextColor(48, 159, 255);
 
-			$this->writeHTMLCell(80, '', $this->getX()+10, $this->getY(), $this->address, 0, 0, 0, true, 'L', true);
+			$this->writeHTMLCell(60, '', 15, $this->getY()+3, $this->donor, 0, 0, 0, true, 'R', true);
 
-			$this->writeHTMLCell(40, '', $this->getX(), $this->getY(), "Date: ".date("d/m/Y", $this->downloaded_date), 0, 0, 0, true, 'R', true);
+			$this->writeHTMLCell(80, '', $this->getX()+5, $this->getY(), $this->address, 0, 0, 0, true, 'L', true);
 
-			$this->Line(10, $this->y+10, $this->w - 10, $this->y+10);
+			$this->writeHTMLCell(40, '', $this->getX()-5, $this->getY(), "Date: ".date("d/m/Y", $this->downloaded_date), 0, 0, 0, true, 'R', true);
+
+			$this->SetLineStyle( array( 'width' => 0.50, 'color' => array(174, 51, 53)));
+
+			$this->Line(6,6, $this->getPageWidth()-6,6); 
+
+			$this->Line($this->getPageWidth()-6,6, $this->getPageWidth()-6, $this->getPageHeight()-6);
+			$this->Line(6, $this->getPageHeight()-6, $this->getPageWidth()-6, $this->getPageHeight()-6);
+			$this->Line(6,6,6, $this->getPageHeight()-6);	
 		}
 
 		// Page footer
 		public function Footer() {
-			$this->Line(10, $this->y-5, $this->w - 10, $this->y-5);
+			//$this->SetLineStyle( array( 'width' => 0.40, 'color' => array(153, 204, 0)));
+			//$this->Line(10, $this->y-5, $this->w - 10, $this->y-5);
 			// Position at 15 mm from bottom
 			$this->SetY(-15);
 			// Set font
 			$this->SetFont('courier', 'I', 8);
 			// Page number
-			$this->Cell(0, 10, 'Page '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
+			//$this->Cell(0, 10, 'Page '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
 		}
 	}
 
@@ -51,14 +71,34 @@
 
 	// add a page
 	$pdf->AddPage();
+
+	//$pdf->SetFillColor('#FFFF00');
+	//$pdf->Rect(0, 0, $pdf->getPageWidth(), $pdf->getPageHeight(), 'DF', "");
 	
 	$pdf->SetFont('courier', '', 11);
 
-	$cart_data_html = '<table cellspacing="0" cellpadding="1" border="1">';
+	$cart_data_html = '<style>
+				th{
+                	background-color: #2F4F4F;
+  					color: #ffffff;
+  					border: 1px solid #D3D3D3;
+                }
+                td {
+                    border: 1px solid #D3D3D3;
+                }
+                table{
+                	border-collapse: collapse;
+                }                
+                </style>';
+
+	$cart_data_html .= '<table cellspacing="0" cellpadding="1">';
 	$cart_data_html .= '<thead>';
 	$cart_data_html .= '<tr><th align="center" width="40px"><b>Sl No</b></th><th align="center" width="430px"><b>Name</b></th><th align="center" width="50px"><b>Price</b></th><th align="center" width="120px"><b>PNR No</b></th></tr>';
 	$cart_data_html .= '</thead>';
 	$cart_data_html .= '<tbody>';
+
+	$pdf->SetTextColor(0,0,128);
+
 	if(!empty($parents)){
 		$counter = 10;
 		foreach ($parents as $parent) {
