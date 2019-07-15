@@ -19,7 +19,7 @@
               <div class="navbar-collapse-header d-md-none">
                 <div class="row">
                   <div class="col-6 collapse-brand">
-                    <a href="index.html">
+                    <a href="<?php echo base_url();?>">
                       <img src="<?php echo base_url(); ?>resources/images/blue.png">
                     </a>
                   </div>
